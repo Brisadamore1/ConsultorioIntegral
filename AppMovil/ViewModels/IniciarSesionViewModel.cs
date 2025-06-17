@@ -9,7 +9,22 @@ namespace AppMovil.ViewModels
 {
     public class IniciarSesionViewModel : ObjectNotification
     {
-		private string email;
+        public IniciarSesionViewModel()
+        {
+            IniciarSesionCommand = new Command(IniciarSesion, PermitirIniciarSesion);
+        }
+
+        private bool PermitirIniciarSesion(object arg)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void IniciarSesion(object obj)
+        {
+           App.Current.MainPage.DisplayAlert("Iniciar Sesión", "Iniciar sesión con " + Email + " y contraseña " + Password, "Aceptar"); 
+        }
+
+        private string email;
 		public string Email
 		{
 			get { return email; }
@@ -28,7 +43,6 @@ namespace AppMovil.ViewModels
 		}
 
 		private bool rememberpassword;
-
 		public bool Rememberpassword
         {
 			get { return rememberpassword; }
@@ -37,6 +51,7 @@ namespace AppMovil.ViewModels
 			}
 		}
 
-
-	}
+		public Command IniciarSesionCommand { get; }
+        public Command RegistrarseCommand { get; }
+    }
 }
