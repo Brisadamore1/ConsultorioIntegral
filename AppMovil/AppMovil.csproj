@@ -63,6 +63,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Service\Service.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\IniciarSesionView.xaml.cs">
 	    <DependentUpon>IniciarSesionView.xaml</DependentUpon>
 	  </Compile>
