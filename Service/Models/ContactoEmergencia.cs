@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Class
+namespace Service.Models
 {
     public partial class ContactoEmergencia
     {
         public int Id { get; set; }
+
+        public int? IdPaciente { get; set; } // Almacena el número de paciente
+        public virtual Paciente? Paciente { get; set; } // Permite ver el nombre del paciente
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         public string Nombre { get; set; } = null!;
@@ -20,6 +23,6 @@ namespace Service.Class
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
         public string Telefono { get; set; } = null!;
 
-
+        
     }
 }

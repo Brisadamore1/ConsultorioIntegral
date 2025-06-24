@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Class
+namespace Service.Models
 {
     public partial class Paciente
     {
         public int Id { get; set; }
+
+        public int? IdProfesional { get; set; }
+
+        public virtual Profesional? Profesional { get; set; }
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         public string Nombre { get; set; } = null!;

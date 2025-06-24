@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Service.Class
+namespace Service.Models
 {
     public partial class Profesional
     {
@@ -10,16 +10,18 @@ namespace Service.Class
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         public string Nombre { get; set; } = null!;
 
+        [Required(ErrorMessage = "El campo Matricula es obligatorio.")]
+        public string Matricula { get; set; } = null!;
+
         [Required(ErrorMessage = "El campo Especialidad es obligatorio.")]
         public string Especialidad { get; set; } = null!;
 
-        [Required(ErrorMessage = "El campo Matricula es obligatorio.")]
-        public string Matricula { get; set; } = null!;
+        [EmailAddress(ErrorMessage = "El campo Email no tiene un formato válido.")]
+        public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
         public string Telefono { get; set; } = null!;
 
-        [EmailAddress(ErrorMessage = "El campo Email no tiene un formato válido.")]
-        public string Email { get; set; } = null!;
+       
     }
 }

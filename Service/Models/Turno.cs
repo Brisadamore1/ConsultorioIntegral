@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Class
+namespace Service.Models
 {
     public partial class Turno
     {
@@ -25,7 +25,7 @@ namespace Service.Class
 
         [Required(ErrorMessage = "El campo Estado es obligatorio.")]
         public int IdEstadoTurno { get; set; } // almacena el número (ej: 2)
-        public virtual EstadoTurno EstadoTurno { get; set; } // permite ver el nombre ("Confirmado")
+        public virtual EstadoTurno? EstadoTurno { get; set; }  // permite ver el nombre ("Confirmado")
 
         public bool CanceladoPorProfesional { get; set; }
 

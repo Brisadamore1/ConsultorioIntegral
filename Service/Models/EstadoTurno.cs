@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Class
+namespace Service.Models
 {
     public partial class EstadoTurno
     {
         public int Id { get; set; }         // Ej: 1
-        public string Nombre { get; set; }  // Ej: "Reservado"
+
+        [Required(ErrorMessage = "El campo Estado es obligatorio.")]
+        public string Estado { get; set; }  // Ej: "Reservado"
 
         public virtual ICollection<Turno> Turnos { get; set; } = new List<Turno>();
 

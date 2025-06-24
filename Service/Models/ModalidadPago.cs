@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Service.Models
+{
+    public partial class ModalidadPago
+    {
+        public int Id { get; set; }        
+
+        [Required(ErrorMessage = "El campo Modalidad es obligatorio.")]
+        public string Modalidad { get; set; }
+    }
+}
