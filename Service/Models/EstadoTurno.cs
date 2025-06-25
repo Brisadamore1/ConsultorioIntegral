@@ -14,7 +14,7 @@ namespace Service.Models
         public int Id { get; set; }         // Ej: 1
 
         [Required(ErrorMessage = "El campo Estado es obligatorio.")]
-        public string Estado { get; set; }  // Ej: "Reservado"
+        public string? Estado { get; set; }  // Ej: "Reservado"
 
         public virtual ICollection<Turno> Turnos { get; set; } = new List<Turno>();
 

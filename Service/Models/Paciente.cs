@@ -11,7 +11,7 @@ namespace Service.Models
     {
         public int Id { get; set; }
 
-        public int? IdProfesional { get; set; }
+        public int? ProfesionalId { get; set; }
 
         public virtual Profesional? Profesional { get; set; }
 

@@ -12,6 +12,6 @@ namespace Service.Models
         public int Id { get; set; }        
 
         [Required(ErrorMessage = "El campo Modalidad es obligatorio.")]
-        public string Modalidad { get; set; }
+        public string? Modalidad { get; set; }
     }
 }

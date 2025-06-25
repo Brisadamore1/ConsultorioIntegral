@@ -11,7 +11,7 @@ namespace Service.Models
     {
         public int Id { get; set; }
 
-        public int? IdPaciente { get; set; } // Almacena el número de paciente
+        public int? PacienteId { get; set; } // Almacena el número de paciente
         public virtual Paciente? Paciente { get; set; } // Permite ver el nombre del paciente
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
@@ -22,7 +22,5 @@ namespace Service.Models
 
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
         public string Telefono { get; set; } = null!;
-
-        
     }
 }

@@ -11,11 +11,11 @@ namespace Service.Models
     {
         public int Id { get; set; }
 
-        public int? IdSesion { get; set; }
+        public int? SesionId { get; set; }
 
         public virtual Sesion? Sesion { get; set; }
 
-        public int? IdModalidadPago { get; set; }
+        public int? ModalidadPagoId { get; set; }
 
         public virtual ModalidadPago? ModalidadPago { get; set; }
 

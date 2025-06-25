@@ -10,9 +10,9 @@ namespace Service.Models
     public partial class Deuda
     {
         public int Id { get; set; }
-        public int IdPaciente { get; set; } // Almacena el número de paciente (ej: 1)
+        public int PacienteId { get; set; } // Almacena el número de paciente (ej: 1)
         public virtual Paciente? Paciente { get; set; } // Permite ver el nombre del paciente
-        public int IdProfesional { get; set; } // Almacena el número de profesional (ej: 1)
+        public int ProfesionalId { get; set; } // Almacena el número de profesional (ej: 1)
         public virtual Profesional? Profesional { get; set; } // Permite ver el nombre del profesional
 
         [Required(ErrorMessage = "El campo Monto es obligatorio.")]

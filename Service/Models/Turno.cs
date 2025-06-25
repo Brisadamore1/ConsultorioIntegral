@@ -11,9 +11,9 @@ namespace Service.Models
     {
         public int Id { get; set; }
 
-        public int? IdPaciente { get; set; } // Almacena el número de paciente (ej: 1)
+        public int? PacienteId { get; set; } // Almacena el número de paciente (ej: 1)
         public virtual Paciente? Paciente { get; set; } // Permite ver el nombre del paciente (ej: "Juan Pérez")
-        public int? IdProfesional { get; set; } 
+        public int? ProfesionalId { get; set; } 
 
         public virtual Profesional? Profesional { get; set; } // Relación con Profesional
 
@@ -24,7 +24,7 @@ namespace Service.Models
         public int DuracionMinutos { get; set; }
 
         [Required(ErrorMessage = "El campo Estado es obligatorio.")]
-        public int IdEstadoTurno { get; set; } // almacena el número (ej: 2)
+        public int EstadoTurnoId { get; set; } // almacena el número (ej: 2)
         public virtual EstadoTurno? EstadoTurno { get; set; }  // permite ver el nombre ("Confirmado")
 
         public bool CanceladoPorProfesional { get; set; }
