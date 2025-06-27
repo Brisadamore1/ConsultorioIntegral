@@ -61,6 +61,24 @@ namespace Service.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a true.
+        /// </summary>
+        internal static string Remoto {
+            get {
+                return ResourceManager.GetString("Remoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a https://consultoriointegral.azurewebsites.net/api/.
+        /// </summary>
+        internal static string UrlApi {
+            get {
+                return ResourceManager.GetString("UrlApi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a https://localhost:7214/api/.
         /// </summary>
         internal static string UrlApiLocal {

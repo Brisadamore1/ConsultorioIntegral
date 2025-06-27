@@ -21,11 +21,11 @@ namespace Service.Services
             client = new HttpClient();
             options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
-            //string urlApi = Properties.Resources.UrlApi;
-            //if (Properties.Resources.Remoto == "false")
-            //    urlApi = Properties.Resources.UrlApiLocal;
+            string urlApi = Properties.Resources.UrlApi;
+            if (Properties.Resources.Remoto == "false")
+                urlApi = Properties.Resources.UrlApiLocal;
 
-            //_endpoint = urlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
+            _endpoint = urlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
         }
 
         public async Task<List<T>?> GetAllAsync(string? filtro = "")
