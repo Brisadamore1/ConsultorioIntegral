@@ -96,7 +96,8 @@ public partial class ConsultorioContext : DbContext
         modelBuilder.Entity<ModalidadPago>().HasData(
             new ModalidadPago() { Id = 1, Modalidad = "Efectivo" },
             new ModalidadPago() { Id = 2, Modalidad = "Tarjeta de crédito" },
-            new ModalidadPago() { Id = 3, Modalidad = "Tarjeta de débito" }
+            new ModalidadPago() { Id = 3, Modalidad = "Tarjeta de débito" },
+            new ModalidadPago() { Id = 4, Modalidad = "Transferencia" }
             );
 
         //carga de datos semilla Paciente
@@ -184,15 +185,15 @@ public partial class ConsultorioContext : DbContext
             new Sesion() { 
                 Id = 1, 
                 TurnoId = 1, 
-                Notas = "", 
-                Honorarios = 2000,
+                Notas = "Paciente se presentó puntual. Refirió sentirse ansioso por situaciones laborales. Se trabajó en identificar factores desencadenantes. Buena predisposición al diálogo.", 
+                Honorarios = 20000,
                 Pagado= true
             },
             new Sesion() { 
                 Id = 2,
                 TurnoId = 2, 
-                Notas = "", 
-                Honorarios = 45,
+                Notas = "Paciente mencionó recuerdos de infancia que impactaron emocionalmente. Profundizar en vínculos afectivos en la próxima sesión.", 
+                Honorarios = 20000,
                 Pagado= true }
             );
         //carga de datos semilla Turno

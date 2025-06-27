@@ -22,5 +22,11 @@ namespace Service.Models
 
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
         public string Telefono { get; set; } = null!;
+
+        //Esto permite que en la base de datos se visualice el nombre del contacto de emergencia
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

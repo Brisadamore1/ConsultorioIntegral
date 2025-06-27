@@ -1,8 +1,8 @@
 namespace Desktop
 {
-    public partial class Form1 : Form
+    public partial class MenuPrincipalView : Form
     {
-        public Form1()
+        public MenuPrincipalView()
         {
             InitializeComponent();
         }

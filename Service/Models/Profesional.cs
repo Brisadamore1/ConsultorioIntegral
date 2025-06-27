@@ -21,7 +21,12 @@ namespace Service.Models
 
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
         public string Telefono { get; set; } = null!;
+        
+        public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
-       
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

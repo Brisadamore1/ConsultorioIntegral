@@ -15,7 +15,7 @@ namespace Service.Models
         public string Notas { get; set; } = null!; // Notas de la sesión.
 
         [Required(ErrorMessage = "El campo Honorarios es obligatorio.")]
-        public int Honorarios { get; set; } // Honorarios cobrados por la sesión.
+        public decimal Honorarios { get; set; } // Honorarios cobrados por la sesión.
 
         [Required(ErrorMessage = "El campo Pagado es obligatorio.")]
         public bool Pagado { get; set; } // Indica si la sesión ha sido pagada o no.

@@ -6,6 +6,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.Models
 {
@@ -25,5 +26,10 @@ namespace Service.Models
         //var turnosConfirmados = db.Turnos
         //  .Where(t => t.EstadoTurnoId == 2)
         //  .ToList();
+
+        public override string? ToString()
+        {
+            return Estado;
+        }
     }
 }

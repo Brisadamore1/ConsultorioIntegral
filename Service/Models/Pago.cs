@@ -20,7 +20,7 @@ namespace Service.Models
         public virtual ModalidadPago? ModalidadPago { get; set; }
 
         [Required(ErrorMessage = "El campo Monto es obligatorio.")]
-        public int Monto { get; set; } 
+        public decimal Monto { get; set; } 
 
         [Required(ErrorMessage = "El campo Fecha es obligatorio.")]
         [DataType(DataType.Date)]
