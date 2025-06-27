@@ -26,6 +26,13 @@ jobs:
       - name: Install MAUI Android workload
         run: dotnet workload install maui-android
 
+
+      - name: Restore dependencies
+        run: dotnet restore AppMovil/AppMovil.csproj
+
+      - name: Build and publish project
+        run: dotnet publish AppMovil/AppMovil.csproj -c Release -f net8.0-android
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
