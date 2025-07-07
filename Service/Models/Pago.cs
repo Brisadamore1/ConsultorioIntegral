@@ -27,7 +27,7 @@ namespace Service.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
-
+        public bool Eliminado { get; set; } = false;
 
     }
 }

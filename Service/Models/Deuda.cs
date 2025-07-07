@@ -24,5 +24,7 @@ namespace Service.Models
 
         [Required(ErrorMessage = "El campo Cancelación es obligatorio.")]
         public bool Cancelada { get; set; } // Indica si la deuda ha sido pagada o no
+
+        public bool Eliminado { get; set; } = false;
     }
 }

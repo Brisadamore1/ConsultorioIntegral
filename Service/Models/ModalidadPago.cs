@@ -15,6 +15,7 @@ namespace Service.Models
         [Required(ErrorMessage = "El campo Modalidad es obligatorio.")]
         public string? Modalidad { get; set; }
 
+        public bool Eliminado { get; set; } = false;
         public override string? ToString()
         {
             return Modalidad;

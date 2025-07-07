@@ -29,7 +29,8 @@ namespace Service.Models
 
         public bool CanceladoPorProfesional { get; set; }
 
-        public string? MotivoCancelacion { get; set; }   
+        public string? MotivoCancelacion { get; set; }
 
+        public bool Eliminado { get; set; } = false;
     }
 }

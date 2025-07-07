@@ -16,7 +16,7 @@ namespace AppMovil.ViewModels
 
         private bool PermitirIniciarSesion(object arg)
         {
-            throw new NotImplementedException();
+            return !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
         }
 
         private void IniciarSesion(object obj)

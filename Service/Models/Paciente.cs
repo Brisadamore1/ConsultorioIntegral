@@ -39,6 +39,7 @@ namespace Service.Models
         public string ObraSocial { get; set; }
         public string NumeroAfiliado { get; set; }
 
+        public bool Eliminado { get; set; } = false;
         public override string ToString()
         {
             return Nombre;

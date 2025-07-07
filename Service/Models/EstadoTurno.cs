@@ -27,6 +27,8 @@ namespace Service.Models
         //  .Where(t => t.EstadoTurnoId == 2)
         //  .ToList();
 
+        public bool Eliminado { get; set; } = false;
+
         public override string? ToString()
         {
             return Estado;
