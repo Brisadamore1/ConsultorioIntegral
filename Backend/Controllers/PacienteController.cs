@@ -8,7 +8,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PacienteController : ControllerBase
     {
         private readonly ConsultorioContext _context;
@@ -22,7 +22,7 @@ namespace Backend.Controllers
         public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientes([FromQuery] string? filtro = "")
         {
             return await _context.Pacientes.Include(c => c.Profesional)
-               .Where(c => c.Profesional.Nombre.ToUpper().Contains(filtro.ToUpper()))
+               .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
 

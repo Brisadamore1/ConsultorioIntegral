@@ -5,8 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
-
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        });
 var configuration = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json")
         .Build();
