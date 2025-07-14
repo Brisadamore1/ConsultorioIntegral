@@ -21,7 +21,7 @@ namespace AppMovil.ViewModels
 
         private void IniciarSesion(object obj)
         {
-           App.Current.MainPage.DisplayAlert("Iniciar Sesión", "Iniciar sesión con " + Email + " y contraseña " + Password, "Aceptar"); 
+           App.Current.MainPage.DisplayAlert("Iniciar Sesión", "Iniciando Sesión", "Aceptar"); 
         }
 
         private string email;
@@ -30,7 +30,8 @@ namespace AppMovil.ViewModels
 			get { return email; }
 			set { email = value;
 				OnPropertyChanged();
-			}
+				IniciarSesionCommand.ChangeCanExecute(); // Actualiza el estado del comando cuando cambia el email
+            }
 		}
 
 		private string password;
@@ -39,7 +40,8 @@ namespace AppMovil.ViewModels
 			get { return password; }
 			set { password = value;
 				OnPropertyChanged();
-			}
+				IniciarSesionCommand.ChangeCanExecute(); // Actualiza el estado del comando cuando cambia la contraseña
+            }
 		}
 
 		private bool rememberpassword;
