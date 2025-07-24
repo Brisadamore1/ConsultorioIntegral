@@ -9,10 +9,10 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class ModalidadPagoController : ControllerBase
+    public class ModalidadesPagoController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public ModalidadPagoController(ConsultorioContext context)
+        public ModalidadesPagoController(ConsultorioContext context)
         {
             _context = context;
         }

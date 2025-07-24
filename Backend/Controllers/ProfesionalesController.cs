@@ -9,48 +9,48 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class PacienteController : ControllerBase
+    public class ProfesionalesController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public PacienteController(ConsultorioContext context)
+        public ProfesionalesController(ConsultorioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Paciente
+        // GET: api/Profesional
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientes([FromQuery] string? filtro = "")
+        public async Task<ActionResult<IEnumerable<Profesional>>> GetProfesionales([FromQuery] string? filtro = "")
         {
-            return await _context.Pacientes.Include(c => c.Profesional)
+            return await _context.Profesionales.Include(p => p.Pacientes)
                .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
 
-        // GET: api/Paciente/5
+        // GET: api/Profesional/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Paciente>> GetPaciente(int id)
+        public async Task<ActionResult<Profesional>> GetProfesional(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var profesional = await _context.Profesionales.FindAsync(id);
 
-            if (paciente == null)
+            if (profesional == null)
             {
                 return NotFound();
             }
 
-            return paciente;
+            return profesional;
         }
 
-        // PUT: api/Pacientes/5
+        // PUT: api/Profesionales/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPaciente(int id, Paciente paciente)
+        public async Task<IActionResult> PutProfesional(int id, Profesional profesional)
         {
-            if (id != paciente.Id)
+            if (id != profesional.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(paciente).State = EntityState.Modified;
+            _context.Entry(profesional).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PacienteExists(id))
+                if (!ProfesionalExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,38 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Pacientes
+
+        // POST: api/Profesionales
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Paciente>> PostPaciente(Paciente paciente)
+        public async Task<ActionResult<Profesional>> PostPaciente(Profesional profesional)
         {
-            _context.Pacientes.Add(paciente);
+            _context.Profesionales.Add(profesional);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPaciente", new { id = paciente.Id }, paciente);
+            return CreatedAtAction("GetProfesional", new { id = profesional.Id }, profesional);
         }
 
-        // DELETE: api/Pacientes/5
+        // DELETE: api/Profesionales/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePaciente(int id)
+        public async Task<IActionResult> DeleteProfesional(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            if (paciente == null)
+            var profesional = await _context.Profesionales.FindAsync(id);
+            if (profesional == null)
             {
                 return NotFound();
             }
-            paciente.Eliminado = true;
-            _context.Pacientes.Update(paciente);
+            profesional.Eliminado = true;
+            _context.Profesionales.Update(profesional);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-        private bool PacienteExists(int id)
+
+        private bool ProfesionalExists(int id)
         {
             return _context.Deudas.Any(e => e.Id == id);
         }
+
     }
 }

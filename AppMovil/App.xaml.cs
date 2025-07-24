@@ -9,7 +9,7 @@ namespace AppMovil
             InitializeComponent();
 
             //MainPage = new AppShell();
-            MainPage = new IniciarSesionView();
+            MainPage = new ProfesionalesView();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class TurnoController : ControllerBase
+    public class TurnosController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public TurnoController(ConsultorioContext context)
+        public TurnosController(ConsultorioContext context)
         {
             _context = context;
         }

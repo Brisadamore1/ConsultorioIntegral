@@ -3,55 +3,54 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Service.Models;
-using System.ComponentModel;
 
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class DeudaController : ControllerBase
+    public class PacientesController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public DeudaController(ConsultorioContext context)
+        public PacientesController(ConsultorioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Deuda
+        // GET: api/Paciente
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Deuda>>> GetDeudas([FromQuery] string? filtro = "")
+        public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientes([FromQuery] string? filtro = "")
         {
-            return await _context.Deudas.Include(c => c.Paciente)
-               .Where(c => c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+            return await _context.Pacientes.Include(c => c.Profesional)
+               .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
-        
-        // GET: api/Deuda/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Deuda>> GetDeuda(int id)
-        {
-            var deuda = await _context.Deudas.FindAsync(id);
 
-            if (deuda == null)
+        // GET: api/Paciente/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Paciente>> GetPaciente(int id)
+        {
+            var paciente = await _context.Pacientes.FindAsync(id);
+
+            if (paciente == null)
             {
                 return NotFound();
             }
 
-            return deuda;
+            return paciente;
         }
 
-        // PUT: api/Deudas/5
+        // PUT: api/Pacientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDeuda(int id, Deuda deuda)
+        public async Task<IActionResult> PutPaciente(int id, Paciente paciente)
         {
-            if (id != deuda.Id)
+            if (id != paciente.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(deuda).State = EntityState.Modified;
+            _context.Entry(paciente).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +58,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DeudaExists(id))
+                if (!PacienteExists(id))
                 {
                     return NotFound();
                 }
@@ -72,33 +71,33 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Deudas
+        // POST: api/Pacientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Deuda>> PostDeuda(Deuda deuda)
+        public async Task<ActionResult<Paciente>> PostPaciente(Paciente paciente)
         {
-            _context.Deudas.Add(deuda);
+            _context.Pacientes.Add(paciente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDeuda", new { id = deuda.Id }, deuda);
+            return CreatedAtAction("GetPaciente", new { id = paciente.Id }, paciente);
         }
 
-        // DELETE: api/Deudas/5
+        // DELETE: api/Pacientes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDeuda(int id)
+        public async Task<IActionResult> DeletePaciente(int id)
         {
-            var deuda = await _context.Deudas.FindAsync(id);
-            if (deuda == null)
+            var paciente = await _context.Pacientes.FindAsync(id);
+            if (paciente == null)
             {
                 return NotFound();
             }
-            deuda.Eliminado = true;
-            _context.Deudas.Update(deuda);
+            paciente.Eliminado = true;
+            _context.Pacientes.Update(paciente);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-        private bool DeudaExists(int id)
+        private bool PacienteExists(int id)
         {
             return _context.Deudas.Any(e => e.Id == id);
         }

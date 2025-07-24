@@ -9,47 +9,48 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class PagoController : ControllerBase
+    public class SesionesController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public PagoController(ConsultorioContext context)
+        public SesionesController(ConsultorioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Pago
+        // GET: api/Profesionales
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pago>>> GetPagos([FromQuery] string? filtro = "")
+        public async Task<ActionResult<IEnumerable<Sesion>>> GetSesiones([FromQuery] string? filtro = "")
         {
-            return await _context.Pagos.Include(c => c.ModalidadPago)
-               .Where(c => c.ModalidadPago.Modalidad.ToUpper().Contains(filtro.ToUpper()))
+            return await _context.Sesiones
+               .Where(c => c.Notas.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
-        // GET: api/Pago/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Pago>> GetPago(int id)
-        {
-            var pago = await _context.Pagos.FindAsync(id);
 
-            if (pago == null)
+        // GET: api/Sesiones/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Sesion>> GetSesion(int id)
+        {
+            var sesion = await _context.Sesiones.FindAsync(id);
+
+            if (sesion == null)
             {
                 return NotFound();
             }
 
-            return pago;
+            return sesion;
         }
 
-        // PUT: api/Pagos/5
+        // PUT: api/Sesiones/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPago(int id, Pago pago)
+        public async Task<IActionResult> PutSesion(int id, Sesion sesion)
         {
-            if (id != pago.Id)
+            if (id != sesion.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pago).State = EntityState.Modified;
+            _context.Entry(sesion).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +58,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PagoExists(id))
+                if (!SesionExists(id))
                 {
                     return NotFound();
                 }
@@ -70,33 +71,33 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Pagos
+        // POST: api/Sesiones
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Pago>> PostPago(Pago pago)
+        public async Task<ActionResult<Sesion>> PostSesion(Sesion sesion)
         {
-            _context.Pagos.Add(pago);
+            _context.Sesiones.Add(sesion);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPaciente", new { id = pago.Id }, pago);
+            return CreatedAtAction("GetSesion", new { id = sesion.Id }, sesion);
         }
 
-        // DELETE: api/Pagos/5
+        // DELETE: api/Sesiones/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePago(int id)
+        public async Task<IActionResult> DeleteSesion(int id)
         {
-            var pago = await _context.Pagos.FindAsync(id);
-            if (pago == null)
+            var sesion = await _context.Sesiones.FindAsync(id);
+            if (sesion == null)
             {
                 return NotFound();
             }
-            pago.Eliminado = true;
-            _context.Pagos.Update(pago);
+            sesion.Eliminado = true;
+            _context.Sesiones.Update(sesion);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-        private bool PagoExists(int id)
+        private bool SesionExists(int id)
         {
             return _context.Deudas.Any(e => e.Id == id);
         }

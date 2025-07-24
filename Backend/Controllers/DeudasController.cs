@@ -3,54 +3,55 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Service.Models;
+using System.ComponentModel;
 
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class SesionController : ControllerBase
+    public class DeudasController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public SesionController(ConsultorioContext context)
+        public DeudasController(ConsultorioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Profesionales
+        // GET: api/Deuda
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sesion>>> GetSesiones([FromQuery] string? filtro = "")
+        public async Task<ActionResult<IEnumerable<Deuda>>> GetDeudas([FromQuery] string? filtro = "")
         {
-            return await _context.Sesiones
-               .Where(c => c.Notas.ToUpper().Contains(filtro.ToUpper()))
+            return await _context.Deudas.Include(c => c.Paciente)
+               .Where(c => c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
-
-        // GET: api/Sesiones/5
+        
+        // GET: api/Deuda/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sesion>> GetSesion(int id)
+        public async Task<ActionResult<Deuda>> GetDeuda(int id)
         {
-            var sesion = await _context.Sesiones.FindAsync(id);
+            var deuda = await _context.Deudas.FindAsync(id);
 
-            if (sesion == null)
+            if (deuda == null)
             {
                 return NotFound();
             }
 
-            return sesion;
+            return deuda;
         }
 
-        // PUT: api/Sesiones/5
+        // PUT: api/Deudas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSesion(int id, Sesion sesion)
+        public async Task<IActionResult> PutDeuda(int id, Deuda deuda)
         {
-            if (id != sesion.Id)
+            if (id != deuda.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(sesion).State = EntityState.Modified;
+            _context.Entry(deuda).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +59,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SesionExists(id))
+                if (!DeudaExists(id))
                 {
                     return NotFound();
                 }
@@ -71,33 +72,33 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Sesiones
+        // POST: api/Deudas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Sesion>> PostSesion(Sesion sesion)
+        public async Task<ActionResult<Deuda>> PostDeuda(Deuda deuda)
         {
-            _context.Sesiones.Add(sesion);
+            _context.Deudas.Add(deuda);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSesion", new { id = sesion.Id }, sesion);
+            return CreatedAtAction("GetDeuda", new { id = deuda.Id }, deuda);
         }
 
-        // DELETE: api/Sesiones/5
+        // DELETE: api/Deudas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSesion(int id)
+        public async Task<IActionResult> DeleteDeuda(int id)
         {
-            var sesion = await _context.Sesiones.FindAsync(id);
-            if (sesion == null)
+            var deuda = await _context.Deudas.FindAsync(id);
+            if (deuda == null)
             {
                 return NotFound();
             }
-            sesion.Eliminado = true;
-            _context.Sesiones.Update(sesion);
+            deuda.Eliminado = true;
+            _context.Deudas.Update(deuda);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-        private bool SesionExists(int id)
+        private bool DeudaExists(int id)
         {
             return _context.Deudas.Any(e => e.Id == id);
         }

@@ -9,48 +9,47 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class ProfesionalController : ControllerBase
+    public class PagosController : ControllerBase
     {
         private readonly ConsultorioContext _context;
-        public ProfesionalController(ConsultorioContext context)
+        public PagosController(ConsultorioContext context)
         {
             _context = context;
         }
 
-        // GET: api/Profesional
+        // GET: api/Pago
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Profesional>>> GetProfesionales([FromQuery] string? filtro = "")
+        public async Task<ActionResult<IEnumerable<Pago>>> GetPagos([FromQuery] string? filtro = "")
         {
-            return await _context.Profesionales.Include(p => p.Pacientes)
-               .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
+            return await _context.Pagos.Include(c => c.ModalidadPago)
+               .Where(c => c.ModalidadPago.Modalidad.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
-
-        // GET: api/Profesional/5
+        // GET: api/Pago/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Profesional>> GetProfesional(int id)
+        public async Task<ActionResult<Pago>> GetPago(int id)
         {
-            var profesional = await _context.Profesionales.FindAsync(id);
+            var pago = await _context.Pagos.FindAsync(id);
 
-            if (profesional == null)
+            if (pago == null)
             {
                 return NotFound();
             }
 
-            return profesional;
+            return pago;
         }
 
-        // PUT: api/Profesionales/5
+        // PUT: api/Pagos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfesional(int id, Profesional profesional)
+        public async Task<IActionResult> PutPago(int id, Pago pago)
         {
-            if (id != profesional.Id)
+            if (id != pago.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(profesional).State = EntityState.Modified;
+            _context.Entry(pago).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +57,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProfesionalExists(id))
+                if (!PagoExists(id))
                 {
                     return NotFound();
                 }
@@ -71,38 +70,35 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-
-        // POST: api/Profesionales
+        // POST: api/Pagos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Profesional>> PostPaciente(Profesional profesional)
+        public async Task<ActionResult<Pago>> PostPago(Pago pago)
         {
-            _context.Profesionales.Add(profesional);
+            _context.Pagos.Add(pago);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProfesional", new { id = profesional.Id }, profesional);
+            return CreatedAtAction("GetPaciente", new { id = pago.Id }, pago);
         }
 
-        // DELETE: api/Profesionales/5
+        // DELETE: api/Pagos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProfesional(int id)
+        public async Task<IActionResult> DeletePago(int id)
         {
-            var profesional = await _context.Profesionales.FindAsync(id);
-            if (profesional == null)
+            var pago = await _context.Pagos.FindAsync(id);
+            if (pago == null)
             {
                 return NotFound();
             }
-            profesional.Eliminado = true;
-            _context.Profesionales.Update(profesional);
+            pago.Eliminado = true;
+            _context.Pagos.Update(pago);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
-        private bool ProfesionalExists(int id)
+        private bool PagoExists(int id)
         {
             return _context.Deudas.Any(e => e.Id == id);
         }
-
     }
 }
