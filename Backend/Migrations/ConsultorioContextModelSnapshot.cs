@@ -30,6 +30,9 @@ namespace Backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -55,6 +58,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Nombre = "Alba Russo",
                             PacienteId = 1,
                             Relacion = "Madre",
@@ -63,6 +67,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Nombre = "Julia Urriaga",
                             PacienteId = 2,
                             Relacion = "Madre",
@@ -71,6 +76,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 3,
+                            Eliminado = false,
                             Nombre = "Benjamín Ferro",
                             PacienteId = 3,
                             Relacion = "Padre",
@@ -92,6 +98,9 @@ namespace Backend.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime(6)");
@@ -119,7 +128,8 @@ namespace Backend.Migrations
                             Id = 1,
                             Cancelada = false,
                             Descripcion = "Consulta inicial",
-                            Fecha = new DateTime(2025, 6, 26, 18, 37, 50, 484, DateTimeKind.Local).AddTicks(4517),
+                            Eliminado = false,
+                            Fecha = new DateTime(2025, 7, 22, 22, 23, 27, 5, DateTimeKind.Local).AddTicks(8404),
                             Monto = 10000m,
                             PacienteId = 1,
                             ProfesionalId = 1
@@ -129,7 +139,8 @@ namespace Backend.Migrations
                             Id = 2,
                             Cancelada = true,
                             Descripcion = "Seguimiento",
-                            Fecha = new DateTime(2025, 6, 16, 18, 37, 50, 484, DateTimeKind.Local).AddTicks(4574),
+                            Eliminado = false,
+                            Fecha = new DateTime(2025, 7, 12, 22, 23, 27, 5, DateTimeKind.Local).AddTicks(8425),
                             Monto = 5000m,
                             PacienteId = 2,
                             ProfesionalId = 2
@@ -144,6 +155,9 @@ namespace Backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -156,26 +170,31 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Estado = "Reservado"
                         },
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Estado = "Confirmado"
                         },
                         new
                         {
                             Id = 3,
+                            Eliminado = false,
                             Estado = "Cancelado"
                         },
                         new
                         {
                             Id = 4,
+                            Eliminado = false,
                             Estado = "Atendido"
                         },
                         new
                         {
                             Id = 5,
+                            Eliminado = false,
                             Estado = "Ausente"
                         });
                 });
@@ -187,6 +206,9 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Modalidad")
                         .IsRequired()
@@ -200,21 +222,25 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Modalidad = "Efectivo"
                         },
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Modalidad = "Tarjeta de crédito"
                         },
                         new
                         {
                             Id = 3,
+                            Eliminado = false,
                             Modalidad = "Tarjeta de débito"
                         },
                         new
                         {
                             Id = 4,
+                            Eliminado = false,
                             Modalidad = "Transferencia"
                         });
                 });
@@ -234,6 +260,9 @@ namespace Backend.Migrations
                     b.Property<string>("Dni")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -276,6 +305,7 @@ namespace Backend.Migrations
                             Id = 1,
                             Direccion = "Italia 4787",
                             Dni = "37138426",
+                            Eliminado = false,
                             Email = "abrilcosta@gmail.com",
                             EsParticular = false,
                             FechaNacimiento = new DateTime(1999, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -290,6 +320,7 @@ namespace Backend.Migrations
                             Id = 2,
                             Direccion = "Belgrano 2410",
                             Dni = "39420170",
+                            Eliminado = false,
                             Email = "joaquinvargas@gmail.com",
                             EsParticular = true,
                             FechaNacimiento = new DateTime(1995, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -304,6 +335,7 @@ namespace Backend.Migrations
                             Id = 3,
                             Direccion = "25 de mayo 4254",
                             Dni = "39421170",
+                            Eliminado = false,
                             Email = "emmaferro@gmail.com",
                             EsParticular = true,
                             FechaNacimiento = new DateTime(1995, 2, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -322,6 +354,9 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime(6)");
@@ -347,6 +382,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModalidadPagoId = 1,
                             Monto = 20000m,
@@ -355,6 +391,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModalidadPagoId = 2,
                             Monto = 22000m,
@@ -370,12 +407,18 @@ namespace Backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Especialidad")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Imagen")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Matricula")
@@ -398,8 +441,10 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Email = "webersantiago@gmail.com",
                             Especialidad = "Psicología",
+                            Imagen = "",
                             Matricula = "4456",
                             Nombre = "Dr. Santiago Weber",
                             Telefono = "3498114782"
@@ -407,8 +452,10 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Email = "urriagavalentina@gmail.com",
                             Especialidad = "Psicología",
+                            Imagen = "",
                             Matricula = "8015",
                             Nombre = "Dra. Valentina Urriaga",
                             Telefono = "3498114789"
@@ -422,6 +469,9 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("Honorarios")
                         .HasColumnType("decimal(65,30)");
@@ -446,6 +496,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            Eliminado = false,
                             Honorarios = 20000m,
                             Notas = "Paciente se presentó puntual. Refirió sentirse ansioso por situaciones laborales. Se trabajó en identificar factores desencadenantes. Buena predisposición al diálogo.",
                             Pagado = true,
@@ -454,6 +505,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 2,
+                            Eliminado = false,
                             Honorarios = 20000m,
                             Notas = "Paciente mencionó recuerdos de infancia que impactaron emocionalmente. Profundizar en vínculos afectivos en la próxima sesión.",
                             Pagado = true,
@@ -474,6 +526,9 @@ namespace Backend.Migrations
 
                     b.Property<int>("DuracionMinutos")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("EstadoTurnoId")
                         .HasColumnType("int");
@@ -506,6 +561,7 @@ namespace Backend.Migrations
                             Id = 1,
                             CanceladoPorProfesional = false,
                             DuracionMinutos = 60,
+                            Eliminado = false,
                             EstadoTurnoId = 4,
                             FechaHora = new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             PacienteId = 1,
@@ -516,6 +572,7 @@ namespace Backend.Migrations
                             Id = 2,
                             CanceladoPorProfesional = false,
                             DuracionMinutos = 50,
+                            Eliminado = false,
                             EstadoTurnoId = 4,
                             FechaHora = new DateTime(2025, 6, 16, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             PacienteId = 2,
@@ -554,7 +611,7 @@ namespace Backend.Migrations
             modelBuilder.Entity("Service.Models.Paciente", b =>
                 {
                     b.HasOne("Service.Models.Profesional", "Profesional")
-                        .WithMany()
+                        .WithMany("Pacientes")
                         .HasForeignKey("ProfesionalId");
 
                     b.Navigation("Profesional");
@@ -610,6 +667,11 @@ namespace Backend.Migrations
             modelBuilder.Entity("Service.Models.EstadoTurno", b =>
                 {
                     b.Navigation("Turnos");
+                });
+
+            modelBuilder.Entity("Service.Models.Profesional", b =>
+                {
+                    b.Navigation("Pacientes");
                 });
 #pragma warning restore 612, 618
         }

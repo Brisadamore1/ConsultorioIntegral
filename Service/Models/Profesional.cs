@@ -26,6 +26,7 @@ namespace Service.Models
         public virtual ICollection<Paciente?> Pacientes { get; set; } = new List<Paciente?>();
 
         public bool Eliminado { get; set; } = false;
+        public string? Imagen { get; set; } = string.Empty;
         public override string ToString()
         {
             return Nombre;

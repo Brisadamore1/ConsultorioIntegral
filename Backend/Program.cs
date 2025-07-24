@@ -54,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(); // Esto permite acceder a archivos de wwwroot desde la web
 app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
@@ -64,3 +65,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+

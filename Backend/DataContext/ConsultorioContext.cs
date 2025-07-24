@@ -169,7 +169,9 @@ public partial class ConsultorioContext : DbContext
                 Matricula= "4456",
                 Especialidad = "Psicología", 
                 Telefono = "3498114782", 
-                Email = "webersantiago@gmail.com" 
+                Email = "webersantiago@gmail.com",
+                Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologo.png"
+
             },
             new Profesional() { 
                 Id = 2, 
@@ -177,7 +179,8 @@ public partial class ConsultorioContext : DbContext
                 Matricula = "8015",
                 Especialidad = "Psicología", 
                 Telefono = "3498114789", 
-                Email = "urriagavalentina@gmail.com" 
+                Email = "urriagavalentina@gmail.com",
+                Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologa.png"
             }
             );
         //carga de datos semilla Sesion
