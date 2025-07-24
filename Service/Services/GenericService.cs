@@ -30,8 +30,6 @@ namespace Service.Services
 
         public async Task<List<T>?> GetAllAsync(string? filtro = "")
         {
-            System.Diagnostics.Debug.WriteLine($"{_endpoint}?filtro={filtro}");
-
             var response = await client.GetAsync($"{_endpoint}?filtro={filtro}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
