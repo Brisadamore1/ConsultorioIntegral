@@ -1,39 +1,91 @@
+using Backend.Class;
 using Backend.DataContext;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+var firebaseJson = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+
+if (string.IsNullOrWhiteSpace(firebaseJson))
+{
+    throw new Exception("Falta la variable GOOGLE_CREDENTIALS");
+}
+
+var credential = GoogleCredential.FromJson(firebaseJson);
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = credential
+});
+
+builder.Services
+    .AddAuthentication("Firebase")
+    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("Firebase", null);
+
 builder.Services.AddAuthorization();
-
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-        options.JsonSerializerOptions.PropertyNamingPolicy = null; // opcional si querés conservar PascalCase
-    });
-
-var configuration = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json")
-        .Build();
-string cadenaConexion = configuration.GetConnectionString("mysqlRemoto");
-
-//configuración de inyección de dependencias del DBContext
-builder.Services.AddDbContext<ConsultorioContext>(
-    options => options.UseMySql(cadenaConexion,
-                                ServerVersion.AutoDetect(cadenaConexion),
-                    options => options.EnableRetryOnFailure(
-                                        maxRetryCount: 5,
-                                        maxRetryDelay: System.TimeSpan.FromSeconds(30),
-                                       errorNumbersToAdd: null)
-                                ));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables()
+        .Build();
 
+var cadenaConexion = configuration.GetConnectionString("mysqlRemoto");
+
+//configuración de inyección de dependencias del DBContext
+
+builder.Services.AddDbContext<ConsultorioContext>(
+    options => options.UseMySql(cadenaConexion,
+                                ServerVersion.AutoDetect(cadenaConexion)));
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configura el serializador JSON para manejar referencias cíclicas.
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
+builder.Services.AddEndpointsApiExplorer();
+//Esto permite ocupar swagger con autenticación y autorización
+builder.Services.AddSwaggerGen(c =>
+{
+    // Agregar esquema de seguridad JWT
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Ingrese el token JWT en este formato: Bearer {su token}"
+    });
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 // Configurar una política de CORS
 builder.Services.AddCors(options =>
@@ -41,8 +93,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder
             .WithOrigins("https://consultoriointegral.azurewebsites.net/",
-                    "https://consultoriointegral.azurewebsites.net",
-                    "https://localhost:7214")
+                    "https://www.consultoriointegral.azurewebsites.net/",
+                    "https://localhost:7214",
+                    "https://localhost:8000")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
@@ -57,11 +110,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles(); // Esto permite acceder a archivos de wwwroot desde la web
+
 app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();

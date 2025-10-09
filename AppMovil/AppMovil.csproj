@@ -70,10 +70,16 @@
 	  <Compile Update="Views\IniciarSesionView.xaml.cs">
 	    <DependentUpon>IniciarSesionView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\PerfilView.xaml.cs">
+	    <DependentUpon>PerfilView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\IniciarSesionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PerfilView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfesionalesView.xaml">

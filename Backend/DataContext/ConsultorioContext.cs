@@ -166,8 +166,8 @@ public partial class ConsultorioContext : DbContext
             new Profesional() { 
                 Id = 1, 
                 Nombre = "Dr. Santiago Weber", 
-                Matricula= "4456",
-                Especialidad = "Psicología", 
+                Matricula= "MAT. 4456",
+                Especialidad = "Psicólogo", 
                 Telefono = "3498114782", 
                 Email = "webersantiago@gmail.com",
                 Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologo.png"
@@ -176,8 +176,8 @@ public partial class ConsultorioContext : DbContext
             new Profesional() { 
                 Id = 2, 
                 Nombre = "Dra. Valentina Urriaga",
-                Matricula = "8015",
-                Especialidad = "Psicología", 
+                Matricula = "MAT.8015",
+                Especialidad = "Psicóloga", 
                 Telefono = "3498114789", 
                 Email = "urriagavalentina@gmail.com",
                 Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologa.png"
@@ -223,5 +223,17 @@ public partial class ConsultorioContext : DbContext
             }
             );
         #endregion
+
+        //configuramos los query filters para que no trigan los registros marcados como eliminados. Son los mecanimos por el cual se indica que un registro esta eliminado sin borrarlo fisicamente de la base de datos.
+        modelBuilder.Entity<ContactoEmergencia>().HasQueryFilter(c => !c.Eliminado);
+        modelBuilder.Entity<Deuda>().HasQueryFilter(e => !e.Eliminado);
+        modelBuilder.Entity<EstadoTurno>().HasQueryFilter(e => !e.Eliminado);
+        modelBuilder.Entity<ModalidadPago>().HasQueryFilter(m => !m.Eliminado);
+        modelBuilder.Entity<Paciente>().HasQueryFilter(pc => !pc.Eliminado);
+        modelBuilder.Entity<Pago>().HasQueryFilter(p => !p.Eliminado);
+        modelBuilder.Entity<Profesional>().HasQueryFilter(pr => !pr.Eliminado);
+        modelBuilder.Entity<Sesion>().HasQueryFilter(s => !s.Eliminado);
+        modelBuilder.Entity<Turno>().HasQueryFilter(t => !t.Eliminado);
+
     }
 }

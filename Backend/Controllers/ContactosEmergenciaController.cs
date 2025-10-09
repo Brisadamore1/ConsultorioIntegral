@@ -8,7 +8,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ContactosEmergenciaController : ControllerBase
     {
         private readonly ConsultorioContext _context;
@@ -22,22 +22,34 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContactoEmergencia>>> GetContactosEmergencia([FromQuery] string? filtro = "")
         {
-            return await _context.ContactosEmergencia.Include(c => c.Paciente)
+            return await _context.ContactosEmergencia
+               .AsNoTracking()
+               .Include(c => c.Paciente)
                .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
+
+        [HttpGet("deleteds")]
+        public async Task<ActionResult<IEnumerable<ContactoEmergencia>>> GetDeletedsContactosEmergencia()
+        {
+            return await _context.ContactosEmergencia
+                .AsNoTracking()
+                .IgnoreQueryFilters()
+                .Where(c => c.Eliminado).ToListAsync();
+        }
+
         // GET: api/ContactoEmergencia/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ContactoEmergencia>> GetContactoEmergencia(int id)
         {
-            var contactoEmergencia = await _context.ContactosEmergencia.FindAsync(id);
+            var contactoEmergencia = await _context.ContactosEmergencia.AsNoTracking().FirstOrDefaultAsync(c => c.Id.Equals(id));
 
             if (contactoEmergencia == null)
             {
                 return NotFound();
             }
 
-            return contactoEmergencia;
+            return contactoEmergencia;  
         }
 
         // PUT: api/ContactoEmergencia/5
@@ -103,6 +115,22 @@ namespace Backend.Controllers
             _context.ContactosEmergencia.Update(contactoEmergencia);
             await _context.SaveChangesAsync();
 
+            return NoContent();
+        }
+
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreContactoEmergencia(int id)
+        {
+            var contactoEmergencia = await _context.ContactosEmergencia.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (contactoEmergencia == null)
+            {
+                return NotFound();
+            }
+            contactoEmergencia.Eliminado = false;
+            //Impacta en memoria
+            _context.ContactosEmergencia.Update(contactoEmergencia);
+            //Aca recien impacta en la base de datos
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 

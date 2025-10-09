@@ -8,7 +8,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProfesionalesController : ControllerBase
     {
         private readonly ConsultorioContext _context;
