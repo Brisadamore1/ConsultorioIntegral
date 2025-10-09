@@ -37,6 +37,7 @@ namespace AppMovil.ViewModels
             }
         }
 
+        //El ICommand es para enlazar con el boton de refrescar
         public ICommand ObtenerPacienteCommand { get; }
         public int PacienteId { get; set; }
 
