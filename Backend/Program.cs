@@ -92,8 +92,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder
-            .WithOrigins("https://consultoriointegral.azurewebsites.net/",
-                    "https://www.consultoriointegral.azurewebsites.net/",
+            .WithOrigins("https://backendconsultorio.azurewebsites.net/",
+                    "https://www.backendconsultorio.azurewebsites.net/",
                     "https://localhost:7214",
                     "https://localhost:8000")
             .AllowAnyHeader()

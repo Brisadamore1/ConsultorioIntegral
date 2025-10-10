@@ -121,7 +121,7 @@
     <value>true</value>
   </data>
   <data name="UrlApi" xml:space="preserve">
-    <value>https://consultoriointegral.azurewebsites.net/api/</value>
+    <value>https://backendconsultorio.azurewebsites.net/api/</value>
   </data>
   <data name="UrlApiLocal" xml:space="preserve">
     <value>https://localhost:7214/api/</value>

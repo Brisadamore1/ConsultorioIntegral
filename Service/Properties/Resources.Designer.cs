@@ -70,7 +70,7 @@ namespace Service.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a https://consultoriointegral.azurewebsites.net/api/.
+        ///   Busca una cadena traducida similar a https://backendconsultorio.azurewebsites.net/api/.
         /// </summary>
         internal static string UrlApi {
             get {

@@ -170,7 +170,7 @@ public partial class ConsultorioContext : DbContext
                 Especialidad = "Psicólogo", 
                 Telefono = "3498114782", 
                 Email = "webersantiago@gmail.com",
-                Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologo.png"
+                Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologo.jpeg"
 
             },
             new Profesional() { 
@@ -180,7 +180,7 @@ public partial class ConsultorioContext : DbContext
                 Especialidad = "Psicóloga", 
                 Telefono = "3498114789", 
                 Email = "urriagavalentina@gmail.com",
-                Imagen = "https://consultoriointegral.azurewebsites.net/imagenes/psicologa.png"
+                Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologa.jpeg"
             }
             );
         //carga de datos semilla Sesion
