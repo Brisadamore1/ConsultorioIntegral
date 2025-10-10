@@ -74,8 +74,10 @@ namespace AppMovil.ViewModels
             var profesionalesFiltrados = profesionalesListToFilter.Where(p => p.Nombre.ToUpper().Contains(filterProfessionals.ToUpper()));
             Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
         }
+        //Método para obtener los profesionales desde el backend
         private async Task ObtenerProfesionales()
         {
+            
 			FilterProfessionals = string.Empty;
             IsRefreshing = true; // Asegúrate de que IsRefreshing se establezca en true al inicio
             profesionalesListToFilter = await profesionalService.GetAllAsync();
