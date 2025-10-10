@@ -58,7 +58,7 @@ jobs:
       - name: Set environment variable in Azure App Service
         uses: Azure/appservice-settings@v1
         with:
-          app-name: 'consultoriointegral'
+          app-name: 'backendconsultorio'
           slot-name: Production
           app-settings-json: |
             [
@@ -83,3 +83,4 @@ jobs:
           package: .
 
           
+
