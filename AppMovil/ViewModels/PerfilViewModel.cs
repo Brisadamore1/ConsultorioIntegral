@@ -8,6 +8,7 @@ namespace AppMovil.ViewModels
 {
     public class PerfilViewModel : ObjectNotification
     {
+        //Este generic service es para obtener los datos del paciente desde el backend
         private GenericService<Paciente> pacienteService = new GenericService<Paciente>();
         public PerfilViewModel()
         {
