@@ -51,15 +51,38 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E08BF36E3140455CAC7494BEE91E2BDC }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A1CC36620AAF427086DA9C5C87A3ABF3 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_EC234FF186A84A4985F33C0338021305 }}
-
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F66DEDE55CB74F08BACDF6141EBCE03B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8DACDB05C7814F3B8C8C495F39B2E282 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D9204186E64F4D9E9CC6DA4C4CA83F20 }}
+          
+      - name: Set environment variable in Azure App Service
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: 'consultoriointegral'
+          slot-name: Production
+          app-settings-json: |
+            [
+              {
+                "name": "GOOGLE_CREDENTIALS",
+                "value": "${{ secrets.GOOGLE_CREDENTIALS }}",
+                "slotSetting": false
+              },
+              {
+                "name": "ConnectionStrings__mysqlRemoto",
+                "value": "${{ secrets.MYSQLREMOTO_CONNECTIONSTRING }}",
+                "slotSetting": false
+              }
+            ]
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'consultoriointegral'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
           package: .
           
+
+
+
+
