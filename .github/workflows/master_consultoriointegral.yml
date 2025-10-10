@@ -52,9 +52,9 @@ jobs:
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AC284BA4995F47A68918F6166250D239 }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }} 
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8DACDB05C7814F3B8C8C495F39B2E282 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D9204186E64F4D9E9CC6DA4C4CA83F20 }}
-          allow-no-subscriptions: true
           
       - name: Set environment variable in Azure App Service
         uses: Azure/appservice-settings@v1
@@ -83,6 +83,7 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
           package: .
           
+
 
 
 
