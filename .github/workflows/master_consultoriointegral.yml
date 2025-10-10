@@ -51,14 +51,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F66DEDE55CB74F08BACDF6141EBCE03B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8DACDB05C7814F3B8C8C495F39B2E282 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D9204186E64F4D9E9CC6DA4C4CA83F20 }}
           
       - name: Set environment variable in Azure App Service
         uses: Azure/appservice-settings@v1
         with:
-          app-name: 'backendkioscobri'
+          app-name: 'consultoriointegral'
           slot-name: Production
           app-settings-json: |
             [
@@ -82,6 +82,7 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
           package: .
           
+
 
 
 
