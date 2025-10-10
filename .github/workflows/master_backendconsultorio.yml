@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build Backend/Backend.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish Backend/Backend.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -54,12 +54,33 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1F3E4B860F884A2E8322488D19B437CA }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_653FD40FD218450F8FE7DE927F0A94BF }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DD0C684DB5A9409BB47D397D99E9F9C6 }}
-
+          
+      - name: Set environment variable in Azure App Service
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: 'backendconsultorio'
+          slot-name: Production
+          app-settings-json: |
+            [
+              {
+                "name": "GOOGLE_CREDENTIALS",
+                "value": "${{ secrets.GOOGLE_CREDENTIALS }}",
+                "slotSetting": false
+              },
+              {
+                "name": "ConnectionStrings__mysqlRemoto",
+                "value": "${{ secrets.MYSQLREMOTO_CONNECTIONSTRING }}",
+                "slotSetting": false
+              }
+            ]
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'backendconsultorio'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
           package: .
+
           
+
