@@ -3,6 +3,8 @@ using Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -12,22 +14,25 @@ namespace Service.Services
 {
     public class GenericService<T> : IGenericService<T> where T : class
     {
-        protected readonly HttpClient client;
-        protected readonly JsonSerializerOptions options;
+        protected readonly HttpClient _httpClient;
+        protected readonly JsonSerializerOptions _options;
         protected readonly string _endpoint;
+        public static string? jwtToken = string.Empty;
 
-        public GenericService()
+        public GenericService(HttpClient? httpClient = null)
         {
-            client = new HttpClient();
-            options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-
-            string urlApi = Properties.Resources.UrlApi;
-            if (Properties.Resources.Remoto == "false")
-                urlApi = Properties.Resources.UrlApiLocal;
-
-            _endpoint = urlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
+            _httpClient = httpClient ?? new HttpClient();
+            //Esto es para que no importe si las propiedades del json vienen en mayuscula o minuscula.  
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _endpoint = Properties.Resources.UrlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
         }
-
+        protected void SetAuthorizationHeader()
+        {
+            if (!string.IsNullOrEmpty(GenericService<object>.jwtToken))
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GenericService<object>.jwtToken);
+            else
+                throw new ArgumentException("Error Token no definido", nameof(GenericService<object>.jwtToken));
+        }
         public async Task<List<T>?> GetAllAsync(string? filtro = "")
         {
             var response = await client.GetAsync($"{_endpoint}?filtro={filtro}");

@@ -21,7 +21,7 @@
             <!-- Nombre -->
             <Label Text="Consultorio Integral"
                 FontAttributes="Bold"
-                FontSize="26"
+                FontSize="25"
                 HorizontalOptions="Center"
                 TextColor="#111"
                 Margin="0,5,0,0" />
