@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Service.Class;
 using Service.Interfaces;
+using Service.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

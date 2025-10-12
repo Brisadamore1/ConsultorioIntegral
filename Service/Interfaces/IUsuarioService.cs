@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    public interface IPacienteService: IGenericService<Paciente> 
+    public interface IUsuarioService: IGenericService<Paciente> 
     {
         public Task<Paciente?> GetByEmailAsync(string email);
     }

@@ -1,4 +1,8 @@
+using CurrieTechnologies.Razor.SweetAlert2;
+using Service.Interfaces;
+using Service.Services;
 using WebServer.Components;
+using WebServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +11,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<FirebaseAuthService>();
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-builder.Services.AddScoped<ILibroService, LibroService>();
+builder.Services.AddScoped<IProfesionalService, ProfesionalService>();
 builder.Services.AddSweetAlert2();
 
 var app = builder.Build();

@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    public class PacienteService : GenericService<Paciente>, IPacienteService
+    public class UsuarioService : GenericService<Paciente>, IUsuarioService
     {
 
-        public PacienteService(HttpClient? httpClient = null) : base(httpClient)
+        public UsuarioService(HttpClient? httpClient = null) : base(httpClient)
         {
         }
         public async Task<Paciente?> GetByEmailAsync(string email)

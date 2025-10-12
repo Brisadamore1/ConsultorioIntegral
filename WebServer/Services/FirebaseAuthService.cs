@@ -64,7 +64,7 @@ namespace WebServer.Services
             }
         }
 
-public async Task<bool> IsUserAuthenticated()
+        public async Task<bool> IsUserAuthenticated()
         {
             var user = await GetUserFirebase();
             if (user != null)
