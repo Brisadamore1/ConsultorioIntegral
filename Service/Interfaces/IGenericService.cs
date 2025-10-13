@@ -9,9 +9,11 @@ namespace Service.Interfaces
     public interface IGenericService<T> where T : class
     {
         public Task<List<T>?> GetAllAsync(string? filtro);
+        public Task<List<T>?> GetAllDeletedsAsync();
         public Task<T?> GetByIdAsync(int id);
         public Task<T?> AddAsync(T? entity);
-        public Task UpdateAsync(T? entity);
-        public Task DeleteAsync(int id);
+        public Task<bool> UpdateAsync(T? entity);
+        public Task<bool> DeleteAsync(int id);
+        public Task<bool> RestoreAsync(int id);
     }
 }

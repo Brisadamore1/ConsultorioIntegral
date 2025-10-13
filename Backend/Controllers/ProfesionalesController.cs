@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Service.DTOs;
 using Service.Models;
 
 namespace Backend.Controllers
@@ -24,6 +25,35 @@ namespace Backend.Controllers
             return await _context.Profesionales.Include(p => p.Pacientes)
                .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
+        }
+        [HttpPost("withfilter")]
+        public async Task<ActionResult<IEnumerable<Profesional>>> GetProfesionalwithfilter(FilterProfesionalDTO filter)
+        {
+            var query = _context.Profesionales
+                .Include(n => n.Nombre)
+                .Include(e => e.Especialidad)
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter.SearchText))
+            {
+                var search = filter.SearchText.ToLower();
+                query = query.Where(l =>
+                    (filter.ForNombre && l.Nombre.ToLower().Contains(search)) ||
+                    (filter.ForEspecialidad && l.Especialidad.ToLower().Contains(search))
+                );
+            }
+
+            return await query.ToListAsync();
+        }
+
+        [HttpGet("deleteds")]
+        public async Task<ActionResult<IEnumerable<Profesional>>> GetDeletedsLibros()
+        {
+            return await _context.Profesionales
+                .AsNoTracking()
+                .IgnoreQueryFilters()
+                .Where(l => l.Eliminado).ToListAsync();
         }
 
         // GET: api/Profesional/5
@@ -99,9 +129,23 @@ namespace Backend.Controllers
             return NoContent();
         }
 
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreLibro(int id)
+        {
+            var profesional = await _context.Profesionales.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(id));
+            if (profesional == null)
+            {
+                return NotFound();
+            }
+            profesional.Eliminado = false;
+            _context.Profesionales.Update(profesional);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         private bool ProfesionalExists(int id)
         {
-            return _context.Deudas.Any(e => e.Id == id);
+            return _context.Profesionales.Any(e => e.Id == id);
         }
 
     }

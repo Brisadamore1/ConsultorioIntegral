@@ -56,13 +56,13 @@ else
         }
     }
     
-    async Task Buscar(FilterProfesionalDTO filterProfesionalDTO)
+    async Task Buscar(FilterProfesionalDTO filterDTO)
     {
         IsBusy = true;
         StateHasChanged();
         // TODO: Lógica de búsqueda real aquí (llamada a API)
       
-        Profesionales = await _profesionalService.GetWithFilterAsync(filterProfesionalDTO);
+        Profesionales = await _profesionalService.GetWithFilterAsync(filterDTO);
         IsBusy = false;
         StateHasChanged();
     }
