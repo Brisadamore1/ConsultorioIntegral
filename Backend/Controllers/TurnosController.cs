@@ -96,7 +96,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            turno.Eliminado = true;
+            turno.IsDeleted = true;
             _context.Turnos.Update(turno);
             await _context.SaveChangesAsync();
 

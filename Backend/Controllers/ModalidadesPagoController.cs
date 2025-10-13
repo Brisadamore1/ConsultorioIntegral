@@ -99,7 +99,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            modalidadPago.Eliminado = true;
+            modalidadPago.IsDeleted = true;
             _context.ModalidadesPago.Update(modalidadPago);
             await _context.SaveChangesAsync();
 

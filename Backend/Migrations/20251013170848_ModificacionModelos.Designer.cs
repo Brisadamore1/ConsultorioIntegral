@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ConsultorioContext))]
-    [Migration("20250626213751_agreguecorrecciones")]
-    partial class agreguecorrecciones
+    [Migration("20251013170848_ModificacionModelos")]
+    partial class ModificacionModelos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -58,6 +61,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            IsDeleted = false,
                             Nombre = "Alba Russo",
                             PacienteId = 1,
                             Relacion = "Madre",
@@ -66,6 +70,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 2,
+                            IsDeleted = false,
                             Nombre = "Julia Urriaga",
                             PacienteId = 2,
                             Relacion = "Madre",
@@ -74,6 +79,7 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 3,
+                            IsDeleted = false,
                             Nombre = "Benjamín Ferro",
                             PacienteId = 3,
                             Relacion = "Padre",
@@ -99,6 +105,9 @@ namespace Backend.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(65,30)");
 
@@ -122,7 +131,8 @@ namespace Backend.Migrations
                             Id = 1,
                             Cancelada = false,
                             Descripcion = "Consulta inicial",
-                            Fecha = new DateTime(2025, 6, 26, 18, 37, 50, 484, DateTimeKind.Local).AddTicks(4517),
+                            Fecha = new DateTime(2025, 10, 13, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(236),
+                            IsDeleted = false,
                             Monto = 10000m,
                             PacienteId = 1,
                             ProfesionalId = 1
@@ -132,7 +142,8 @@ namespace Backend.Migrations
                             Id = 2,
                             Cancelada = true,
                             Descripcion = "Seguimiento",
-                            Fecha = new DateTime(2025, 6, 16, 18, 37, 50, 484, DateTimeKind.Local).AddTicks(4574),
+                            Fecha = new DateTime(2025, 10, 3, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(261),
+                            IsDeleted = false,
                             Monto = 5000m,
                             PacienteId = 2,
                             ProfesionalId = 2
@@ -151,6 +162,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("Id");
 
                     b.ToTable("EstadosTurno");
@@ -159,27 +173,32 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
-                            Estado = "Reservado"
+                            Estado = "Reservado",
+                            IsDeleted = false
                         },
                         new
                         {
                             Id = 2,
-                            Estado = "Confirmado"
+                            Estado = "Confirmado",
+                            IsDeleted = false
                         },
                         new
                         {
                             Id = 3,
-                            Estado = "Cancelado"
+                            Estado = "Cancelado",
+                            IsDeleted = false
                         },
                         new
                         {
                             Id = 4,
-                            Estado = "Atendido"
+                            Estado = "Atendido",
+                            IsDeleted = false
                         },
                         new
                         {
                             Id = 5,
-                            Estado = "Ausente"
+                            Estado = "Ausente",
+                            IsDeleted = false
                         });
                 });
 
@@ -190,6 +209,9 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Modalidad")
                         .IsRequired()
@@ -203,21 +225,25 @@ namespace Backend.Migrations
                         new
                         {
                             Id = 1,
+                            IsDeleted = false,
                             Modalidad = "Efectivo"
                         },
                         new
                         {
                             Id = 2,
+                            IsDeleted = false,
                             Modalidad = "Tarjeta de crédito"
                         },
                         new
                         {
                             Id = 3,
+                            IsDeleted = false,
                             Modalidad = "Tarjeta de débito"
                         },
                         new
                         {
                             Id = 4,
+                            IsDeleted = false,
                             Modalidad = "Transferencia"
                         });
                 });
@@ -247,6 +273,9 @@ namespace Backend.Migrations
 
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -282,6 +311,7 @@ namespace Backend.Migrations
                             Email = "abrilcosta@gmail.com",
                             EsParticular = false,
                             FechaNacimiento = new DateTime(1999, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Nombre = "Abril Costa",
                             NumeroAfiliado = "265488245",
                             ObraSocial = "Sancor Salud",
@@ -296,6 +326,7 @@ namespace Backend.Migrations
                             Email = "joaquinvargas@gmail.com",
                             EsParticular = true,
                             FechaNacimiento = new DateTime(1995, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Nombre = "Joaquín Vargas",
                             NumeroAfiliado = "",
                             ObraSocial = "Particular",
@@ -310,6 +341,7 @@ namespace Backend.Migrations
                             Email = "emmaferro@gmail.com",
                             EsParticular = true,
                             FechaNacimiento = new DateTime(1995, 2, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Nombre = "Emma Ferro",
                             NumeroAfiliado = "",
                             ObraSocial = "Particular",
@@ -328,6 +360,9 @@ namespace Backend.Migrations
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("ModalidadPagoId")
                         .HasColumnType("int");
@@ -351,6 +386,7 @@ namespace Backend.Migrations
                         {
                             Id = 1,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             ModalidadPagoId = 1,
                             Monto = 20000m,
                             SesionId = 1
@@ -359,6 +395,7 @@ namespace Backend.Migrations
                         {
                             Id = 2,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             ModalidadPagoId = 2,
                             Monto = 22000m,
                             SesionId = 2
@@ -381,11 +418,21 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Imagen")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Matricula")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Profesion")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -402,18 +449,24 @@ namespace Backend.Migrations
                         {
                             Id = 1,
                             Email = "webersantiago@gmail.com",
-                            Especialidad = "Psicología",
-                            Matricula = "4456",
+                            Especialidad = "Psicología clínica",
+                            Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologo.jpeg",
+                            IsDeleted = false,
+                            Matricula = "MAT. 4456",
                             Nombre = "Dr. Santiago Weber",
+                            Profesion = "Psicólogo",
                             Telefono = "3498114782"
                         },
                         new
                         {
                             Id = 2,
                             Email = "urriagavalentina@gmail.com",
-                            Especialidad = "Psicología",
-                            Matricula = "8015",
+                            Especialidad = "Neuropsicología",
+                            Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologa.jpeg",
+                            IsDeleted = false,
+                            Matricula = "MAT.8015",
                             Nombre = "Dra. Valentina Urriaga",
+                            Profesion = "Psicóloga",
                             Telefono = "3498114789"
                         });
                 });
@@ -428,6 +481,9 @@ namespace Backend.Migrations
 
                     b.Property<decimal>("Honorarios")
                         .HasColumnType("decimal(65,30)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Notas")
                         .IsRequired()
@@ -450,6 +506,7 @@ namespace Backend.Migrations
                         {
                             Id = 1,
                             Honorarios = 20000m,
+                            IsDeleted = false,
                             Notas = "Paciente se presentó puntual. Refirió sentirse ansioso por situaciones laborales. Se trabajó en identificar factores desencadenantes. Buena predisposición al diálogo.",
                             Pagado = true,
                             TurnoId = 1
@@ -458,6 +515,7 @@ namespace Backend.Migrations
                         {
                             Id = 2,
                             Honorarios = 20000m,
+                            IsDeleted = false,
                             Notas = "Paciente mencionó recuerdos de infancia que impactaron emocionalmente. Profundizar en vínculos afectivos en la próxima sesión.",
                             Pagado = true,
                             TurnoId = 2
@@ -483,6 +541,9 @@ namespace Backend.Migrations
 
                     b.Property<DateTime>("FechaHora")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("MotivoCancelacion")
                         .HasColumnType("longtext");
@@ -511,6 +572,7 @@ namespace Backend.Migrations
                             DuracionMinutos = 60,
                             EstadoTurnoId = 4,
                             FechaHora = new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             PacienteId = 1,
                             ProfesionalId = 1
                         },
@@ -521,9 +583,60 @@ namespace Backend.Migrations
                             DuracionMinutos = 50,
                             EstadoTurnoId = 4,
                             FechaHora = new DateTime(2025, 6, 16, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             PacienteId = 2,
                             ProfesionalId = 2
                         });
+                });
+
+            modelBuilder.Entity("Service.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Dni")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Domicilio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("FechaRegistracion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Observacion")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TipoRol")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Service.Models.ContactoEmergencia", b =>
@@ -557,7 +670,7 @@ namespace Backend.Migrations
             modelBuilder.Entity("Service.Models.Paciente", b =>
                 {
                     b.HasOne("Service.Models.Profesional", "Profesional")
-                        .WithMany()
+                        .WithMany("Pacientes")
                         .HasForeignKey("ProfesionalId");
 
                     b.Navigation("Profesional");
@@ -613,6 +726,11 @@ namespace Backend.Migrations
             modelBuilder.Entity("Service.Models.EstadoTurno", b =>
                 {
                     b.Navigation("Turnos");
+                });
+
+            modelBuilder.Entity("Service.Models.Profesional", b =>
+                {
+                    b.Navigation("Pacientes");
                 });
 #pragma warning restore 612, 618
         }

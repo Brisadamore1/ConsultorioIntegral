@@ -24,7 +24,7 @@ namespace Service.Models
         public string Telefono { get; set; } = null!;
 
         //Eliminado es un campo booleano que indica si el contacto de emergencia ha sido eliminado lógicamente
-        public bool Eliminado { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
 
         //Esto permite que en la base de datos se visualice el nombre del contacto de emergencia
         public override string ToString()

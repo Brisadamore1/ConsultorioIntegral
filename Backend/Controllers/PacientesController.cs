@@ -91,7 +91,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            paciente.Eliminado = true;
+            paciente.IsDeleted = true;
             _context.Pacientes.Update(paciente);
             await _context.SaveChangesAsync();
 

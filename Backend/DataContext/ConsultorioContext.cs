@@ -22,6 +22,7 @@ public partial class ConsultorioContext : DbContext
     public virtual DbSet<Profesional> Profesionales { get; set; }
     public virtual DbSet<Sesion> Sesiones { get; set; }
     public virtual DbSet<Turno> Turnos { get; set; }
+    public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -166,8 +167,9 @@ public partial class ConsultorioContext : DbContext
             new Profesional() { 
                 Id = 1, 
                 Nombre = "Dr. Santiago Weber", 
-                Matricula= "MAT. 4456",
-                Especialidad = "Psicólogo", 
+                Profesion= "Psicólogo",
+                Matricula = "MAT. 4456",
+                Especialidad = "Psicología clínica", 
                 Telefono = "3498114782", 
                 Email = "webersantiago@gmail.com",
                 Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologo.jpeg"
@@ -176,8 +178,9 @@ public partial class ConsultorioContext : DbContext
             new Profesional() { 
                 Id = 2, 
                 Nombre = "Dra. Valentina Urriaga",
+                Profesion= "Psicóloga",
                 Matricula = "MAT.8015",
-                Especialidad = "Psicóloga", 
+                Especialidad = "Neuropsicología", 
                 Telefono = "3498114789", 
                 Email = "urriagavalentina@gmail.com",
                 Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologa.jpeg"
@@ -225,15 +228,15 @@ public partial class ConsultorioContext : DbContext
         #endregion
 
         //configuramos los query filters para que no trigan los registros marcados como eliminados. Son los mecanimos por el cual se indica que un registro esta eliminado sin borrarlo fisicamente de la base de datos.
-        modelBuilder.Entity<ContactoEmergencia>().HasQueryFilter(c => !c.Eliminado);
-        modelBuilder.Entity<Deuda>().HasQueryFilter(e => !e.Eliminado);
-        modelBuilder.Entity<EstadoTurno>().HasQueryFilter(e => !e.Eliminado);
-        modelBuilder.Entity<ModalidadPago>().HasQueryFilter(m => !m.Eliminado);
-        modelBuilder.Entity<Paciente>().HasQueryFilter(pc => !pc.Eliminado);
-        modelBuilder.Entity<Pago>().HasQueryFilter(p => !p.Eliminado);
-        modelBuilder.Entity<Profesional>().HasQueryFilter(pr => !pr.Eliminado);
-        modelBuilder.Entity<Sesion>().HasQueryFilter(s => !s.Eliminado);
-        modelBuilder.Entity<Turno>().HasQueryFilter(t => !t.Eliminado);
+        modelBuilder.Entity<ContactoEmergencia>().HasQueryFilter(c => !c.IsDeleted);
+        modelBuilder.Entity<Deuda>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<EstadoTurno>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ModalidadPago>().HasQueryFilter(m => !m.IsDeleted);
+        modelBuilder.Entity<Paciente>().HasQueryFilter(pc => !pc.IsDeleted);
+        modelBuilder.Entity<Pago>().HasQueryFilter(p => !p.IsDeleted);
+        modelBuilder.Entity<Profesional>().HasQueryFilter(pr => !pr.IsDeleted);
+        modelBuilder.Entity<Sesion>().HasQueryFilter(s => !s.IsDeleted);
+        modelBuilder.Entity<Turno>().HasQueryFilter(t => !t.IsDeleted);
 
     }
 }

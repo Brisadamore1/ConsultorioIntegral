@@ -31,6 +31,6 @@ namespace Service.Models
 
         public string? MotivoCancelacion { get; set; }
 
-        public bool Eliminado { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -10,6 +10,9 @@ namespace Service.Models
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         public string Nombre { get; set; } = null!;
 
+        [Required(ErrorMessage = "El campo Profesion es obligatorio.")]
+        public string Profesion { get; set; } = null!;
+
         [Required(ErrorMessage = "El campo Matricula es obligatorio.")]
         public string Matricula { get; set; } = null!;
 
@@ -25,7 +28,7 @@ namespace Service.Models
         //Esto es una relacion de uno a muchos, un profesional puede tener muchos pacientes
         public virtual ICollection<Paciente?> Pacientes { get; set; } = new List<Paciente?>();
 
-        public bool Eliminado { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
         public string? Imagen { get; set; } = string.Empty;
         public override string ToString()
         {

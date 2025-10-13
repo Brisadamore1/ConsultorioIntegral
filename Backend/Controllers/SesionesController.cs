@@ -91,7 +91,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            sesion.Eliminado = true;
+            sesion.IsDeleted = true;
             _context.Sesiones.Update(sesion);
             await _context.SaveChangesAsync();
 

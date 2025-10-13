@@ -20,6 +20,6 @@ namespace Service.Models
         [Required(ErrorMessage = "El campo Pagado es obligatorio.")]
         public bool Pagado { get; set; } // Indica si la sesión ha sido pagada o no.
 
-        public bool Eliminado { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
     }
 }

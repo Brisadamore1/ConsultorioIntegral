@@ -35,7 +35,7 @@ namespace Backend.Controllers
             return await _context.ContactosEmergencia
                 .AsNoTracking()
                 .IgnoreQueryFilters()
-                .Where(c => c.Eliminado).ToListAsync();
+                .Where(c => c.IsDeleted).ToListAsync();
         }
 
         // GET: api/ContactoEmergencia/5
@@ -111,7 +111,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            contactoEmergencia.Eliminado = true;
+            contactoEmergencia.IsDeleted = true;
             _context.ContactosEmergencia.Update(contactoEmergencia);
             await _context.SaveChangesAsync();
 
@@ -126,7 +126,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            contactoEmergencia.Eliminado = false;
+            contactoEmergencia.IsDeleted = false;
             //Impacta en memoria
             _context.ContactosEmergencia.Update(contactoEmergencia);
             //Aca recien impacta en la base de datos

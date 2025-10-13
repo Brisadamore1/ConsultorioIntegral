@@ -90,7 +90,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            pago.Eliminado = true;
+            pago.IsDeleted = true;
             _context.Pagos.Update(pago);
             await _context.SaveChangesAsync();
 

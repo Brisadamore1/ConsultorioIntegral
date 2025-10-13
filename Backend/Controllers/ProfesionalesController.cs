@@ -53,7 +53,7 @@ namespace Backend.Controllers
             return await _context.Profesionales
                 .AsNoTracking()
                 .IgnoreQueryFilters()
-                .Where(l => l.Eliminado).ToListAsync();
+                .Where(l => l.IsDeleted).ToListAsync();
         }
 
         // GET: api/Profesional/5
@@ -122,7 +122,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            profesional.Eliminado = true;
+            profesional.IsDeleted = true;
             _context.Profesionales.Update(profesional);
             await _context.SaveChangesAsync();
 
@@ -137,7 +137,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            profesional.Eliminado = false;
+            profesional.IsDeleted = false;
             _context.Profesionales.Update(profesional);
             await _context.SaveChangesAsync();
             return NoContent();

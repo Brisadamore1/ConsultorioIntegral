@@ -35,7 +35,7 @@ namespace Backend.Controllers
             return await _context.Deudas
                 .AsNoTracking()
                 .IgnoreQueryFilters()
-                .Where(a => a.Eliminado).ToListAsync();
+                .Where(a => a.IsDeleted).ToListAsync();
         }
         // GET: api/Deuda/5
         [HttpGet("{id}")]
@@ -102,7 +102,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            deuda.Eliminado = true;
+            deuda.IsDeleted = true;
             _context.Deudas.Update(deuda);
             await _context.SaveChangesAsync();
 
@@ -117,7 +117,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            deuda.Eliminado = false;
+            deuda.IsDeleted = false;
             //Impacta en memoria
             _context.Deudas.Update(deuda);
             //Aca recien impacta en la base de datos
