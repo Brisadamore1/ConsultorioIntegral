@@ -52,6 +52,8 @@ else
     {
         if (firstRender)
         {
+            IsBusy = true;
+            StateHasChanged();
             await Buscar(new FilterProfesionalDTO(){ForNombre=true});
         }
     }

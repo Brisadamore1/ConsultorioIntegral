@@ -9,9 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// caching memory  
+builder.Services.AddMemoryCache();
+// Auth service que usa el provider
 builder.Services.AddScoped<FirebaseAuthService>();
-builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+builder.Services.AddScoped(typeof(IGenericService<object>),
+    typeof(GenericService<object>));
+
+//Estas interfaces y servicios son para consumir la API RESTful
+//profesionalService
 builder.Services.AddScoped<IProfesionalService, ProfesionalService>();
+
+//usuarioService
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
 builder.Services.AddSweetAlert2();
 
 var app = builder.Build();
@@ -19,8 +32,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);  
     app.UseHsts();
 }
 

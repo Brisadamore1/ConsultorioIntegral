@@ -1,4 +1,5 @@
-﻿using Service.Interfaces;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Service.Interfaces;
 using Service.Models;
 using Service.Utils;
 using System;
@@ -12,22 +13,22 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    public class UsuarioService : GenericService<Paciente>, IUsuarioService
+    public class UsuarioService : GenericService<Usuario>, IUsuarioService
     {
 
-        public UsuarioService(HttpClient? httpClient = null) : base(httpClient)
+        public UsuarioService(HttpClient? httpClient = null, IMemoryCache ? memoryCache = null) : base(httpClient, memoryCache)
         {
         }
-        public async Task<Paciente?> GetByEmailAsync(string email)
+        public async Task<Usuario?> GetByEmailAsync(string email)
         {
-            SetAuthorizationHeader();
+            //SetAuthorizationHeader();
             var response = await _httpClient.GetAsync($"{_endpoint}/byemail?email={email}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error al obtener los datos: {response.StatusCode}");
             }
-            return JsonSerializer.Deserialize<Paciente>(content, _options);
+            return JsonSerializer.Deserialize<Usuario>(content, _options);
         }
     }
 }

@@ -24,11 +24,11 @@ FirebaseApp.Create(new AppOptions
     Credential = credential
 });
 
-builder.Services
-    .AddAuthentication("Firebase")
-    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("Firebase", null);
+//builder.Services
+//    .AddAuthentication("Firebase")
+//    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("Firebase", null);
 
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
 
 // Add services to the container.
 
@@ -59,33 +59,34 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 //Esto permite ocupar swagger con autenticación y autorización
-builder.Services.AddSwaggerGen(c =>
-{
-    // Agregar esquema de seguridad JWT
-    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Ingrese el token JWT en este formato: Bearer {su token}"
-    });
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-    {
-        {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-            {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
-});
+
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    // Agregar esquema de seguridad JWT
+//    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+//    {
+//        Name = "Authorization",
+//        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+//        Scheme = "Bearer",
+//        BearerFormat = "JWT",
+//        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+//        Description = "Ingrese el token JWT en este formato: Bearer {su token}"
+//    });
+//    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+//    {
+//        {
+//            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+//            {
+//                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+//                {
+//                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+//                    Id = "Bearer"
+//                }
+//            },
+//            new string[] {}
+//        }
+//    });
+//});
 
 // Configurar una política de CORS
 builder.Services.AddCors(options =>
@@ -115,9 +116,9 @@ app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+//app.UseAuthentication();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

@@ -1,0 +1,39 @@
+﻿@page "/pacientes"
+@inject IGenericService<Paciente> PacienteService
+<h3>Pacientes</h3>
+
+@if (pacientes == null)
+{
+    <p><em> Obteniendo lista de pacientes...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dni</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in pacientes)
+            {
+                <tr>
+                    <td>@paciente.Nombre</td>
+                    <td>@paciente.Dni</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Paciente>? pacientes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pacientes = await PacienteService.GetAllAsync(null);
+    }
+}

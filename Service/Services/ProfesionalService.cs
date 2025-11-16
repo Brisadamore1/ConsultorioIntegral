@@ -1,4 +1,5 @@
-﻿using Service.DTOs;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Service.DTOs;
 using Service.Interfaces;
 using Service.Models;
 using Service.Utils;
@@ -15,14 +16,14 @@ namespace Service.Services
 {
     public class ProfesionalService : GenericService<Profesional>, IProfesionalService
     {
-        public ProfesionalService(HttpClient? httpClient=null): base(httpClient)
+        public ProfesionalService(HttpClient? httpClient=null, IMemoryCache? memoryCache= null) : base(httpClient, memoryCache)
         {
 
         }
 
         public async Task<List<Profesional>?> GetWithFilterAsync(FilterProfesionalDTO filter)
         {
-            SetAuthorizationHeader();
+            //SetAuthorizationHeader();
             var response = await _httpClient.PostAsJsonAsync($"{_endpoint}/withfilter",filter);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)

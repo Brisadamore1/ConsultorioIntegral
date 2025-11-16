@@ -1,4 +1,5 @@
 ﻿using Firebase.Auth;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.JSInterop;
 using Service.Models.Login;
 using Service.Services;
@@ -10,10 +11,13 @@ namespace WebServer.Services
         private readonly IJSRuntime _jsRuntime;
         public event Action OnChangeLogin;
         public FirebaseUser CurrentUser { get; set; }
+        private IMemoryCache _memoryCache;
 
-        public FirebaseAuthService(IJSRuntime jsRuntime)
+        public FirebaseAuthService(IJSRuntime jsRuntime, IMemoryCache memoryCache)
         {
             _jsRuntime = jsRuntime;
+            _memoryCache = memoryCache;
+
         }
 
         public async Task<FirebaseUser?> SignInWithEmailPassword(string email, string password, bool rememberPassword)
@@ -22,6 +26,7 @@ namespace WebServer.Services
             if (user != null)
             {
                 CurrentUser = user;
+                await SetUserToken();
                 OnChangeLogin?.Invoke();
             }
             return user;
@@ -41,6 +46,7 @@ namespace WebServer.Services
         {
             await _jsRuntime.InvokeVoidAsync("firebaseAuth.signOut");
             CurrentUser = null;
+            _memoryCache.Remove("jwt");
             OnChangeLogin?.Invoke();
         }
 
@@ -55,13 +61,19 @@ namespace WebServer.Services
             else return null;
 
         }
-        public async Task SetUserToken()
+        private async Task SetUserToken()
         {
-           var jwt = await _jsRuntime.InvokeAsync<string?>("firebaseAuth.getUserToken");
-            if (jwt != null)
+            var jwtToken = await _jsRuntime.InvokeAsync<string?>("firebaseAuth.getUserToken");
+            _memoryCache.Set("jwt", jwtToken);
+        }
+        public async Task<string?> GetUserToken()
+        {
+            return await _memoryCache.GetOrCreateAsync("jwt", async entry =>
             {
-                GenericService<Object>.jwtToken = jwt;
-            }
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(55);
+                var token = await _jsRuntime.InvokeAsync<string?>("firebaseAuth.getUserToken");
+                return token;
+            });
         }
 
         public async Task<bool> IsUserAuthenticated()
@@ -80,6 +92,7 @@ namespace WebServer.Services
         {
             var userFirebase = await _jsRuntime.InvokeAsync<FirebaseUser>("firebaseAuth.loginWithGoogle");
             CurrentUser = userFirebase;
+            await SetUserToken();
             OnChangeLogin?.Invoke();
             return userFirebase;
         }
