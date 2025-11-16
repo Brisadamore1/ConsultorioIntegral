@@ -32,7 +32,9 @@ namespace Service.Services
                 _httpClient.BaseAddress = new Uri(Properties.Resources.UrlApi);
             }
 
-            _endpoint = ApiEndpoints.GetEndpoint(typeof(T).Name);
+            //_endpoint = ApiEndpoints.GetEndpoint(typeof(T).Name);
+            _endpoint = $"api/{ApiEndpoints.GetEndpoint(typeof(T).Name)}";
+
 
         }
         //protected void SetAuthorizationHeader()
