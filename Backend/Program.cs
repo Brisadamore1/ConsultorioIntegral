@@ -1,4 +1,4 @@
-using Backend.Class;
+ï»¿using Backend.Class;
 using Backend.DataContext;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
@@ -41,7 +41,7 @@ var configuration = new ConfigurationBuilder()
 
 var cadenaConexion = configuration.GetConnectionString("mysqlRemoto");
 
-//configuración de inyección de dependencias del DBContext
+//configuraciÃ³n de inyecciÃ³n de dependencias del DBContext
 
 builder.Services.AddDbContext<ConsultorioContext>(
     options => options.UseMySql(cadenaConexion,
@@ -49,7 +49,7 @@ builder.Services.AddDbContext<ConsultorioContext>(
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-// Configura el serializador JSON para manejar referencias cíclicas.
+// Configura el serializador JSON para manejar referencias cÃ­clicas.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -58,7 +58,10 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-//Esto permite ocupar swagger con autenticación y autorización
+builder.Services.AddSwaggerGen(); // â† NECESARIO SIEMPRE, CON O SIN JWT
+
+
+//Esto permite ocupar swagger con autenticaciÃ³n y autorizaciÃ³n
 
 //builder.Services.AddSwaggerGen(c =>
 //{
@@ -88,7 +91,7 @@ builder.Services.AddEndpointsApiExplorer();
 //    });
 //});
 
-// Configurar una política de CORS
+// Configurar una polÃ­tica de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
