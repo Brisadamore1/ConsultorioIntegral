@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,9 +16,8 @@ namespace Service.Models
 
         public virtual Sesion? Sesion { get; set; }
 
-        public int? ModalidadPagoId { get; set; }
-
-        public virtual ModalidadPago? ModalidadPago { get; set; }
+        [Required(ErrorMessage = "El campo Modalidad es obligatorio.")]
+        public ModalidadDePagoEnum ModalidadDePago { get; set; } = ModalidadDePagoEnum.Efectivo;
 
         [Required(ErrorMessage = "El campo Monto es obligatorio.")]
         public decimal Monto { get; set; } 

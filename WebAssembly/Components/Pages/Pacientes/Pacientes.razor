@@ -1,0 +1,76 @@
+﻿@page "/pacientes"
+@inject IGenericService<Paciente> PacienteService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<h3> Pacientes</h3>
+
+@if (pacientes == null)
+{
+    <p><em> Obteniendo lista de pacientes...</em></p>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="AgregarPaciente">Agregar Nuevo Paciente</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dni</th>
+                <th>Profesional</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in pacientes)
+            {
+                <tr>
+                    <td>@paciente.Nombre</td>
+                    <td>@paciente.Dni</td>
+                    <td>@paciente.Profesional.Nombre</td>
+                    <td>
+                        <a href="/nuevoeditarpaciente?IdPacienteEditado=@paciente.Id">Editar</a>
+                    </td>
+                    <td>
+                        <button title="Eliminar" class="btn btn-danger" @onclick="@(() => Eliminar(paciente))">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Paciente>? pacientes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pacientes = await PacienteService.GetAllAsync(null);
+    }
+
+    private void AgregarPaciente()
+    {
+        // Redirigir a la página para agregar una nueva localidad
+        NavigationManager.NavigateTo("/nuevoeditarpaciente");
+    }
+    private async Task Eliminar(Paciente paciente)
+    {
+        SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
+        {
+            Title = "Borrando Paciente",
+            Text = $"¿Está seguro que desea borrar este paciente {paciente.Nombre}?",
+            Icon = SweetAlertIcon.Warning,
+            ShowCancelButton = true,
+            ConfirmButtonText = "Sí, quiero borrarlo",
+            CancelButtonText = "No, esperar"
+        });
+
+        if (respuesta.IsConfirmed)
+        {
+            await PacienteService.DeleteAsync(paciente.Id);
+            pacientes = await PacienteService.GetAllAsync(string.Empty);
+            StateHasChanged();
+        }
+    }
+}

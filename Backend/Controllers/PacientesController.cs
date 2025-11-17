@@ -30,7 +30,10 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Paciente>> GetPaciente(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var paciente = await _context.Pacientes
+                .Include(p => p.Profesional)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.Id.Equals(id));
 
             if (paciente == null)
             {
@@ -99,7 +102,7 @@ namespace Backend.Controllers
         }
         private bool PacienteExists(int id)
         {
-            return _context.Deudas.Any(e => e.Id == id);
+            return _context.Pacientes.Any(e => e.Id == id);
         }
     }
 }

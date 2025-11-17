@@ -8,7 +8,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PagosController : ControllerBase
     {
         private readonly ConsultorioContext _context;
@@ -21,9 +21,10 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pago>>> GetPagos([FromQuery] string? filtro = "")
         {
-            return await _context.Pagos.Include(c => c.ModalidadPago)
-               .Where(c => c.ModalidadPago.Modalidad.ToUpper().Contains(filtro.ToUpper()))
-               .ToListAsync();
+            return await _context.Pagos
+                .Include(p => p.ModalidadDePago)
+                .Where(c => c.ModalidadDePago.ToString().ToUpper().Contains(filtro.ToUpper()))
+                .ToListAsync();
         }
         // GET: api/Pago/5
         [HttpGet("{id}")]

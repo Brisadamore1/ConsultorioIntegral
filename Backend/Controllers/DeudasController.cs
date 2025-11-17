@@ -9,7 +9,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DeudasController : ControllerBase
     {
         private readonly ConsultorioContext _context;

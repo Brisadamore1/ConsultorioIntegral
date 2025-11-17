@@ -1,0 +1,94 @@
+﻿@page "/nuevoeditarpaciente"
+@inject IGenericService<Paciente> PacienteService
+@inject IProfesionalService ProfesionalService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<h3> Paciente</h3>
+@if (paciente == null||profesionales==null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <EditForm Model="paciente" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+
+        <div class="form-group mb-2">
+            <label for="Nombre">Nombre:</label>
+            <InputText id="Nombre" class="form-control" @bind-Value="paciente.Nombre" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="Dni">Dni:</label>
+            <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
+        </div>
+
+     @*    <div class="form-group mb-2">
+            <label for="Telefonos">Telefonos:</label>
+            <InputText id="Telefonos" class="form-control" @bind-Value="paciente.Telefonos" />
+        </div> *@
+
+        <div class="form-group mb-2">
+            <label for="IdProfesional">Profesional:</label>
+            <InputSelect id="IdProfesional" class="form-control" @bind-Value="paciente.ProfesionalId">
+                <option value="">Seleccione un profesional</option>
+                @foreach (var profesional in profesionales)
+                {
+                    <option value="@profesional.Id">@profesional.Nombre</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2">Guardar</button>
+
+        <ValidationSummary />
+    </EditForm>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public int IdPacienteEditado { get; set; }
+
+    private Paciente paciente;
+    List<Profesional>? profesionales = new List<Profesional>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (IdPacienteEditado != 0)
+        {
+            paciente = await PacienteService.GetByIdAsync(IdPacienteEditado) ?? new Paciente();
+        }
+        else
+        {
+            paciente = new Paciente();
+        }
+        profesionales = await ProfesionalService.GetAllAsync(string.Empty);
+    }
+
+
+
+    private async Task Guardar()
+    {
+        if(paciente.ProfesionalId==null)
+        {
+            await SweetAlert.FireAsync("Error", "Debe seleccionar un profesional", SweetAlertIcon.Error);
+            return;
+        }
+
+        if (paciente != null)
+        {
+            if (IdPacienteEditado == 0)
+            {
+                await PacienteService.AddAsync(paciente);
+            }
+            else
+            {
+                await PacienteService.UpdateAsync(paciente);
+            }
+
+            NavigationManager.NavigateTo("/pacientes");
+        }
+    }
+}

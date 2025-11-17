@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Service.Enums;
 using Service.Models;
 
 namespace Backend.DataContext;
@@ -15,8 +16,6 @@ public partial class ConsultorioContext : DbContext
 
     public virtual DbSet<ContactoEmergencia> ContactosEmergencia { get; set; }
     public virtual DbSet<Deuda> Deudas { get; set; }
-    public virtual DbSet<EstadoTurno> EstadosTurno { get; set; }
-    public virtual DbSet<ModalidadPago> ModalidadesPago { get; set; }
     public virtual DbSet<Paciente> Pacientes { get; set; }
     public virtual DbSet<Pago> Pagos { get; set; }
     public virtual DbSet<Profesional> Profesionales { get; set; }
@@ -84,23 +83,6 @@ public partial class ConsultorioContext : DbContext
                 Cancelada = true }
             );
 
-        //carga de datos semilla EstadoTurno
-        modelBuilder.Entity<EstadoTurno>().HasData(
-            new EstadoTurno() { Id = 1, Estado = "Reservado" },
-            new EstadoTurno() { Id = 2, Estado = "Confirmado" },
-            new EstadoTurno() { Id = 3, Estado = "Cancelado" },
-            new EstadoTurno() { Id = 4, Estado = "Atendido" },
-            new EstadoTurno() { Id = 5, Estado = "Ausente" }
-            );
-
-        //carga de datos semilla ModalidadPago
-        modelBuilder.Entity<ModalidadPago>().HasData(
-            new ModalidadPago() { Id = 1, Modalidad = "Efectivo" },
-            new ModalidadPago() { Id = 2, Modalidad = "Tarjeta de crédito" },
-            new ModalidadPago() { Id = 3, Modalidad = "Tarjeta de débito" },
-            new ModalidadPago() { Id = 4, Modalidad = "Transferencia" }
-            );
-
         //carga de datos semilla Paciente
         modelBuilder.Entity<Paciente>().HasData(
             new Paciente() { 
@@ -148,15 +130,15 @@ public partial class ConsultorioContext : DbContext
         modelBuilder.Entity<Pago>().HasData(
             new Pago() { 
                 Id = 1, 
-                SesionId = 1, 
-                ModalidadPagoId = 1, 
+                SesionId = 1,
+                ModalidadDePago = ModalidadDePagoEnum.Transferencia,
                 Monto = 20000, 
                 Fecha = new DateTime(2025, 06, 24)
             },
             new Pago() { 
                 Id = 2, 
                 SesionId = 2, 
-                ModalidadPagoId = 2,
+                ModalidadDePago = ModalidadDePagoEnum.Efectivo,
                 Monto = 22000,
                 Fecha = new DateTime(2025, 06, 24)
             }
@@ -186,6 +168,7 @@ public partial class ConsultorioContext : DbContext
                 Imagen = "https://consultorioimagenes.blob.core.windows.net/imagenes/psicologa.jpeg"
             }
             );
+
         //carga de datos semilla Sesion
         modelBuilder.Entity<Sesion>().HasData(
             new Sesion() { 
@@ -202,6 +185,7 @@ public partial class ConsultorioContext : DbContext
                 Honorarios = 20000,
                 Pagado= true }
             );
+
         //carga de datos semilla Turno
         modelBuilder.Entity<Turno>().HasData(
             new Turno() { 
@@ -209,8 +193,8 @@ public partial class ConsultorioContext : DbContext
                 PacienteId = 1, 
                 ProfesionalId = 1, 
                 FechaHora = new DateTime(2025, 05, 15, 10, 0, 0), 
-                DuracionMinutos = 60, 
-                EstadoTurnoId = 4, 
+                DuracionMinutos = 60,
+                EstadoTurno = EstadoTurnoEnum.Confirmado, 
                 CanceladoPorProfesional = false, 
                 MotivoCancelacion = null 
             },
@@ -220,7 +204,7 @@ public partial class ConsultorioContext : DbContext
                 ProfesionalId = 2, 
                 FechaHora = new DateTime(2025, 06, 16, 11, 0, 0), 
                 DuracionMinutos = 50,
-                EstadoTurnoId = 4, 
+                EstadoTurno = EstadoTurnoEnum.Reservado,
                 CanceladoPorProfesional = false, 
                 MotivoCancelacion = null 
             }
@@ -230,8 +214,6 @@ public partial class ConsultorioContext : DbContext
         //configuramos los query filters para que no trigan los registros marcados como eliminados. Son los mecanimos por el cual se indica que un registro esta eliminado sin borrarlo fisicamente de la base de datos.
         modelBuilder.Entity<ContactoEmergencia>().HasQueryFilter(c => !c.IsDeleted);
         modelBuilder.Entity<Deuda>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<EstadoTurno>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<ModalidadPago>().HasQueryFilter(m => !m.IsDeleted);
         modelBuilder.Entity<Paciente>().HasQueryFilter(pc => !pc.IsDeleted);
         modelBuilder.Entity<Pago>().HasQueryFilter(p => !p.IsDeleted);
         modelBuilder.Entity<Profesional>().HasQueryFilter(pr => !pr.IsDeleted);

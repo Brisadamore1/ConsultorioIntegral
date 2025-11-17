@@ -9,44 +9,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class ModificacionModelos : Migration
+    public partial class creacionenumfinal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "EstadosTurno",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Estado = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EstadosTurno", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "ModalidadesPago",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Modalidad = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModalidadesPago", x => x.Id);
-                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -212,7 +180,7 @@ namespace Backend.Migrations
                     ProfesionalId = table.Column<int>(type: "int", nullable: true),
                     FechaHora = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DuracionMinutos = table.Column<int>(type: "int", nullable: false),
-                    EstadoTurnoId = table.Column<int>(type: "int", nullable: false),
+                    EstadoTurno = table.Column<int>(type: "int", nullable: false),
                     CanceladoPorProfesional = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     MotivoCancelacion = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -221,12 +189,6 @@ namespace Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Turnos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Turnos_EstadosTurno_EstadoTurnoId",
-                        column: x => x.EstadoTurnoId,
-                        principalTable: "EstadosTurno",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Turnos_Pacientes_PacienteId",
                         column: x => x.PacienteId,
@@ -271,7 +233,7 @@ namespace Backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SesionId = table.Column<int>(type: "int", nullable: true),
-                    ModalidadPagoId = table.Column<int>(type: "int", nullable: true),
+                    ModalidadDePago = table.Column<int>(type: "int", nullable: false),
                     Monto = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
@@ -280,40 +242,12 @@ namespace Backend.Migrations
                 {
                     table.PrimaryKey("PK_Pagos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pagos_ModalidadesPago_ModalidadPagoId",
-                        column: x => x.ModalidadPagoId,
-                        principalTable: "ModalidadesPago",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Pagos_Sesiones_SesionId",
                         column: x => x.SesionId,
                         principalTable: "Sesiones",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "EstadosTurno",
-                columns: new[] { "Id", "Estado", "IsDeleted" },
-                values: new object[,]
-                {
-                    { 1, "Reservado", false },
-                    { 2, "Confirmado", false },
-                    { 3, "Cancelado", false },
-                    { 4, "Atendido", false },
-                    { 5, "Ausente", false }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ModalidadesPago",
-                columns: new[] { "Id", "IsDeleted", "Modalidad" },
-                values: new object[,]
-                {
-                    { 1, false, "Efectivo" },
-                    { 2, false, "Tarjeta de crédito" },
-                    { 3, false, "Tarjeta de débito" },
-                    { 4, false, "Transferencia" }
-                });
 
             migrationBuilder.InsertData(
                 table: "Profesionales",
@@ -349,17 +283,17 @@ namespace Backend.Migrations
                 columns: new[] { "Id", "Cancelada", "Descripcion", "Fecha", "IsDeleted", "Monto", "PacienteId", "ProfesionalId" },
                 values: new object[,]
                 {
-                    { 1, false, "Consulta inicial", new DateTime(2025, 10, 13, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(236), false, 10000m, 1, 1 },
-                    { 2, true, "Seguimiento", new DateTime(2025, 10, 3, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(261), false, 5000m, 2, 2 }
+                    { 1, false, "Consulta inicial", new DateTime(2025, 11, 17, 17, 0, 22, 11, DateTimeKind.Local).AddTicks(7669), false, 10000m, 1, 1 },
+                    { 2, true, "Seguimiento", new DateTime(2025, 11, 7, 17, 0, 22, 11, DateTimeKind.Local).AddTicks(7688), false, 5000m, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Turnos",
-                columns: new[] { "Id", "CanceladoPorProfesional", "DuracionMinutos", "EstadoTurnoId", "FechaHora", "IsDeleted", "MotivoCancelacion", "PacienteId", "ProfesionalId" },
+                columns: new[] { "Id", "CanceladoPorProfesional", "DuracionMinutos", "EstadoTurno", "FechaHora", "IsDeleted", "MotivoCancelacion", "PacienteId", "ProfesionalId" },
                 values: new object[,]
                 {
-                    { 1, false, 60, 4, new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), false, null, 1, 1 },
-                    { 2, false, 50, 4, new DateTime(2025, 6, 16, 11, 0, 0, 0, DateTimeKind.Unspecified), false, null, 2, 2 }
+                    { 1, false, 60, 1, new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), false, null, 1, 1 },
+                    { 2, false, 50, 0, new DateTime(2025, 6, 16, 11, 0, 0, 0, DateTimeKind.Unspecified), false, null, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -373,11 +307,11 @@ namespace Backend.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pagos",
-                columns: new[] { "Id", "Fecha", "IsDeleted", "ModalidadPagoId", "Monto", "SesionId" },
+                columns: new[] { "Id", "Fecha", "IsDeleted", "ModalidadDePago", "Monto", "SesionId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 1, 20000m, 1 },
-                    { 2, new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 2, 22000m, 2 }
+                    { 1, new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 3, 20000m, 1 },
+                    { 2, new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 0, 22000m, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -401,11 +335,6 @@ namespace Backend.Migrations
                 column: "ProfesionalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_ModalidadPagoId",
-                table: "Pagos",
-                column: "ModalidadPagoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pagos_SesionId",
                 table: "Pagos",
                 column: "SesionId");
@@ -414,11 +343,6 @@ namespace Backend.Migrations
                 name: "IX_Sesiones_TurnoId",
                 table: "Sesiones",
                 column: "TurnoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Turnos_EstadoTurnoId",
-                table: "Turnos",
-                column: "EstadoTurnoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Turnos_PacienteId",
@@ -447,16 +371,10 @@ namespace Backend.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "ModalidadesPago");
-
-            migrationBuilder.DropTable(
                 name: "Sesiones");
 
             migrationBuilder.DropTable(
                 name: "Turnos");
-
-            migrationBuilder.DropTable(
-                name: "EstadosTurno");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");

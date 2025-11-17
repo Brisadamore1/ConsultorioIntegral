@@ -1,0 +1,43 @@
+﻿@page "/profesionales"
+@inject IProfesionalService ProfesionalService
+<h3>Profesionales</h3>
+
+@if (profesionales == null)
+{
+    <p><em> Obteniendo lista de profesionales...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Profesión</th>
+                <th>Especialidad</th>
+                <th>Teléfono</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var profesional in profesionales)
+            {
+                <tr>
+                    <td>@profesional.Nombre</td>
+                    <td>@profesional.Profesion</td>
+                    <td>@profesional.Especialidad</td>
+                    <td>@profesional.Telefono</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Profesional>? profesionales;
+
+    protected override async Task OnInitializedAsync()
+    {
+        profesionales = await ProfesionalService.GetAllAsync(null);
+    }
+}

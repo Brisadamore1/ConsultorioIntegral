@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,8 +25,7 @@ namespace Service.Models
         public int DuracionMinutos { get; set; }
 
         [Required(ErrorMessage = "El campo Estado es obligatorio.")]
-        public int EstadoTurnoId { get; set; } // almacena el número (ej: 2)
-        public virtual EstadoTurno? EstadoTurno { get; set; }  // permite ver el nombre ("Confirmado")
+        public EstadoTurnoEnum EstadoTurno { get; set; } = EstadoTurnoEnum.Reservado;
 
         public bool CanceladoPorProfesional { get; set; }
 

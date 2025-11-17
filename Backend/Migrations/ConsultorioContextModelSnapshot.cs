@@ -128,7 +128,7 @@ namespace Backend.Migrations
                             Id = 1,
                             Cancelada = false,
                             Descripcion = "Consulta inicial",
-                            Fecha = new DateTime(2025, 10, 13, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(236),
+                            Fecha = new DateTime(2025, 11, 17, 17, 0, 22, 11, DateTimeKind.Local).AddTicks(7669),
                             IsDeleted = false,
                             Monto = 10000m,
                             PacienteId = 1,
@@ -139,109 +139,11 @@ namespace Backend.Migrations
                             Id = 2,
                             Cancelada = true,
                             Descripcion = "Seguimiento",
-                            Fecha = new DateTime(2025, 10, 3, 14, 8, 47, 157, DateTimeKind.Local).AddTicks(261),
+                            Fecha = new DateTime(2025, 11, 7, 17, 0, 22, 11, DateTimeKind.Local).AddTicks(7688),
                             IsDeleted = false,
                             Monto = 5000m,
                             PacienteId = 2,
                             ProfesionalId = 2
-                        });
-                });
-
-            modelBuilder.Entity("Service.Models.EstadoTurno", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EstadosTurno");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Estado = "Reservado",
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Estado = "Confirmado",
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Estado = "Cancelado",
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Estado = "Atendido",
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Estado = "Ausente",
-                            IsDeleted = false
-                        });
-                });
-
-            modelBuilder.Entity("Service.Models.ModalidadPago", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Modalidad")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ModalidadesPago");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsDeleted = false,
-                            Modalidad = "Efectivo"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsDeleted = false,
-                            Modalidad = "Tarjeta de crédito"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsDeleted = false,
-                            Modalidad = "Tarjeta de débito"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsDeleted = false,
-                            Modalidad = "Transferencia"
                         });
                 });
 
@@ -361,7 +263,7 @@ namespace Backend.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("ModalidadPagoId")
+                    b.Property<int>("ModalidadDePago")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Monto")
@@ -371,8 +273,6 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ModalidadPagoId");
 
                     b.HasIndex("SesionId");
 
@@ -384,7 +284,7 @@ namespace Backend.Migrations
                             Id = 1,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            ModalidadPagoId = 1,
+                            ModalidadDePago = 3,
                             Monto = 20000m,
                             SesionId = 1
                         },
@@ -393,7 +293,7 @@ namespace Backend.Migrations
                             Id = 2,
                             Fecha = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            ModalidadPagoId = 2,
+                            ModalidadDePago = 0,
                             Monto = 22000m,
                             SesionId = 2
                         });
@@ -533,7 +433,7 @@ namespace Backend.Migrations
                     b.Property<int>("DuracionMinutos")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstadoTurnoId")
+                    b.Property<int>("EstadoTurno")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaHora")
@@ -553,8 +453,6 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstadoTurnoId");
-
                     b.HasIndex("PacienteId");
 
                     b.HasIndex("ProfesionalId");
@@ -567,7 +465,7 @@ namespace Backend.Migrations
                             Id = 1,
                             CanceladoPorProfesional = false,
                             DuracionMinutos = 60,
-                            EstadoTurnoId = 4,
+                            EstadoTurno = 1,
                             FechaHora = new DateTime(2025, 5, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             PacienteId = 1,
@@ -578,7 +476,7 @@ namespace Backend.Migrations
                             Id = 2,
                             CanceladoPorProfesional = false,
                             DuracionMinutos = 50,
-                            EstadoTurnoId = 4,
+                            EstadoTurno = 0,
                             FechaHora = new DateTime(2025, 6, 16, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             PacienteId = 2,
@@ -675,15 +573,9 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Service.Models.Pago", b =>
                 {
-                    b.HasOne("Service.Models.ModalidadPago", "ModalidadPago")
-                        .WithMany()
-                        .HasForeignKey("ModalidadPagoId");
-
                     b.HasOne("Service.Models.Sesion", "Sesion")
                         .WithMany()
                         .HasForeignKey("SesionId");
-
-                    b.Navigation("ModalidadPago");
 
                     b.Navigation("Sesion");
                 });
@@ -699,12 +591,6 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Service.Models.Turno", b =>
                 {
-                    b.HasOne("Service.Models.EstadoTurno", "EstadoTurno")
-                        .WithMany("Turnos")
-                        .HasForeignKey("EstadoTurnoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Service.Models.Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("PacienteId");
@@ -713,16 +599,9 @@ namespace Backend.Migrations
                         .WithMany()
                         .HasForeignKey("ProfesionalId");
 
-                    b.Navigation("EstadoTurno");
-
                     b.Navigation("Paciente");
 
                     b.Navigation("Profesional");
-                });
-
-            modelBuilder.Entity("Service.Models.EstadoTurno", b =>
-                {
-                    b.Navigation("Turnos");
                 });
 
             modelBuilder.Entity("Service.Models.Profesional", b =>

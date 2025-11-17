@@ -10,8 +10,6 @@ namespace Service.Utils
     {
         public static string ContactoEmergencia { get; set; } = "contactosemergencia";
         public static string Deuda { get; set; } = "deudas";
-        public static string EstadoTurno { get; set; } = "estadosturno";
-        public static string ModalidadPago { get; set; } = "modalidadespago";
         public static string Paciente { get; set; } = "pacientes";
         public static string Pago { get; set; } = "pagos";
         public static string Profesional { get; set; } = "profesionales"; 
@@ -27,8 +25,6 @@ namespace Service.Utils
             {
                 nameof(ContactoEmergencia) => ContactoEmergencia,
                 nameof(Deuda) => Deuda,
-                nameof(EstadoTurno) => EstadoTurno,
-                nameof(ModalidadPago) => ModalidadPago,
                 nameof(Paciente) => Paciente,
                 nameof(Pago) => Pago,
                 nameof(Profesional) => Profesional,

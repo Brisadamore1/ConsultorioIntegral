@@ -1,13 +1,22 @@
-﻿using WebAssembly.Components;
+﻿using CurrieTechnologies.Razor.SweetAlert2;
 using Service.Interfaces;
 using Service.Services;
+using WebAssembly.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+builder.Services.AddScoped<IProfesionalService, ProfesionalService>();
+
+builder.Services.AddSweetAlert2();
+
+
+
 // ⬅️ NECESARIO PARA QUE EL CLIENTE SE COMUNIQUE CON EL BACKEND
 builder.Services.AddScoped(sp => new HttpClient
 {
