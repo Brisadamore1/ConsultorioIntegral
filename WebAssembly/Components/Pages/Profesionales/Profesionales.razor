@@ -1,6 +1,9 @@
 ﻿@page "/profesionales"
 @inject IProfesionalService ProfesionalService
-<h3>Profesionales</h3>
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<HeaderPage TitlePage="Profesionales" />
 
 @if (profesionales == null)
 {
@@ -8,29 +11,52 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Profesión</th>
-                <th>Especialidad</th>
-                <th>Teléfono</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var profesional in profesionales)
-            {
+    <button class="btn btn-primary mb-3" @onclick="AgregarProfesional">Agregar Nuevo Profesional</button>
+
+    @if (!profesionales.Any())
+    {
+        <div class="alert alert-info">No hay profesionales registrados</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@profesional.Nombre</td>
-                    <td>@profesional.Profesion</td>
-                    <td>@profesional.Especialidad</td>
-                    <td>@profesional.Telefono</td>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Profesión</th>
+                    <th>Mátricula</th>
+                    <th>Especialidad</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var profesional in profesionales)
+                {
+                    <tr>
+                        <td>@profesional.Id</td>
+                        <td>@profesional.Nombre</td>
+                        <td>@profesional.Profesion</td>
+                        <td>@profesional.Matricula</td>
+                        <td>@profesional.Especialidad</td>
+                        <td>@profesional.Email</td>
+                        <td>@profesional.Telefono</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" @onclick="() => EditarProfesional(profesional.Id)">
+                                Editar
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(profesional)">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 
 @code {
@@ -38,6 +64,57 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        profesionales = await ProfesionalService.GetAllAsync(null);
+        await CargarProfesionales();
+    }
+
+    private async Task CargarProfesionales()
+    {
+        try
+        {
+            profesionales = await ProfesionalService.GetAllAsync(string.Empty);
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al cargar profesionales: {ex.Message}", SweetAlertIcon.Error);
+            profesionales = new List<Profesional>();
+        }
+    }
+
+    private void AgregarProfesional()
+    {
+        // Redirigir a la página para agregar una nueva localidad
+        NavigationManager.NavigateTo("/nuevoeditarprofesional");
+    }
+
+    private void EditarProfesional(int id)
+    {
+        NavigationManager.NavigateTo($"/nuevoeditarprofesional?IdProfesionalEditado={id}");
+    }
+
+    private async Task Eliminar(Profesional profesional)
+    {
+        try
+        {
+            var respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
+            {
+                Title = "Borrando Profesional",
+                Text = $"¿Está seguro que desea borrar al profesional {profesional.Nombre}?",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Sí, quiero borrarlo",
+                CancelButtonText = "No, esperar"
+            });
+
+            if (respuesta.IsConfirmed)
+            {
+                await ProfesionalService.DeleteAsync(profesional.Id);
+                await SweetAlert.FireAsync("Eliminado", "El profesional ha sido eliminado correctamente", SweetAlertIcon.Success);
+                await CargarProfesionales();
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al eliminar: {ex.Message}", SweetAlertIcon.Error);
+        }
     }
 }

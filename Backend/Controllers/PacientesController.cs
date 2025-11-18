@@ -21,7 +21,8 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientes([FromQuery] string? filtro = "")
         {
-            return await _context.Pacientes.Include(c => c.Profesional)
+            return await _context.Pacientes
+                .Include(c => c.Profesional)
                .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }

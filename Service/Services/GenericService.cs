@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;           
 
 namespace Service.Services
@@ -25,7 +26,11 @@ namespace Service.Services
             _httpClient = httpClient??new HttpClient();
             _memoryCache = memoryCache;
             //Esto es para que no importe si las propiedades del json vienen en mayuscula o minuscula.  
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _options = new JsonSerializerOptions { 
+                PropertyNameCaseInsensitive = true,
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
 
             if (_httpClient.BaseAddress is null)
             {

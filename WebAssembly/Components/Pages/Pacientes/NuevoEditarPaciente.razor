@@ -4,29 +4,50 @@
 @inject NavigationManager NavigationManager
 @inject SweetAlertService SweetAlert
 
-<h3> Paciente</h3>
+<HeaderPage TitlePage="Nuevo Paciente"/>
+
 @if (paciente == null || profesionales == null)
 {
-    <p><em>Cargando...</em></p>
+    <p class="text-center mt-3"><em>Cargando...</em></p>
 }
 else
 {
-    <EditForm Model="paciente" OnValidSubmit="Guardar" FormName="PacienteForm">
+    <EditForm Model="paciente" OnValidSubmit="Guardar">
         <DataAnnotationsValidator />
 
         <div class="form-group mb-2">
-            <label for="Nombre">Nombre:</label>
+            <label for="Nombre">Nombre: <span class="text-danger">*</span></label>
             <InputText id="Nombre" class="form-control" @bind-Value="paciente.Nombre" />
+            <ValidationMessage For="@(() => paciente.Nombre)" />
         </div>
 
         <div class="form-group mb-2">
-            <label for="Dni">Dni:</label>
+            <label for="Dni">DNI: <span class="text-danger">*</span></label>
             <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
+            <ValidationMessage For="@(() => paciente.Dni)" />
         </div>
 
-           <div class="form-group mb-2">
-            <label for="Telefono">Teléfono:</label>
+        <div class="form-group mb-2">
+            <label for="Telefono">Teléfono: <span class="text-danger">*</span></label>
             <InputText id="Telefono" class="form-control" @bind-Value="paciente.Telefono" />
+            <ValidationMessage For="@(() => paciente.Telefono)" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="Email">Email:</label>
+            <InputText id="Email" class="form-control" @bind-Value="paciente.Email" />
+            <ValidationMessage For="@(() => paciente.Email)" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="Direccion">Dirección:</label>
+            <InputText id="Direccion" class="form-control" @bind-Value="paciente.Direccion" placeholder="Calle, número, ciudad" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="FechaNacimiento">Fecha de nacimiento: <span class="text-danger">*</span></label>
+            <InputDate id="FechaNacimiento" class="form-control" @bind-Value="paciente.FechaNacimiento" />
+            <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
         </div>
 
         <div class="form-group mb-2">
@@ -40,7 +61,18 @@ else
             </InputSelect>
         </div>
 
-        <button type="submit" form="PacienteForm" class="btn btn-primary mb-2">Guardar</button>
+        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
+            @if (guardando)
+            {
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span>Guardando...</span>
+            }
+            else
+            {
+                <span>Guardar</span>
+            }
+        </button>
+        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
 
         <ValidationSummary />
     </EditForm>
@@ -51,44 +83,88 @@ else
     [Parameter]
     public int IdPacienteEditado { get; set; }
 
-    private Paciente? paciente; // <-- Cambiar a tipo que acepta null para corregir CS8618
-    List<Profesional>? profesionales = new List<Profesional>();
+    private Paciente? paciente;
+    private List<Profesional>? profesionales;
+    private bool guardando = false;
 
     protected override async Task OnInitializedAsync()
     {
-        if (IdPacienteEditado != 0)
+        try
         {
-            paciente = await PacienteService.GetByIdAsync(IdPacienteEditado) ?? new Paciente();
-        }
-        else
-        {
-            paciente = new Paciente();
-        }
-        profesionales = await ProfesionalService.GetAllAsync(string.Empty);
-    }
-
-
-
-    private async Task Guardar()
-    {
-        if (paciente?.ProfesionalId == null)
-        {
-            await SweetAlert.FireAsync("Error", "Debe seleccionar un profesional", SweetAlertIcon.Error);
-            return;
-        }
-
-        if (paciente != null)
-        {
-            if (IdPacienteEditado == 0)
+            profesionales = await ProfesionalService.GetAllAsync(string.Empty);
+            
+            if (IdPacienteEditado != 0)
             {
-                await PacienteService.AddAsync(paciente);
+                paciente = await PacienteService.GetByIdAsync(IdPacienteEditado);
+                if (paciente == null)
+                {
+                    await SweetAlert.FireAsync("Error", "No se encontró el paciente", SweetAlertIcon.Error);
+                    paciente = new Paciente();
+                }
             }
             else
             {
-                await PacienteService.UpdateAsync(paciente);
+                paciente = new Paciente();
             }
-
-            NavigationManager.NavigateTo("/pacientes");
         }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al cargar datos: {ex.Message}", SweetAlertIcon.Error);
+            paciente = new Paciente();
+            profesionales = new List<Profesional>();
+        }   
+    }
+
+    private async Task Guardar()
+    {
+        try
+        {
+            guardando = true;
+            StateHasChanged();
+
+            if (paciente != null)
+            {
+                // Asegurar que los campos opcionales no sean null si están vacíos
+                if (string.IsNullOrWhiteSpace(paciente.Email))
+                {
+                    paciente.Email = null;
+                }
+                
+                if (string.IsNullOrWhiteSpace(paciente.Direccion))
+                {
+                    paciente.Direccion = null;
+                }
+
+                // Limpiar navegación para evitar referencia circular
+                paciente.Profesional = null;
+
+                if (IdPacienteEditado == 0)
+                {
+                    await PacienteService.AddAsync(paciente);
+                    await SweetAlert.FireAsync("Éxito", "Paciente agregado correctamente", SweetAlertIcon.Success);
+                }
+                else
+                {
+                    paciente.Id = IdPacienteEditado;
+                    await PacienteService.UpdateAsync(paciente);
+                    await SweetAlert.FireAsync("Éxito", "Paciente actualizado correctamente", SweetAlertIcon.Success);
+                }
+
+                NavigationManager.NavigateTo("/pacientes");
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al guardar: {ex.Message}", SweetAlertIcon.Error);
+        }
+        finally
+        {
+            guardando = false;
+        }
+    }
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/pacientes");
     }
 }
