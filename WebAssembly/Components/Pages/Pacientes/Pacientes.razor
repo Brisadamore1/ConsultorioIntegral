@@ -1,68 +1,77 @@
 ﻿@page "/pacientes"
+@using Newtonsoft.Json
 @inject IGenericService<Paciente> PacienteService
 @inject NavigationManager NavigationManager
 @inject SweetAlertService SweetAlert
 
 <HeaderPage TitlePage="Pacientes"/>
 
-@if (pacientes == null)
+@if (cargando)
 {
     <p><em>Cargando pacientes...</em></p>
+}
+else if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger">
+        <h5>Error al cargar pacientes:</h5>
+        <p>@mensajeError</p>
+        <button class="btn btn-primary" @onclick="CargarPacientes">Reintentar</button>
+    </div>
+}
+else if (pacientes == null || !pacientes.Any())
+{
+    <button class="btn btn-primary mb-3" @onclick="AgregarPaciente">Agregar Nuevo Paciente</button>
+    <div class="alert alert-info">No hay pacientes registrados</div>
 }
 else
 {
     <button class="btn btn-primary mb-3" @onclick="AgregarPaciente">Agregar Nuevo Paciente</button>
     
-    @if (!pacientes.Any())
-    {
-        <div class="alert alert-info">No hay pacientes registrados</div>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Fecha Nacimiento</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Profesional</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in pacientes)
+            {
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Dni</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Profesional</th>
-                    <th></th>
-                    <th></th>
+                    <td>@paciente.Id</td>
+                    <td>@paciente.Nombre</td>
+                    <td>@paciente.Dni</td>
+                    <td>@FormatearFecha(paciente.FechaNacimiento)</td>
+                    <td>@(string.IsNullOrEmpty(paciente.Email) ? "-" : paciente.Email)</td>
+                    <td>@paciente.Telefono</td>
+                    <td>@(paciente.Profesional != null ? paciente.Profesional.Nombre : "Sin asignar")</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" @onclick="() => EditarPaciente(paciente.Id)">
+                            Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(paciente)">
+                            Eliminar
+                        </button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var paciente in pacientes)
-                {
-                    <tr>
-                        <td>@paciente.Id</td>
-                        <td>@paciente.Nombre</td>
-                        <td>@paciente.Dni</td>
-                        <td>@(paciente.FechaNacimiento?.ToString("dd/MM/yyyy") ?? "-")</td>
-                        <td>@paciente.Email</td>
-                        <td>@paciente.Telefono</td>
-                        <td>@(paciente.Profesional != null ? paciente.Profesional.Nombre : "Sin asignar")</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning" @onclick="() => EditarPaciente(paciente.Id)">
-                                Editar
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(paciente)">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
 }
 
 @code {
     private List<Paciente>? pacientes;
+    private bool cargando = true;
+    private string? mensajeError;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,13 +82,48 @@ else
     {
         try
         {
+            cargando = true;
+            mensajeError = null;
+            StateHasChanged();
+
             pacientes = await PacienteService.GetAllAsync(string.Empty);
+            
+            if (pacientes == null)
+            {
+                pacientes = new List<Paciente>();
+                mensajeError = "El servicio devolvió una respuesta nula";
+            }
+        }
+        catch (HttpRequestException httpEx)
+        {
+            mensajeError = $"Error de conexión: {httpEx.Message}. Verifica que el Backend esté ejecutándose.";
+            pacientes = new List<Paciente>();
+        }
+        catch (JsonException jsonEx)
+        {
+            mensajeError = $"Error al deserializar los datos: {jsonEx.Message}. Puede haber un problema con el formato de FechaNacimiento en la base de datos.";
+            pacientes = new List<Paciente>();
         }
         catch (Exception ex)
         {
-            await SweetAlert.FireAsync("Error", $"Error al cargar pacientes: {ex.Message}", SweetAlertIcon.Error);
+            mensajeError = $"Error inesperado: {ex.Message}";
             pacientes = new List<Paciente>();
         }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private string FormatearFecha(DateTime fecha)
+    {
+        // Verificar si la fecha es válida (no es la fecha mínima por defecto)
+        if (fecha == DateTime.MinValue || fecha.Year < 1900)
+        {
+            return "-";
+        }
+        return fecha.ToString("dd/MM/yyyy");
     }
 
     private void AgregarPaciente()

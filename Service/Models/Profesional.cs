@@ -26,7 +26,7 @@ namespace Service.Models
         public string Telefono { get; set; } = null!;
 
         //Esto es una relacion de uno a muchos, un profesional puede tener muchos pacientes
-        public virtual ICollection<Paciente?> Pacientes { get; set; } = new List<Paciente?>();
+        public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
         public bool IsDeleted { get; set; } = false;
         public string? Imagen { get; set; } = string.Empty;
