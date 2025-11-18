@@ -16,28 +16,26 @@ namespace Service.Models
         public virtual Profesional? Profesional { get; set; }
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
-        public string Nombre { get; set; } = null!;
+        public string Nombre { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El campo Dni es obligatorio.")]
-        public string Dni { get; set; } = null!;
+        public string Dni { get; set; } = string.Empty;
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
 
         [Required(ErrorMessage = "El campo Telefono es obligatorio.")]
-        public string Telefono { get; set; } = null!;
+        public string Telefono { get; set; } = string.Empty;
 
         [EmailAddress(ErrorMessage = "El campo Email no tiene un formato válido.")]
-        public string Email { get; set; } = null!;
-
-        [Required(ErrorMessage = "El campo Direccion es obligatorio.")]
-        public string Direccion { get; set; } = null!;
+        public string? Email { get; set; } 
+        public string? Direccion { get; set; } 
 
         public bool EsParticular { get; set; }
         
-        public string ObraSocial { get; set; }
-        public string NumeroAfiliado { get; set; }
+        public string? ObraSocial { get; set; }
+        public string? NumeroAfiliado { get; set; }
 
         public bool IsDeleted { get; set; } = false;
         public override string ToString()

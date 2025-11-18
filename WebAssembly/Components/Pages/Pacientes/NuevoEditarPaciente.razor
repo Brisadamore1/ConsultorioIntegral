@@ -5,13 +5,13 @@
 @inject SweetAlertService SweetAlert
 
 <h3> Paciente</h3>
-@if (paciente == null||profesionales==null)
+@if (paciente == null || profesionales == null)
 {
     <p><em>Cargando...</em></p>
 }
 else
 {
-    <EditForm Model="paciente" OnValidSubmit="Guardar">
+    <EditForm Model="paciente" OnValidSubmit="Guardar" FormName="PacienteForm">
         <DataAnnotationsValidator />
 
         <div class="form-group mb-2">
@@ -24,7 +24,7 @@ else
             <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
         </div>
 
-     @*    <div class="form-group mb-2">
+        @*    <div class="form-group mb-2">
             <label for="Telefonos">Telefonos:</label>
             <InputText id="Telefonos" class="form-control" @bind-Value="paciente.Telefonos" />
         </div> *@
@@ -40,7 +40,7 @@ else
             </InputSelect>
         </div>
 
-        <button type="submit" class="btn btn-primary mb-2">Guardar</button>
+        <button type="submit" form="PacienteForm" class="btn btn-primary mb-2">Guardar</button>
 
         <ValidationSummary />
     </EditForm>
@@ -71,7 +71,7 @@ else
 
     private async Task Guardar()
     {
-        if(paciente.ProfesionalId==null)
+        if (paciente.ProfesionalId == null)
         {
             await SweetAlert.FireAsync("Error", "Debe seleccionar un profesional", SweetAlertIcon.Error);
             return;
