@@ -24,10 +24,10 @@ else
             <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
         </div>
 
-        @*    <div class="form-group mb-2">
-            <label for="Telefonos">Telefonos:</label>
-            <InputText id="Telefonos" class="form-control" @bind-Value="paciente.Telefonos" />
-        </div> *@
+           <div class="form-group mb-2">
+            <label for="Telefono">Teléfono:</label>
+            <InputText id="Telefono" class="form-control" @bind-Value="paciente.Telefono" />
+        </div>
 
         <div class="form-group mb-2">
             <label for="IdProfesional">Profesional:</label>
@@ -51,7 +51,7 @@ else
     [Parameter]
     public int IdPacienteEditado { get; set; }
 
-    private Paciente paciente;
+    private Paciente? paciente; // <-- Cambiar a tipo que acepta null para corregir CS8618
     List<Profesional>? profesionales = new List<Profesional>();
 
     protected override async Task OnInitializedAsync()
@@ -71,7 +71,7 @@ else
 
     private async Task Guardar()
     {
-        if (paciente.ProfesionalId == null)
+        if (paciente?.ProfesionalId == null)
         {
             await SweetAlert.FireAsync("Error", "Debe seleccionar un profesional", SweetAlertIcon.Error);
             return;

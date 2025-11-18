@@ -17,6 +17,7 @@ else
             <tr>
                 <th>Nombre</th>
                 <th>Dni</th>
+                <th>Teléfono</th>
                 <th>Profesional</th>
                 <th></th>
                 <th></th>
@@ -28,7 +29,8 @@ else
                 <tr>
                     <td>@paciente.Nombre</td>
                     <td>@paciente.Dni</td>
-                    <td>@paciente.Profesional.Nombre</td>
+                    <td>@paciente.Telefono</td>
+                    <td>@(paciente.Profesional != null ? paciente.Profesional.Nombre : "")</td>
                     <td>
                         <a href="/nuevoeditarpaciente?IdPacienteEditado=@paciente.Id">Editar</a>
                     </td>

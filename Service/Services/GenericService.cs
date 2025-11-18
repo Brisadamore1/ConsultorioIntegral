@@ -32,13 +32,13 @@ namespace Service.Services
                 _httpClient.BaseAddress = new Uri(Properties.Resources.UrlApi);
             }
 
-            //_endpoint = ApiEndpoints.GetEndpoint(typeof(T).Name);
+            //este endpoint hace referencia a la api controller que se va a consumir pero en minuscula
             _endpoint = $"api/{ApiEndpoints.GetEndpoint(typeof(T).Name)}";
 
 
         }
         //protected void SetAuthorizationHeader()
-        //{
+        //{ 
         //    // Si ya está configurado (por un DelegatingHandler), no hacer nada
         //    if (_httpClient.DefaultRequestHeaders.Authorization is not null)
         //        return;

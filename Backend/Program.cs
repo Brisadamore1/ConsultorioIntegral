@@ -99,7 +99,7 @@ builder.Services.AddCors(options =>
             .WithOrigins("https://backendconsultorio.azurewebsites.net/",
                     "https://www.backendconsultorio.azurewebsites.net/",
                     "https://localhost:7214",
-                    "https://localhost:8000")
+                    "https://localhost:7107")      // ← TU WEBASSEMBLY
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
