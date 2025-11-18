@@ -98,7 +98,7 @@ else
             var respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Profesional",
-                Text = $"¿Está seguro que desea borrar al profesional {profesional.Nombre}?",
+                Text = $"¿Está seguro que desea eliminar el registro de {profesional.Nombre}?",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Sí, quiero borrarlo",
@@ -108,7 +108,7 @@ else
             if (respuesta.IsConfirmed)
             {
                 await ProfesionalService.DeleteAsync(profesional.Id);
-                await SweetAlert.FireAsync("Eliminado", "El profesional ha sido eliminado correctamente", SweetAlertIcon.Success);
+                await SweetAlert.FireAsync("Eliminado", "El registro ha sido eliminado correctamente", SweetAlertIcon.Success);
                 await CargarProfesionales();
             }
         }

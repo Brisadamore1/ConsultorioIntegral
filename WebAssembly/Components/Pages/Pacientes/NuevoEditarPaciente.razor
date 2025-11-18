@@ -4,7 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject SweetAlertService SweetAlert
 
-<HeaderPage TitlePage="Nuevo Paciente"/>
+<HeaderPage TitlePage="@(IdPacienteEditado == 0 ? "Agregar Paciente" : "Editar Paciente")"/>
 
 @if (paciente == null || profesionales == null)
 {
@@ -46,13 +46,21 @@ else
 
         <div class="form-group mb-2">
             <label for="FechaNacimiento">Fecha de nacimiento: <span class="text-danger">*</span></label>
-            <InputDate id="FechaNacimiento" class="form-control" @bind-Value="paciente.FechaNacimiento" />
+            <input type="date" 
+                   id="FechaNacimiento" 
+                   class="form-control" 
+                   value="@ObtenerFechaParaInput()"
+                   @onchange="ActualizarFecha" />
             <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
+            @if (mostrarErrorFecha)
+            {
+                <div class="text-danger small">El campo Fecha de Nacimiento es obligatorio.</div>
+            }
         </div>
 
         <div class="form-group mb-2">
             <label for="IdProfesional">Profesional:</label>
-            <InputSelect id="IdProfesional" class="form-control" @bind-Value="paciente.ProfesionalId">
+            <InputSelect id="IdProfesional" class="form-select" @bind-Value="paciente.ProfesionalId">
                 <option value="">Seleccione un profesional</option>
                 @foreach (var profesional in profesionales)
                 {
@@ -73,8 +81,6 @@ else
             }
         </button>
         <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-
-        <ValidationSummary />
     </EditForm>
 }
 
@@ -86,6 +92,7 @@ else
     private Paciente? paciente;
     private List<Profesional>? profesionales;
     private bool guardando = false;
+    private bool mostrarErrorFecha = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -115,8 +122,49 @@ else
         }   
     }
 
+    private string ObtenerFechaParaInput()
+    {
+        // Si la fecha es válida (no es MinValue), mostrarla
+        if (paciente?.FechaNacimiento != null && 
+            paciente.FechaNacimiento != DateTime.MinValue && 
+            paciente.FechaNacimiento.Year > 1900)
+        {
+            return paciente.FechaNacimiento.ToString("yyyy-MM-dd");
+        }
+        // Si no hay fecha válida, dejar el campo vacío
+        return string.Empty;
+    }
+
+    private void ActualizarFecha(ChangeEventArgs e)
+    {
+        if (paciente != null && e.Value != null)
+        {
+            var valorFecha = e.Value.ToString();
+            if (!string.IsNullOrWhiteSpace(valorFecha) && DateTime.TryParse(valorFecha, out var fecha))
+            {
+                paciente.FechaNacimiento = fecha;
+                mostrarErrorFecha = false;
+            }
+            else
+            {
+                paciente.FechaNacimiento = DateTime.MinValue;
+            }
+        }
+    }
+
     private async Task Guardar()
     {
+        // Validar fecha manualmente
+        mostrarErrorFecha = paciente == null || 
+                           paciente.FechaNacimiento == DateTime.MinValue || 
+                           paciente.FechaNacimiento.Year < 1900;
+
+        if (mostrarErrorFecha)
+        {
+            StateHasChanged();
+            return; // No continuar si la fecha no es válida
+        }
+
         try
         {
             guardando = true;

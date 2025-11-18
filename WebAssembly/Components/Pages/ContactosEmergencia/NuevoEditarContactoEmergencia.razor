@@ -1,0 +1,137 @@
+﻿@page "/nuevoeditarcontactoemergencia"
+@inject IGenericService<ContactoEmergencia> ContactoEmergenciaService
+@inject IGenericService<Paciente> PacienteService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<HeaderPage TitlePage="@(IdContactoEmergenciaEditado == 0 ? "Agregar Contacto Emergencia" : "Editar Contacto Emergencia")"/>
+
+@if (contactoemergencia == null || pacientes == null)
+{
+    <p class="text-center mt-3"><em>Cargando...</em></p>
+}
+else
+{
+    <EditForm Model="contactoemergencia" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+
+        <div class="form-group mb-2">
+            <label for="Nombre">Contacto de Emergencia: <span class="text-danger">*</span></label>
+            <InputText id="Nombre" class="form-control" @bind-Value="contactoemergencia.Nombre" />
+            <ValidationMessage For="@(() => contactoemergencia.Nombre)" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="Relacion">Relación: <span class="text-danger">*</span></label>
+            <InputText id="Relacion" class="form-control" @bind-Value="contactoemergencia.Relacion" />
+            <ValidationMessage For="@(() => contactoemergencia.Relacion)" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="Telefono">Teléfono: <span class="text-danger">*</span></label>
+            <InputText id="Telefono" class="form-control" @bind-Value="contactoemergencia.Telefono" />
+            <ValidationMessage For="@(() => contactoemergencia.Telefono)" />
+        </div>
+
+        <div class="form-group mb-2">
+            <label for="IdPaciente">Paciente:</label>
+            <InputSelect id="IdPaciente" class="form-select" @bind-Value="contactoemergencia.PacienteId">
+                <option value="">Seleccione un paciente</option>
+                @foreach (var paciente in pacientes)
+                {
+                    <option value="@paciente.Id">@paciente.Nombre</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
+            @if (guardando)
+            {
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span>Guardando...</span>
+            }
+            else
+            {
+                <span>Guardar</span>
+            }
+        </button>
+        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+    </EditForm>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public int IdContactoEmergenciaEditado { get; set; }
+
+    private ContactoEmergencia? contactoemergencia;
+    private List<Paciente>? pacientes;
+    private bool guardando = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            pacientes = await PacienteService.GetAllAsync(string.Empty);
+            
+            if (IdContactoEmergenciaEditado != 0)
+            {
+                contactoemergencia = await ContactoEmergenciaService.GetByIdAsync(IdContactoEmergenciaEditado);
+                if (contactoemergencia == null)
+                {
+                    await SweetAlert.FireAsync("Error", "No se encontró el contacto de emergencia", SweetAlertIcon.Error);
+                    contactoemergencia = new ContactoEmergencia();
+                }
+            }
+            else
+            {
+                contactoemergencia = new ContactoEmergencia();
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al cargar datos: {ex.Message}", SweetAlertIcon.Error);
+            contactoemergencia = new ContactoEmergencia();
+            pacientes = new List<Paciente>();
+        }   
+    }
+
+    private async Task Guardar()
+    {
+        try
+        {
+            guardando = true;
+            StateHasChanged();
+
+            if (contactoemergencia != null)
+            {
+                if (IdContactoEmergenciaEditado == 0)
+                {
+                    await ContactoEmergenciaService.AddAsync(contactoemergencia);
+                    await SweetAlert.FireAsync("Éxito", "Contacto emergencia agregado correctamente", SweetAlertIcon.Success);
+                }
+                else
+                {
+                    contactoemergencia.Id = IdContactoEmergenciaEditado;
+                    await ContactoEmergenciaService.UpdateAsync(contactoemergencia);
+                    await SweetAlert.FireAsync("Éxito", "Contacto emergencia actualizado correctamente", SweetAlertIcon.Success);
+                }
+
+                NavigationManager.NavigateTo("/contactosemergencia");
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al guardar: {ex.Message}", SweetAlertIcon.Error);
+        }
+        finally
+        {
+            guardando = false;
+        }
+    }
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/contactosemergencia");
+    }
+}

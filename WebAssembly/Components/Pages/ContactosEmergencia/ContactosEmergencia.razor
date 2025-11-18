@@ -1,0 +1,140 @@
+﻿@page "/contactosemergencia"
+@inject IGenericService<ContactoEmergencia> ContactoEmergenciaService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<HeaderPage TitlePage="Contactos Emergencia" />
+
+@if (cargando)
+{
+    <p><em>Cargando contactos emergencia...</em></p>
+}
+else if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger">
+        <h5>Error al cargar contactos emergencia:</h5>
+        <p>@mensajeError</p>
+        <button class="btn btn-primary" @onclick="CargarContactosEmergencia">Reintentar</button>
+    </div>
+}
+else if (contactosemergencia == null || !contactosemergencia.Any())
+{
+    <button class="btn btn-primary mb-3" @onclick="AgregarContactoEmergencia">Agregar Nuevo Contacto emergencia</button>
+    <div class="alert alert-info">No hay contactos de emergencia registrados</div>
+}
+else
+{
+    <button class="btn btn-primary mb-3" @onclick="AgregarContactoEmergencia">Agregar Nuevo Contacto emergencia</button>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Relación</th>
+                <th>Teléfono</th>
+                <th>Paciente</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contactoemergencia in contactosemergencia)
+            {
+                <tr>
+                    <td>@contactoemergencia.Id</td>
+                    <td>@contactoemergencia.Nombre</td>
+                    <td>@contactoemergencia.Relacion</td>
+                    <td>@contactoemergencia.Telefono</td>
+                    <td>@(contactoemergencia.Paciente != null ? contactoemergencia.Paciente.Nombre : "Sin asignar")</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" @onclick="() => EditarContactoEmergencia(contactoemergencia.Id)">
+                            Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(contactoemergencia)">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ContactoEmergencia>? contactosemergencia;
+    private bool cargando = true;
+    private string? mensajeError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarContactosEmergencia();
+    }
+
+    private async Task CargarContactosEmergencia()
+    {
+        try
+        {
+            cargando = true;
+            mensajeError = null;
+            StateHasChanged();
+
+            contactosemergencia = await ContactoEmergenciaService.GetAllAsync(string.Empty);
+            
+            if (contactosemergencia == null)
+            {
+                contactosemergencia = new List<ContactoEmergencia>();
+                mensajeError = "El servicio devolvió una respuesta nula";
+            }
+        }
+        catch (Exception ex)
+        {
+            mensajeError = $"Error al cargar datos: {ex.Message}";
+            contactosemergencia = new List<ContactoEmergencia>();
+        }
+        finally
+        {
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private void AgregarContactoEmergencia()
+    {
+        NavigationManager.NavigateTo("/nuevoeditarcontactoemergencia");
+    }
+
+    private void EditarContactoEmergencia(int id)
+    {
+        NavigationManager.NavigateTo($"/nuevoeditarcontactoemergencia?IdContactoEmergenciaEditado={id}");
+    }
+
+    private async Task Eliminar(ContactoEmergencia contactoemergencia)
+    {
+        try
+        {
+            var respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
+            {
+                Title = "Borrando Contacto de Emergencia",
+                Text = $"¿Está seguro que desea eliminar el registro de {contactoemergencia.Nombre}?",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Sí, quiero borrarlo",
+                CancelButtonText = "No, esperar"
+            });
+
+            if (respuesta.IsConfirmed)
+            {
+                await ContactoEmergenciaService.DeleteAsync(contactoemergencia.Id);
+                await SweetAlert.FireAsync("Eliminado", "El registro ha sido eliminado correctamente", SweetAlertIcon.Success);
+                await CargarContactosEmergencia();
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al eliminar: {ex.Message}", SweetAlertIcon.Error);
+        }
+    }
+}

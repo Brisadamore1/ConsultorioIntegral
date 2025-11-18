@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject SweetAlertService SweetAlert
 
-<HeaderPage TitlePage="Nuevo Profesional"/>
+<HeaderPage TitlePage="@(IdProfesionalEditado == 0 ? "Agregar Profesional" : "Editar Profesional")"/>
 
 @if (profesional == null)
 {
@@ -21,14 +21,14 @@ else
         </div>
 
         <div class="form-group mb-2">
-            <label for="Profesión">Profesión: <span class="text-danger">*</span></label>
-            <InputText id="Profesión" class="form-control" @bind-Value="profesional.Profesion" />
+            <label for="Profesion">Profesión: <span class="text-danger">*</span></label>
+            <InputText id="Profesion" class="form-control" @bind-Value="profesional.Profesion" />
             <ValidationMessage For="@(() => profesional.Profesion)" />
         </div>
 
         <div class="form-group mb-2">
-            <label for="Telefono">Matrícula: <span class="text-danger">*</span></label>
-            <InputText id="Telefono" class="form-control" @bind-Value="profesional.Matricula" />
+            <label for="Matricula">Matrícula: <span class="text-danger">*</span></label>
+            <InputText id="Matricula" class="form-control" @bind-Value="profesional.Matricula" />
             <ValidationMessage For="@(() => profesional.Matricula)" />
         </div>
 
@@ -62,8 +62,6 @@ else
             }
         </button>
         <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-
-        <ValidationSummary />
     </EditForm>
 }
 
@@ -73,20 +71,18 @@ else
     public int IdProfesionalEditado { get; set; }
 
     private Profesional? profesional;
-
     private bool guardando = false;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            
             if (IdProfesionalEditado != 0)
             {
                 profesional = await ProfesionalService.GetByIdAsync(IdProfesionalEditado);
                 if (profesional == null)
                 {
-                    await SweetAlert.FireAsync("Error", "No se encontró el paciente", SweetAlertIcon.Error);
+                    await SweetAlert.FireAsync("Error", "No se encontró el profesional", SweetAlertIcon.Error);
                     profesional = new Profesional();
                 }
             }
@@ -111,19 +107,11 @@ else
 
             if (profesional != null)
             {
-                // // Asegurar que los campos opcionales no sean null si están vacíos
-                // if (string.IsNullOrWhiteSpace(profesional.Email))
-                // {
-                //     profesional.Email = string.Empty;
-                // }
-                
-                // if (string.IsNullOrWhiteSpace(profesional.Direccion))
-                // {
-                //     profesional.Direccion = string.Empty;
-                // }
-
-                // Limpiar navegación para evitar referencia circular
-                // profesional.Profesional = null;
+                // Asegurar que el email sea null si está vacío
+                if (string.IsNullOrWhiteSpace(profesional.Email))
+                {
+                    profesional.Email = null;
+                }
 
                 if (IdProfesionalEditado == 0)
                 {

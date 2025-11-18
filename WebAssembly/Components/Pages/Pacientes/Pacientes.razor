@@ -49,7 +49,7 @@ else
                     <td>@paciente.Nombre</td>
                     <td>@paciente.Dni</td>
                     <td>@FormatearFecha(paciente.FechaNacimiento)</td>
-                    <td>@(string.IsNullOrEmpty(paciente.Email) ? "-" : paciente.Email)</td>
+                    <td>@FormatearEmail(paciente.Email)</td>
                     <td>@paciente.Telefono</td>
                     <td>@(paciente.Profesional != null ? paciente.Profesional.Nombre : "Sin asignar")</td>
                     <td>
@@ -121,9 +121,14 @@ else
         // Verificar si la fecha es válida (no es la fecha mínima por defecto)
         if (fecha == DateTime.MinValue || fecha.Year < 1900)
         {
-            return "-";
+            return "Sin asignar";
         }
         return fecha.ToString("dd/MM/yyyy");
+    }
+
+    private string FormatearEmail(string? email)
+    {
+        return string.IsNullOrEmpty(email) ? "Sin asignar" : email;
     }
 
     private void AgregarPaciente()
@@ -143,7 +148,7 @@ else
             var respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Paciente",
-                Text = $"¿Está seguro que desea borrar al paciente {paciente.Nombre}?",
+                Text = $"¿Está seguro que desea eliminar el registro de {paciente.Nombre}?",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Sí, quiero borrarlo",
@@ -153,7 +158,7 @@ else
             if (respuesta.IsConfirmed)
             {
                 await PacienteService.DeleteAsync(paciente.Id);
-                await SweetAlert.FireAsync("Eliminado", "El paciente ha sido eliminado correctamente", SweetAlertIcon.Success);
+                await SweetAlert.FireAsync("Eliminado", "El registro ha sido eliminado correctamente", SweetAlertIcon.Success);
                 await CargarPacientes();
             }
         }
