@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Service.Interfaces;
 using Service.Services;
 using WebAssembly.Components;
+using WebAssembly.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddScoped(sp => new HttpClient
 
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IProfesionalService, ProfesionalService>();
+builder.Services.AddScoped<FirebaseAuthService>();
 builder.Services.AddSweetAlert2();
 
 await builder.Build().RunAsync();

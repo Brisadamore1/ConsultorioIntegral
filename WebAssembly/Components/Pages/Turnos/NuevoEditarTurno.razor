@@ -1,0 +1,253 @@
+﻿@page "/nuevoeditarturno"
+@inject IGenericService<Turno> TurnoService
+@inject IGenericService<Paciente> PacienteService
+@inject IGenericService<Profesional> ProfesionalService
+@inject NavigationManager NavigationManager
+@inject SweetAlertService SweetAlert
+
+<HeaderPage TitlePage="@(IdTurnoEditado == 0 ? "Agregar Turno" : "Editar Turno")" />
+
+@if (turno == null || pacientes == null || profesionales == null)
+{
+    <p class="text-center mt-3"><em>Cargando...</em></p>
+}
+else
+{
+    <EditForm Model="turno" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+
+        <!-- Selector de Paciente -->
+        <div class="form-group mb-2">
+            <label for="IdPaciente">Paciente: <span class="text-danger">*</span></label>
+            <InputSelect id="IdPaciente" class="form-select" @bind-Value="turno.PacienteId">
+                <option value="">Seleccione un paciente</option>
+                @foreach (var paciente in pacientes)
+                {
+                    <option value="@paciente.Id">@paciente.Nombre</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => turno.PacienteId)" />
+        </div>
+
+        <!-- Selector de Profesional -->
+        <div class="form-group mb-2">
+            <label for="IdProfesional">Profesional: <span class="text-danger">*</span></label>
+            <InputSelect id="IdProfesional" class="form-select" @bind-Value="turno.ProfesionalId">
+                <option value="">Seleccione un profesional</option>
+                @foreach (var profesional in profesionales)
+                {
+                    <option value="@profesional.Id">@profesional.Nombre</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => turno.ProfesionalId)" />
+        </div>
+
+        <!-- Campo Fecha y Hora -->
+        <div class="form-group mb-2">
+            <label for="FechaHora">Fecha y Hora: <span class="text-danger">*</span></label>
+            <input type="datetime-local"
+                   id="FechaHora"
+                   class="form-control"
+                   value="@ObtenerFechaHoraParaInput()"
+                   @onchange="ActualizarFechaHora" />
+            <ValidationMessage For="@(() => turno.FechaHora)" />
+            @if (mostrarErrorFechaHora)
+            {
+                <div class="text-danger small">El campo Fecha y Hora es obligatorio.</div>
+            }
+        </div>
+
+        <!-- Campo Duración -->
+        <div class="form-group mb-2">
+            <label for="DuracionMinutos">Duración (minutos): <span class="text-danger">*</span></label>
+            <InputNumber id="DuracionMinutos" class="form-control" @bind-Value="turno.DuracionMinutos" />
+            <ValidationMessage For="@(() => turno.DuracionMinutos)" />
+        </div>
+
+        <!-- Selector de Estado -->
+        <div class="form-group mb-2">
+            <label for="EstadoTurno">Estado: <span class="text-danger">*</span></label>
+            <InputSelect id="EstadoTurno" class="form-select" @bind-Value="turno.EstadoTurno">
+                @foreach (var estado in Enum.GetValues<EstadoTurnoEnum>())
+                {
+                    <option value="@estado">@estado.ToString()</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => turno.EstadoTurno)" />
+        </div>
+
+        <!-- Botones de acción -->
+        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
+            @if (guardando)
+            {
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span>Guardando...</span>
+            }
+            else
+            {
+                <span>Guardar</span>
+            }
+        </button>
+        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+    </EditForm>
+}
+
+@code {
+    // Parámetro que indica si estamos editando (tiene un ID) o creando (ID = 0)
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public int IdTurnoEditado { get; set; }
+
+    // Variables del componente
+    private Turno? turno;
+    private List<Paciente>? pacientes;
+    private List<Profesional>? profesionales;
+    private bool guardando = false;
+    private bool mostrarErrorFechaHora = false;
+
+    // Se ejecuta al inicializar el componente
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Cargar listas de pacientes y profesionales para los dropdowns
+            pacientes = await PacienteService.GetAllAsync(string.Empty);
+            profesionales = await ProfesionalService.GetAllAsync(string.Empty);
+
+            if (IdTurnoEditado != 0)
+            {
+                // Modo edición: cargar el turno existente
+                turno = await TurnoService.GetByIdAsync(IdTurnoEditado);
+                if (turno == null)
+                {
+                    await SweetAlert.FireAsync("Error", "No se encontró el turno", SweetAlertIcon.Error);
+                    turno = new Turno();
+                }
+            }
+            else
+            {
+                // Modo creación: crear un turno nuevo con valores por defecto
+                turno = new Turno
+                {
+                    EstadoTurno = EstadoTurnoEnum.Reservado,
+                    DuracionMinutos = 60
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al cargar datos: {ex.Message}", SweetAlertIcon.Error);
+            turno = new Turno();
+            pacientes = new List<Paciente>();
+            profesionales = new List<Profesional>();
+        }
+    }
+
+    // Convierte la fecha del turno al formato que requiere el input datetime-local
+    private string ObtenerFechaHoraParaInput()
+    {
+        if (turno?.FechaHora != null &&
+            turno.FechaHora != DateTime.MinValue &&
+            turno.FechaHora.Year > 1900)
+        {
+            // Formato requerido: "yyyy-MM-ddTHH:mm"
+            return turno.FechaHora.ToString("yyyy-MM-ddTHH:mm");
+        }
+        return string.Empty;
+    }
+
+    // Actualiza la fecha del turno cuando el usuario cambia el input
+    private void ActualizarFechaHora(ChangeEventArgs e)
+    {
+        if (turno != null && e.Value != null)
+        {
+            var valorFechaHora = e.Value.ToString();
+            if (!string.IsNullOrWhiteSpace(valorFechaHora) && DateTime.TryParse(valorFechaHora, out var fechaHora))
+            {
+                turno.FechaHora = fechaHora;
+                mostrarErrorFechaHora = false;
+            }
+            else
+            {
+                turno.FechaHora = DateTime.MinValue;
+            }
+        }
+    }
+
+    // Guarda el turno (crear o actualizar)
+    private async Task Guardar()
+    {
+        // Validación manual: verificar que la fecha sea válida
+        mostrarErrorFechaHora = turno == null ||
+                               turno.FechaHora == DateTime.MinValue ||
+                               turno.FechaHora.Year < 1900;
+
+        if (mostrarErrorFechaHora)
+        {
+            StateHasChanged();
+            return;
+        }
+
+        try
+        {
+            guardando = true;
+            StateHasChanged();
+
+            if (turno != null)
+            {
+                // Limpiar campos opcionales
+                turno.MotivoCancelacion = null;
+
+                // Limpiar relaciones para evitar referencia circular al serializar
+                turno.Paciente = null;
+                turno.Profesional = null;
+
+                // Gestionar el campo CanceladoPorProfesional
+                if (IdTurnoEditado != 0)
+                {
+                    // Al editar: mantener el valor original de CanceladoPorProfesional
+                    var turnoOriginal = await TurnoService.GetByIdAsync(IdTurnoEditado);
+                    if (turnoOriginal != null)
+                    {
+                        turno.CanceladoPorProfesional = turnoOriginal.CanceladoPorProfesional;
+                    }
+                }
+                else
+                {
+                    // Al crear: siempre es false
+                    turno.CanceladoPorProfesional = false;
+                }
+
+                // Guardar según el modo (crear o editar)
+                if (IdTurnoEditado == 0)
+                {
+                    await TurnoService.AddAsync(turno);
+                    await SweetAlert.FireAsync("Éxito", "Turno agregado correctamente", SweetAlertIcon.Success);
+                }
+                else
+                {
+                    turno.Id = IdTurnoEditado;
+                    await TurnoService.UpdateAsync(turno);
+                    await SweetAlert.FireAsync("Éxito", "Turno actualizado correctamente", SweetAlertIcon.Success);
+                }
+
+                // Redirigir a la lista de turnos
+                NavigationManager.NavigateTo("/turnos");
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al guardar: {ex.Message}", SweetAlertIcon.Error);
+        }
+        finally
+        {
+            guardando = false;
+        }
+    }
+
+    // Cancela la operación y vuelve a la lista de turnos
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/turnos");
+    }
+}

@@ -1,35 +1,80 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject NavigationManager NavigationManager
+@inject FirebaseAuthService AuthService
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Consultorio Integral Web</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-
+        @if (isAuthenticated)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="pacientes">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Pacientes
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="profesionales">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Profesionales
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="contactosemergencia">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Contactos Emergencia
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="turnos">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Turnos
+                </NavLink>
+            </div>
+        }
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pacientes">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Pacientes
+            <NavLink class="nav-link" href="login">
+                <span class="bi bi-login" aria-hidden="true"></span> @textoLogin
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="profesionales">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Profesionales
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="contactosemergencia">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Contactos Emergencia
-            </NavLink>
-        </div>
-
     </nav>
 </div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private bool isAuthenticated = false;
+    //Define el texto del link de login según el estado de autenticación
+    private string textoLogin => isAuthenticated ? "Cerrar sesión" : "Login";
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Pide al servicio y se fija si está autenticado
+        isAuthenticated = await AuthService.IsUserAuthenticated();
+        //Conecta el evento OnChangeLogin con el método ChequeoEstadoLogin
+        AuthService.OnChangeLogin += ChequeoEstadoLogin;
+    }
+
+    public async void ChequeoEstadoLogin()
+    {
+        isAuthenticated = await AuthService.IsUserAuthenticated();
+        //Se redibuja el componente y aparecen los otros menús
+        StateHasChanged();
+
+    }
+}
 

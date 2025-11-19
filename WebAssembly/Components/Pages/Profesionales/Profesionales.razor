@@ -1,6 +1,7 @@
 ﻿@page "/profesionales"
 @inject IProfesionalService ProfesionalService
 @inject NavigationManager NavigationManager
+@inject ILogger<Profesional> Logger
 @inject SweetAlertService SweetAlert
 
 <HeaderPage TitlePage="Profesionales" />
@@ -72,6 +73,7 @@ else
         try
         {
             profesionales = await ProfesionalService.GetAllAsync(string.Empty);
+            Logger.LogInformation($"Profesionales obtenidos {profesionales?.Count}");
         }
         catch (Exception ex)
         {

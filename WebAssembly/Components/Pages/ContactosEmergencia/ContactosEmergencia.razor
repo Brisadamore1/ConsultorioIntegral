@@ -1,6 +1,7 @@
 ﻿@page "/contactosemergencia"
 @inject IGenericService<ContactoEmergencia> ContactoEmergenciaService
 @inject NavigationManager NavigationManager
+@inject ILogger<ContactoEmergencia> Logger
 @inject SweetAlertService SweetAlert
 
 <HeaderPage TitlePage="Contactos Emergencia" />
@@ -82,6 +83,8 @@ else
             StateHasChanged();
 
             contactosemergencia = await ContactoEmergenciaService.GetAllAsync(string.Empty);
+            Logger.LogInformation($"Contactos emergencia obtenidos {contactosemergencia?.Count}");
+
             
             if (contactosemergencia == null)
             {

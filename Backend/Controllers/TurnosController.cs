@@ -21,20 +21,23 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Turno>>> GetTurnos([FromQuery] string? filtro = "")
         {
-            
-            // Arreglar CS1061: Asegurarse de filtrar por una propiedad válida de Turno, como Paciente.Nombre.
-            // Arreglar CS8602: Agregar verificaciones nulas para Paciente y Nombre para evitar problemas de referencia nula.
-
-            return await _context.Turnos.Include(c => c.Paciente)
-               .Where(c => c.Paciente != null && c.Paciente.Nombre != null && c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
-               .ToListAsync();
+            // Incluir tanto Paciente como Profesional en la consulta
+            return await _context.Turnos
+                .Include(c => c.Paciente)
+                .Include(c => c.Profesional)
+                .Where(c => c.Paciente != null && c.Paciente.Nombre != null && c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                .ToListAsync();
         }
 
         // GET: api/Turnos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Turno>> GetTurno(int id)
         {
-            var turno = await _context.Turnos.FindAsync(id);
+            // Incluir las relaciones para obtener datos completos
+            var turno = await _context.Turnos
+                .Include(t => t.Paciente)
+                .Include(t => t.Profesional)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (turno == null)
             {
@@ -105,7 +108,7 @@ namespace Backend.Controllers
 
         private bool TurnoExists(int id)
         {
-            return _context.Deudas.Any(e => e.Id == id);
+            return _context.Turnos.Any(e => e.Id == id);
         }
 
     }

@@ -2,6 +2,7 @@
 @using Newtonsoft.Json
 @inject IGenericService<Paciente> PacienteService
 @inject NavigationManager NavigationManager
+@inject ILogger<Paciente> Logger
 @inject SweetAlertService SweetAlert
 
 <HeaderPage TitlePage="Pacientes"/>
@@ -87,6 +88,8 @@ else
             StateHasChanged();
 
             pacientes = await PacienteService.GetAllAsync(string.Empty);
+            Logger.LogInformation($"Pacientes obtenidos {pacientes?.Count}");
+
             
             if (pacientes == null)
             {
