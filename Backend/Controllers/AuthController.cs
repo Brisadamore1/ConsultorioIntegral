@@ -2,8 +2,12 @@
 using Firebase.Auth.Providers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Service.DTOs;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
 namespace Backend.Controllers
 {
@@ -11,92 +15,51 @@ namespace Backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        FirebaseAuthClient firebaseAuthClient;
-        IConfiguration _configuration;
-        FirebaseAuthConfig _config;
+        private readonly IConfiguration _configuration;
         public AuthController(IConfiguration configuration)
         {
             _configuration = configuration;
-            SetFirebaseConfig();   
-        }
-
-        private void SetFirebaseConfig()
-        {
-            // Configuración de Firebase con proveedor de autenticación por correo electrónico y anónimo
-            _config = new FirebaseAuthConfig
-            {
-                ApiKey = _configuration["ApiKeyFirebase"],
-                AuthDomain = _configuration["AuthDomainFirebase"],
-                Providers = new FirebaseAuthProvider[]
-                {
-                    new EmailProvider()
-
-                },
-            };
-
-            firebaseAuthClient = new FirebaseAuthClient(_config);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            try
-            {
-                var credentials = await firebaseAuthClient.SignInWithEmailAndPasswordAsync
-                    (login.Username, login.Password);
-                if (credentials.User.Info.IsEmailVerified == false)
-                {
+            // Aquí deberías implementar la validación de credenciales
 
-                    return BadRequest("Email no verificado. Verifica tu correo antes de iniciar sesion.");
-                }
-                return Ok(credentials.User.GetIdTokenAsync().Result);
-            }
-            catch (FirebaseAuthException ex)
+            // Por ejemplo, buscar en la base de datos y verificar el password
+            if (model.Username != "admin" || model.Password != "123456")
             {
-                return BadRequest(ex.Reason.ToString());
+                return Unauthorized("Credenciales incorrectas");
             }
-        }
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO register)
-        {
-            try
-            {
-                var user = await firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(register.Email, register.Password, register.Nombre);
-                await SendVerificationEmailAsync(user.User.GetIdTokenAsync().Result);
-                return Ok(user.User.GetIdTokenAsync().Result);
-            }
-            catch (FirebaseAuthException ex)
-            {
-                return BadRequest(new { message = ex.Reason.ToString() });
-            }
-        }
 
-        //[Authorize]
-        [HttpPost("resetpassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] LoginDTO login)
-        {
-            try
+            // Crear la lista de claims (información del token)
+            var claims = new[]
             {
-                await firebaseAuthClient.ResetEmailPasswordAsync(login.Username);
-                return Ok();
-            }
-            catch (FirebaseAuthException ex)
-            {
-                return BadRequest(new { message = ex.Reason.ToString() });
-            }
-        }
+                new Claim(JwtRegisteredClaimNames.Sub, model.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
-        private async Task SendVerificationEmailAsync(string idToken)
-        {
-            var RequestUri = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + _config.ApiKey;
-            using (var client = new HttpClient())
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: jwtSettings["Issuer"],
+                audience: jwtSettings["Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpireMinutes"])),
+                signingCredentials: creds);
+
+            return Ok(new
             {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var content = new StringContent("{\"requestType\":\"VERIFY_EMAIL\",\"idToken\":\"" + idToken + "\"}");
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PostAsync(RequestUri, content);
-                response.EnsureSuccessStatusCode();
-            }
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
         }
+    }
+    // Modelo de datos para login
+    public class LoginModel
+    {
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 }

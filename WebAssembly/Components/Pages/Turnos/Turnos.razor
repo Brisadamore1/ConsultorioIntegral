@@ -36,8 +36,8 @@ else
         </HeaderContent>
         <RowContent>
             <td class="id-column">@context.Id</td>
-            <td class="name-column">@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</td>
-            <td class="name-column">@(context.Profesional != null ? context.Profesional.Nombre : "Sin asignar")</td>
+            <td class="name-column"><strong>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</strong></td>
+            <td class="name-column"><strong>@(context.Profesional != null ? context.Profesional.Nombre : "Sin asignar")</strong></td>
             <td>@FormatearFechaHora(context.FechaHora)</td>
             <td>@context.DuracionMinutos</td>
             <td>

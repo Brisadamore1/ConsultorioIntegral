@@ -39,10 +39,10 @@ else
         </HeaderContent>
         <RowContent>
             <td>@context.Id</td>
-            <td>@context.Nombre</td>
+            <td><strong>@context.Nombre</strong></td>
             <td>@context.Relacion</td>
             <td>@context.Telefono</td>
-            <td>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</td>
+            <td><strong>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</strong></td>
         </RowContent>
     </DataTable>
 }

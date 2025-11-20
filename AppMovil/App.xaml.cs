@@ -7,9 +7,7 @@ namespace AppMovil
         public App()
         {
             InitializeComponent();
-            MainPage = new IniciarSesionView();
-            //int pacienteId = 1; // Aquí puedes establecer el ID del paciente que deseas cargar
-            //MainPage = new PerfilView(pacienteId); 
+            MainPage = new ConsultorioShell();
         }
     }
 }

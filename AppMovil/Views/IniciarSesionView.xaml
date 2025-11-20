@@ -4,7 +4,8 @@
              x:Class="AppMovil.Views.IniciarSesionView"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              BackgroundColor="White"
-             Title="IniciarSesionView">
+             Title="IniciarSesionView"
+             NavigationPage.HasNavigationBar="False">
     <!-- Cada vez que se hace bindig reconoce los elementos que tiene el view model -->
     <ContentPage.BindingContext>
         <viewModels:IniciarSesionViewModel />
@@ -45,7 +46,7 @@
                     </Border.StrokeShape>
                     <Entry Placeholder="tu@email.com"
                         Keyboard="Email"
-                        Text="{Binding Email}"
+                        Text="{Binding Mail}"
                         BackgroundColor="Transparent"
                         TextColor="Black"
                         PlaceholderColor="#999"

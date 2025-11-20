@@ -1,65 +1,99 @@
-﻿using AppMovil.Class;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
+using Firebase.Auth.Repository;
 
 namespace AppMovil.ViewModels
 {
-    public class IniciarSesionViewModel : ObjectNotification
+    public partial class IniciarSesionViewModel : ObservableObject
     {
+        public readonly FirebaseAuthClient _clientAuth;
+        private FileUserRepository _userRepository;
+        private UserInfo _userInfo;
+        private FirebaseCredential _firebaseCredential;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(IniciarSesionCommand))]
+        private string mail;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(IniciarSesionCommand))]
+        private string password;
+
+        [ObservableProperty]
+        private bool rememberpassword;
+
+        public IRelayCommand IniciarSesionCommand { get; }
+        public IRelayCommand RegistrarseCommand { get; }
         public IniciarSesionViewModel()
         {
-            //Cuando se inicializa el viewmodel, se inicializan los comandos. Se asigna a ese command y le pasas por parametros el metodo que se va a ejecutar cuando se llame al comando. El command esta conectado con un metodo. Cuando cumple las condiciones la interfaz grafica se va a encender el boton. Una interfaz reactiva.
-            IniciarSesionCommand = new Command(IniciarSesion, PermitirIniciarSesion);
+            _clientAuth = new FirebaseAuthClient(new FirebaseAuthConfig()
+            {
+                ApiKey = "AIzaSyBej0cIsKLO_UgPNjp5UvJemxmuwNJhePY",
+                AuthDomain = "consultoriointegral-22815.firebaseapp.com",
+                Providers = new Firebase.Auth.Providers.FirebaseAuthProvider[]
+                {
+                    new EmailProvider()
+                }
+            });
+            _userRepository = new FileUserRepository("ConsultorioIntegral");
+            ChequearSiHayUsuarioAlmacenado();
+
+            IniciarSesionCommand = new RelayCommand(IniciarSesion, PermitirIniciarSesion);
+            RegistrarseCommand = new RelayCommand(Registrarse);
         }
 
-        private bool PermitirIniciarSesion(object arg)
+        private async void Registrarse()
         {
-            //Si email no esta nulo y password no esta nulo, devuelve true, si no false.
-            return !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
+            await Shell.Current.GoToAsync("Registrarse");
         }
 
-        private void IniciarSesion(object obj)
+        private async void ChequearSiHayUsuarioAlmacenado()
         {
-           App.Current.MainPage.DisplayAlert("Iniciar Sesión", "Iniciando Sesión", "Aceptar"); 
-        }
+            if (_userRepository.UserExists())
+            {
+                (_userInfo, _firebaseCredential) = _userRepository.ReadUser();
 
-        private string email;
-		public string Email
-		{
-			get { return email; }
-			set { email = value;
-				OnPropertyChanged();
-				IniciarSesionCommand.ChangeCanExecute(); // Actualiza el estado del comando cuando cambia el email. Evalua si puede llegar a ejecutarse ese boton.
+                var shellconsultorio = (ConsultorioShell)App.Current.MainPage;
+                shellconsultorio.EnableAppAfterLogin();
             }
-		}
-
-		private string password;
-		public string Password
-		{
-			get { return password; }
-			set { password = value;
-				OnPropertyChanged();
-				IniciarSesionCommand.ChangeCanExecute(); // Actualiza el estado del comando cuando cambia la contraseña. Evalua si puede llegar a ejecutarse ese boton.
-            }
-		}
-
-		private bool rememberpassword;
-		public bool Rememberpassword
+        }
+        public bool PermitirIniciarSesion()
         {
-			get { return rememberpassword; }
-			set { rememberpassword = value;
-				OnPropertyChanged();
-			}
-		}
+            return !string.IsNullOrEmpty(Mail) && !string.IsNullOrEmpty(Password);
+        }
 
-        //Los command se usan para conectar la vista con el viewmodel en los botones.
-        //Se definen propiedades del tipo Command (orden), tiene la particularidad de que solo se inicializan con get.
-        //La parte grafica va a estar conectada con el command y cuando se pulse el boton se va a ejecutar el metodo que le pasamos por parametro.
-        //Se conectan con la parte grafica haciendole binding en los botones.
-        public Command IniciarSesionCommand { get; }
-        public Command RegistrarseCommand { get; }
+        private async void IniciarSesion()
+        {
+            try
+            {
+
+                var userCredential = await _clientAuth.SignInWithEmailAndPasswordAsync(mail, password);
+                if (userCredential.User.Info.IsEmailVerified == false)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Debe verificar su correo electrónico", "Ok");
+                    return;
+                }
+
+                if (rememberpassword)
+                {
+                    _userRepository.SaveUser(userCredential.User);
+                }
+                else
+                {
+                    _userRepository.DeleteUser();
+                }
+
+                var shellconsultorio = (ConsultorioShell)App.Current.MainPage;
+                shellconsultorio.EnableAppAfterLogin();
+
+            }
+            catch (FirebaseAuthException error)
+            {
+                await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Ocurrió un problema:" + error.Reason, "Ok");
+
+            }
+        }
     }
 }
