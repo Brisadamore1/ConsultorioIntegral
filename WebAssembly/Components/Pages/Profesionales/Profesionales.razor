@@ -4,60 +4,47 @@
 @inject ILogger<Profesional> Logger
 @inject SweetAlertService SweetAlert
 
-<HeaderPage TitlePage="Profesionales" />
+<HeaderPage 
+    TitlePage="Profesionales"
+    SubtitlePage="Control y organización del equipo médico del consultorio."
+    ButtonText="Nuevo Profesional"
+    OnButtonClick="AgregarProfesional" />
 
 @if (profesionales == null)
 {
     <p><em> Obteniendo lista de profesionales...</em></p>
 }
+else if (!profesionales.Any())
+{
+    <div class="alert alert-info">No hay profesionales registrados</div>
+}
 else
 {
-    <button class="btn btn-primary mb-3" @onclick="AgregarProfesional">Agregar Nuevo Profesional</button>
-
-    @if (!profesionales.Any())
-    {
-        <div class="alert alert-info">No hay profesionales registrados</div>
-    }
-    else
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Profesión</th>
-                    <th>Mátricula</th>
-                    <th>Especialidad</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var profesional in profesionales)
-                {
-                    <tr>
-                        <td>@profesional.Id</td>
-                        <td>@profesional.Nombre</td>
-                        <td>@profesional.Profesion</td>
-                        <td>@profesional.Matricula</td>
-                        <td>@profesional.Especialidad</td>
-                        <td>@profesional.Email</td>
-                        <td>@profesional.Telefono</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning" @onclick="() => EditarProfesional(profesional.Id)">
-                                Editar
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(profesional)">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+    <DataTable TItem="Profesional" 
+               Items="profesionales" 
+               OnEdit="EditarProfesional"
+               OnDelete="Eliminar"
+               EmptyMessage="No hay profesionales registrados">
+        <HeaderContent>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Profesión</th>
+            <th>Matrícula</th>
+            <th>Especialidad</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th class="text-center">Acciones</th>
+        </HeaderContent>
+        <RowContent>
+            <td class="id-column">@context.Id</td>
+            <td class="name-column">@context.Nombre</td>
+            <td>@context.Profesion</td>
+            <td>@context.Matricula</td>
+            <td>@context.Especialidad</td>
+            <td>@context.Email</td>
+            <td>@context.Telefono</td>
+        </RowContent>
+    </DataTable>
 }
 
 @code {
@@ -84,13 +71,12 @@ else
 
     private void AgregarProfesional()
     {
-        // Redirigir a la página para agregar una nueva localidad
         NavigationManager.NavigateTo("/nuevoeditarprofesional");
     }
 
-    private void EditarProfesional(int id)
+    private void EditarProfesional(Profesional profesional)
     {
-        NavigationManager.NavigateTo($"/nuevoeditarprofesional?IdProfesionalEditado={id}");
+        NavigationManager.NavigateTo($"/nuevoeditarprofesional?IdProfesionalEditado={profesional.Id}");
     }
 
     private async Task Eliminar(Profesional profesional)

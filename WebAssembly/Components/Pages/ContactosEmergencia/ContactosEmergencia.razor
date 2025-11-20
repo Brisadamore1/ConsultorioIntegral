@@ -4,7 +4,11 @@
 @inject ILogger<ContactoEmergencia> Logger
 @inject SweetAlertService SweetAlert
 
-<HeaderPage TitlePage="Contactos Emergencia" />
+<HeaderPage 
+    TitlePage="Contactos de Emergencia"
+    SubtitlePage="Mantenga actualizada la información de contactos de emergencia de cada paciente para responder rápidamente ante cualquier situación crítica."
+    ButtonText="Nuevo Contacto de Emergencia"
+    OnButtonClick="AgregarContactoEmergencia" />
 
 @if (cargando)
 {
@@ -18,50 +22,29 @@ else if (!string.IsNullOrEmpty(mensajeError))
         <button class="btn btn-primary" @onclick="CargarContactosEmergencia">Reintentar</button>
     </div>
 }
-else if (contactosemergencia == null || !contactosemergencia.Any())
-{
-    <button class="btn btn-primary mb-3" @onclick="AgregarContactoEmergencia">Agregar Nuevo Contacto emergencia</button>
-    <div class="alert alert-info">No hay contactos de emergencia registrados</div>
-}
 else
 {
-    <button class="btn btn-primary mb-3" @onclick="AgregarContactoEmergencia">Agregar Nuevo Contacto emergencia</button>
-    
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Relación</th>
-                <th>Teléfono</th>
-                <th>Paciente</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var contactoemergencia in contactosemergencia)
-            {
-                <tr>
-                    <td>@contactoemergencia.Id</td>
-                    <td>@contactoemergencia.Nombre</td>
-                    <td>@contactoemergencia.Relacion</td>
-                    <td>@contactoemergencia.Telefono</td>
-                    <td>@(contactoemergencia.Paciente != null ? contactoemergencia.Paciente.Nombre : "Sin asignar")</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning" @onclick="() => EditarContactoEmergencia(contactoemergencia.Id)">
-                            Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(contactoemergencia)">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <DataTable TItem="ContactoEmergencia" 
+               Items="contactosemergencia" 
+               OnEdit="EditarContactoEmergenciaObj"
+               OnDelete="Eliminar"
+               EmptyMessage="No hay contactos de emergencia registrados">
+        <HeaderContent>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Relación</th>
+            <th>Teléfono</th>
+            <th>Paciente</th>
+            <th class="text-center">Acciones</th>
+        </HeaderContent>
+        <RowContent>
+            <td>@context.Id</td>
+            <td>@context.Nombre</td>
+            <td>@context.Relacion</td>
+            <td>@context.Telefono</td>
+            <td>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</td>
+        </RowContent>
+    </DataTable>
 }
 
 @code {
@@ -85,7 +68,6 @@ else
             contactosemergencia = await ContactoEmergenciaService.GetAllAsync(string.Empty);
             Logger.LogInformation($"Contactos emergencia obtenidos {contactosemergencia?.Count}");
 
-            
             if (contactosemergencia == null)
             {
                 contactosemergencia = new List<ContactoEmergencia>();
@@ -109,9 +91,9 @@ else
         NavigationManager.NavigateTo("/nuevoeditarcontactoemergencia");
     }
 
-    private void EditarContactoEmergencia(int id)
+    private void EditarContactoEmergenciaObj(ContactoEmergencia contacto)
     {
-        NavigationManager.NavigateTo($"/nuevoeditarcontactoemergencia?IdContactoEmergenciaEditado={id}");
+        NavigationManager.NavigateTo($"/nuevoeditarcontactoemergencia?IdContactoEmergenciaEditado={contacto.Id}");
     }
 
     private async Task Eliminar(ContactoEmergencia contactoemergencia)

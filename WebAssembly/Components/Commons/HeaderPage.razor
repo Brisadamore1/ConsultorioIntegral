@@ -1,8 +1,33 @@
 ﻿<h2>@TitlePage</h2>
 
+@if (!string.IsNullOrEmpty(SubtitlePage))
+{
+    <p class="subtitle-text">
+        @SubtitlePage
+    </p>
+}
+
+@if (!string.IsNullOrEmpty(ButtonText) && OnButtonClick.HasDelegate)
+{
+    <div class="button-container mb-4">
+        <button class="btn btn-custom-dark" @onclick="OnButtonClick">
+            <span class="me-2">+</span>
+            @ButtonText
+        </button>
+    </div>
+}
+
 @code {
     [Parameter]
     [EditorRequired]
     public string TitlePage { get; set; } = string.Empty;
 
+    [Parameter]
+    public string SubtitlePage { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ButtonText { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnButtonClick { get; set; }
 }

@@ -4,76 +4,53 @@
 @inject ILogger<Turno> Logger
 @inject SweetAlertService SweetAlert
 
-<HeaderPage TitlePage="Turnos" />
+<HeaderPage 
+    TitlePage="Turnos"
+    SubtitlePage="Agenda de turnos para organizar citas y controlar asistencia."
+    ButtonText="Nuevo Turno"
+    OnButtonClick="AgregarTurno" />
 
-@if (cargando)
+@if (turnos == null)
 {
     <p><em>Cargando turnos...</em></p>
 }
-else if (!string.IsNullOrEmpty(mensajeError))
+else if (!turnos.Any())
 {
-    <div class="alert alert-danger">
-        <h5>Error al cargar turnos:</h5>
-        <p>@mensajeError</p>
-        <button class="btn btn-primary" @onclick="CargarTurnos">Reintentar</button>
-    </div>
-}
-else if (turnos == null || !turnos.Any())
-{
-    <button class="btn btn-primary mb-3" @onclick="AgregarTurno">Agregar Nuevo Turno</button>
     <div class="alert alert-info">No hay turnos registrados</div>
 }
 else
 {
-    <button class="btn btn-primary mb-3" @onclick="AgregarTurno">Agregar Nuevo Turno</button>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Paciente</th>
-                <th>Profesional</th>
-                <th>Fecha y Hora</th>
-                <th>Duración (min)</th>
-                <th>Estado</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var turno in turnos)
-            {
-                <tr>
-                    <td>@turno.Id</td>
-                    <td>@(turno.Paciente != null ? turno.Paciente.Nombre : "Sin asignar")</td>
-                    <td>@(turno.Profesional != null ? turno.Profesional.Nombre : "Sin asignar")</td>
-                    <td>@FormatearFechaHora(turno.FechaHora)</td>
-                    <td>@turno.DuracionMinutos</td>
-                    <td>
-                        <span class="badge @ObtenerClaseEstado(turno.EstadoTurno)">
-                            @turno.EstadoTurno.ToString()
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-warning" @onclick="() => EditarTurno(turno.Id)">
-                            Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(turno)">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <DataTable TItem="Turno" 
+               Items="turnos" 
+               OnEdit="EditarTurnoObj"
+               OnDelete="Eliminar"
+               EmptyMessage="No hay turnos registrados">
+        <HeaderContent>
+            <th>ID</th>
+            <th>Paciente</th>
+            <th>Profesional</th>
+            <th>Fecha y Hora</th>
+            <th>Duración (min)</th>
+            <th>Estado</th>
+            <th class="text-center">Acciones</th>
+        </HeaderContent>
+        <RowContent>
+            <td class="id-column">@context.Id</td>
+            <td class="name-column">@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</td>
+            <td class="name-column">@(context.Profesional != null ? context.Profesional.Nombre : "Sin asignar")</td>
+            <td>@FormatearFechaHora(context.FechaHora)</td>
+            <td>@context.DuracionMinutos</td>
+            <td>
+                <span class="badge @ObtenerClaseEstado(context.EstadoTurno)">
+                    @context.EstadoTurno.ToString()
+                </span>
+            </td>
+        </RowContent>
+    </DataTable>
 }
 
 @code {
     private List<Turno>? turnos;
-    private bool cargando = true;
-    private string? mensajeError;
 
     protected override async Task OnInitializedAsync()
     {
@@ -84,51 +61,21 @@ else
     {
         try
         {
-            cargando = true;
-            mensajeError = null;
-            StateHasChanged();
-
-            // Obtener todos los turnos del servicio
             turnos = await TurnoService.GetAllAsync(string.Empty);
             Logger.LogInformation($"Turnos obtenidos: {turnos?.Count}");
 
-            // Filtrar turnos cancelados por el profesional (no se muestran)
             if (turnos != null)
             {
                 turnos = turnos.Where(t => !t.CanceladoPorProfesional).ToList();
             }
-            else
-            {
-                turnos = new List<Turno>();
-                mensajeError = "El servicio devolvió una respuesta nula";
-            }
-        }
-        catch (HttpRequestException httpEx)
-        {
-            // Error de conexión con el backend
-            mensajeError = $"Error de conexión: {httpEx.Message}. Verifica que el Backend esté ejecutándose.";
-            turnos = new List<Turno>();
-        }
-        catch (JsonException jsonEx)
-        {
-            // Error al deserializar los datos
-            mensajeError = $"Error al deserializar los datos: {jsonEx.Message}.";
-            turnos = new List<Turno>();
         }
         catch (Exception ex)
         {
-            // Error genérico
-            mensajeError = $"Error inesperado: {ex.Message}";
+            await SweetAlert.FireAsync("Error", $"Error al cargar turnos: {ex.Message}", SweetAlertIcon.Error);
             turnos = new List<Turno>();
-        }
-        finally
-        {
-            cargando = false;
-            StateHasChanged();
         }
     }
 
-    // Formatea la fecha y hora para mostrar en la tabla
     private string FormatearFechaHora(DateTime fechaHora)
     {
         if (fechaHora == DateTime.MinValue || fechaHora.Year < 1900)
@@ -138,7 +85,6 @@ else
         return fechaHora.ToString("dd/MM/yyyy HH:mm");
     }
 
-    // Devuelve la clase CSS del badge según el estado del turno
     private string ObtenerClaseEstado(EstadoTurnoEnum estado)
     {
         return estado switch
@@ -152,24 +98,20 @@ else
         };
     }
 
-    // Navega a la página de creación de turno
     private void AgregarTurno()
     {
         NavigationManager.NavigateTo("/nuevoeditarturno");
     }
 
-    // Navega a la página de edición de turno
-    private void EditarTurno(int id)
+    private void EditarTurnoObj(Turno turno)
     {
-        NavigationManager.NavigateTo($"/nuevoeditarturno?IdTurnoEditado={id}");
+        NavigationManager.NavigateTo($"/nuevoeditarturno?IdTurnoEditado={turno.Id}");
     }
 
-    // Elimina un turno con confirmación
     private async Task Eliminar(Turno turno)
     {
         try
         {
-            // Mostrar confirmación antes de eliminar
             var respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Turno",
@@ -182,7 +124,6 @@ else
 
             if (respuesta.IsConfirmed)
             {
-                // Eliminar el turno y recargar la lista
                 await TurnoService.DeleteAsync(turno.Id);
                 await SweetAlert.FireAsync("Eliminado", "El turno ha sido eliminado correctamente", SweetAlertIcon.Success);
                 await CargarTurnos();
