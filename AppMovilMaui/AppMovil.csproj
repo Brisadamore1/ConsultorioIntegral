@@ -42,6 +42,9 @@
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
@@ -51,6 +54,15 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Remove="Resources\Images\cat.png" />
+		<None Remove="Resources\Images\dog.png" />
+		<None Remove="Resources\Images\paw.png" />
+		<None Remove="Resources\Images\photo.jpg" />
+		<None Remove="Resources\Images\random.png" />
+		<None Remove="Resources\Images\xamarinstore.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,28 +78,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="ConsultorioShell.xaml.cs">
-	    <DependentUpon>ConsultorioShell.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\AddEditProfesionalView.xaml.cs">
-	    <DependentUpon>AddEditProfesionalView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\IniciarSesionView.xaml.cs">
-	    <DependentUpon>IniciarSesionView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\PerfilView.xaml.cs">
-	    <DependentUpon>PerfilView.xaml</DependentUpon>
-	  </Compile>
-	<Compile Update="Views\ProfesionalesView.xaml.cs">
-		<DependentUpon>ProfesionalesView.xaml</DependentUpon>
-	</Compile>
-
-	<Compile Update="Views\RegistrarseView.xaml.cs">
-		<DependentUpon>RegistrarseView.xaml</DependentUpon>
-	</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
+	  <MauiXaml Update="ConsultorioShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ContentViews\FlyoutFooter.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -109,10 +102,6 @@
 	  <MauiXaml Update="Views\RegistrarseView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Resources\Splash\" />
 	</ItemGroup>
 
 </Project>
