@@ -56,6 +56,20 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <Content Include="Platforms\Windows\Assets\splashscreen.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
+		<Content Include="Platforms\Windows\Assets\appicon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
@@ -81,6 +95,13 @@
 	  <Compile Update="Views\PerfilView.xaml.cs">
 	    <DependentUpon>PerfilView.xaml</DependentUpon>
 	  </Compile>
+	<Compile Update="Views\ProfesionalesView.xaml.cs">
+		<DependentUpon>ProfesionalesView.xaml</DependentUpon>
+	</Compile>
+
+	<Compile Update="Views\RegistrarseView.xaml.cs">
+		<DependentUpon>RegistrarseView.xaml</DependentUpon>
+	</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
