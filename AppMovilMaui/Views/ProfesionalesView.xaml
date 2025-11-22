@@ -2,9 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
+             xmlns:converters="clr-namespace:AppMovilMaui.Converters"
              x:Class="AppMovil.Views.ProfesionalesView"
              Title="Lista de profesionales"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringNotNullOrEmptyConverter x:Key="StringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.BindingContext>
         <viewModels:ProfesionalesViewModel />
     </ContentPage.BindingContext>
@@ -21,6 +27,15 @@
                    VerticalOptions="Center"
                    Margin="0,10,0,10"/>
         </HorizontalStackLayout>
+
+        <!-- Mensaje de error o vacío -->
+        <Label Grid.Row="1"
+               Text="{Binding MensajeError}"
+               TextColor="Red"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Margin="0,10,0,10"
+               IsVisible="{Binding MensajeError, Converter={StaticResource StringNotNullOrEmptyConverter}}" />
 
         <ScrollView Grid.Row="1">
             <ListView 

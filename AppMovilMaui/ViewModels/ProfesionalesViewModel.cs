@@ -60,6 +60,13 @@ namespace AppMovil.ViewModels
             }
         }
 
+        private string _mensajeError;
+        public string MensajeError
+        {
+            get => _mensajeError;
+            set { _mensajeError = value; OnPropertyChanged(); }
+        }
+
         public Command ObtenerProfesionalesCommand { get; }
         public Command FiltrarProfesionalesCommand { get; }
         public Command AgregarProfesionalCommand { get; }
@@ -111,17 +118,22 @@ namespace AppMovil.ViewModels
         {
             try
             {
+                MensajeError = string.Empty;
                 FilterProfessionals = string.Empty;
                 IsRefreshing = true;
                 var result = await profesionalService.GetAllAsync();
                 profesionalesListToFilter = result ?? new List<Profesional>();
                 Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+                if (Profesionales.Count == 0)
+                {
+                    MensajeError = "No se encontraron profesionales.";
+                }
             }
             catch (Exception ex)
             {
+                MensajeError = $"Error al obtener profesionales: {ex.Message}";
                 profesionalesListToFilter = new List<Profesional>();
                 Profesionales = new ObservableCollection<Profesional>();
-                // Opcional: puedes mostrar un mensaje de error en la UI si tienes mecanismo
             }
             finally
             {

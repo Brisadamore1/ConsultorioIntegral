@@ -14,7 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Cliente HTTP para comunicarse con el backend
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://localhost:7214/")
+    BaseAddress = new Uri("https://backendconsultorio.azurewebsites.net/api/")
 });
 
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));

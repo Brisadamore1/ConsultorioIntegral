@@ -23,32 +23,33 @@ namespace Service.Services
 
         public GenericService(HttpClient? httpClient = null, IMemoryCache? memoryCache = null)
         {
-            _httpClient = httpClient??new HttpClient();
             _memoryCache = memoryCache;
-
-            //Esto es para que no importe si las propiedades del json vienen en mayuscula o minuscula.  
-            _options = new JsonSerializerOptions { 
+            _options = new JsonSerializerOptions {
                 PropertyNameCaseInsensitive = true,
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
-
-            // Selección remoto/local
             var urlApi = Properties.Resources.UrlApi;
             if (Properties.Resources.Remoto == "false")
                 urlApi = Properties.Resources.UrlApiLocal;
 
-            // Crear HttpClient con handler que acepta cualquier certificado (solo desarrollo)
+#if NET8_0_OR_GREATER && (NET8_0_OR_GREATER_WINDOWS || NET8_0_OR_GREATER_ANDROID || NET8_0_OR_GREATER_IOS || NET8_0_OR_GREATER_MACCATALYST)
+            // MAUI, Desktop, etc: usar handler personalizado
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
             _httpClient = httpClient ?? new HttpClient(handler)
             {
                 BaseAddress = new Uri(urlApi)
             };
-
+#else
+            // Blazor WebAssembly y otros: usar solo el HttpClient inyectado
+            _httpClient = httpClient ?? new HttpClient()
+            {
+                BaseAddress = new Uri(urlApi)
+            };
+#endif
             //este endpoint hace referencia a la api controller que se va a consumir pero en minuscula
-            _endpoint = $"api/{ApiEndpoints.GetEndpoint(typeof(T).Name)}";
+            _endpoint = ApiEndpoints.GetEndpoint(typeof(T).Name); // solo 'profesionales'
 
 
         }
@@ -97,16 +98,19 @@ namespace Service.Services
 
         public virtual async Task<List<T>?> GetAllAsync(string? filtro = "")
         {
-            //SetAuthorizationHeader();
-            var response = await _httpClient.GetAsync($"{_endpoint}?filtro={filtro}");
+            string url = string.IsNullOrEmpty(filtro) ? _endpoint : $"{_endpoint}?filtro={filtro}";
+            Console.WriteLine($"[DEBUG] URL llamada: {url}");
+            var response = await _httpClient.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"[DEBUG] Status: {response.StatusCode}, Content: {content}");
+
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<List<T>>(content, _options);
             }
             else
             {
-                throw new Exception("Error al obtener los datos");
+                throw new Exception($"Error al obtener los datos. Status: {response.StatusCode}, Content: {content}");
             }
            
         }
