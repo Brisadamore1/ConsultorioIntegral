@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.ProfesionalesView"
-             Title="Lista de profesionales">
+             Title="Lista de profesionales"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:ProfesionalesViewModel />
     </ContentPage.BindingContext>
@@ -11,41 +12,51 @@
     <Grid RowDefinitions="Auto, *, Auto, Auto">
         <HorizontalStackLayout Grid.Row="0">
             <Label Text="Buscar:"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Margin="0,10,0,10"
-               Grid.Row="0"/>
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0,10,0,10"/>
             <Entry Placeholder="Buscar profesionales..."
-           Text="{Binding FilterProfessionals}"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           Margin="0,10,0,10"
-           />
-
+                   Text="{Binding FilterProfessionals}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0,10,0,10"/>
         </HorizontalStackLayout>
         
-        <ScrollView Grid.Row="1">
-            <ListView 
-         ItemsSource="{Binding Profesionales}"
-         IsPullToRefreshEnabled="True"
-         RefreshCommand="{Binding ObtenerProfesionalesCommand}"
-         IsRefreshing="{Binding IsRefreshing}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="10">
-                                <Image Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />
-                                <StackLayout Orientation="Vertical" Padding="10,0,0,0">
-                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" />
-                                    <Label Text="{Binding Matricula}" />
-                                    <Label Text="{Binding Especialidad}" />
-                                    <Label Text="{Binding Email}" />
-                                </StackLayout>
+        <ListView 
+             Grid.Row="1"
+             ItemsSource="{Binding Profesionales}"
+             SelectedItem="{Binding SelectedProfessional, Mode=TwoWay}"
+             SelectionMode="Single"
+             IsPullToRefreshEnabled="True"
+             RefreshCommand="{Binding ObtenerProfesionalesCommand}"
+             IsRefreshing="{Binding IsRefreshing}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Image Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />
+                            <StackLayout Orientation="Vertical" Padding="10,0,0,0">
+                                <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                <Label Text="{Binding Matricula}" />
+                                <Label Text="{Binding Especialidad}" />
+                                <Label Text="{Binding Email}" />
                             </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Agregar profesional"
+            Command="{Binding AgregarProfesionalCommand}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0,10,0,10"
+            Grid.Row="2"/>
+        <Button Text="Editar profesional"
+            Command="{Binding EditarProfesionalCommand}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0,10,0,10"
+            Grid.Row="3"/>
     </Grid>
 </ContentPage>

@@ -9,8 +9,8 @@
         <viewModels:AddEditProfesionalViewModel />
     </ContentPage.BindingContext>
     <VerticalStackLayout>
-        
-        <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*">
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
             <Label Text="Nombre del profesional:"
                    Grid.Column="0"
                    Grid.Row="0"
@@ -24,57 +24,57 @@
                    VerticalOptions="Center"/>
             <Label Text="Profesión:"
                    Grid.Column="0"
-                   Grid.Row="0"
+                   Grid.Row="1"
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
             <Entry Placeholder="Profesión"
                    Text="{Binding Profesion}"
                    Grid.Column="1"
-                   Grid.Row="0"
+                   Grid.Row="1"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
             <Label Text="Mátricula:"
                    Grid.Column="0"
-                   Grid.Row="0"
+                   Grid.Row="2"
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
             <Entry Placeholder="Mátricula"
                    Text="{Binding Matricula}"
                    Grid.Column="1"
-                   Grid.Row="0"
+                   Grid.Row="2"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
             <Label Text="Especialidad:"
                    Grid.Column="0"
-                   Grid.Row="0"
+                   Grid.Row="3"
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
             <Entry Placeholder="Especialidad"
                    Text="{Binding Especialidad}"
                    Grid.Column="1"
-                   Grid.Row="0"
+                   Grid.Row="3"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
             <Label Text="Email:"
                    Grid.Column="0"
-                   Grid.Row="0"
+                   Grid.Row="4"
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
             <Entry Placeholder="Email"
                    Text="{Binding Mail}"
                    Grid.Column="1"
-                   Grid.Row="0"
+                   Grid.Row="4"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
             <Label Text="Teléfono:"
                    Grid.Column="0"
-                   Grid.Row="0"
+                   Grid.Row="5"
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
             <Entry Placeholder="Teléfono"
                    Text="{Binding Telefono}"
                    Grid.Column="1"
-                   Grid.Row="0"
+                   Grid.Row="5"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
         </Grid>

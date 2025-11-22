@@ -60,5 +60,6 @@
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate views:IniciarSesionView}"
-        Route="Login" />
+        Route="Login" 
+        IsVisible="{Binding IsUserLogout}"/>
 </Shell>

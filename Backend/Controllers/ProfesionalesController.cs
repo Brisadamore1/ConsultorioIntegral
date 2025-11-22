@@ -24,9 +24,10 @@ namespace Backend.Controllers
         {
             return await _context.Profesionales
                .Include(p => p.Pacientes)
-               .Where(c => c.Nombre.ToUpper().Contains(filtro.ToUpper()))
+               .Where(c => string.IsNullOrEmpty(filtro) || c.Nombre.ToUpper().Contains(filtro.ToUpper()))
                .ToListAsync();
         }
+
         [HttpPost("withfilter")]
         public async Task<ActionResult<IEnumerable<Profesional>>> GetProfesionalwithfilter(FilterProfesionalDTO filter)
         {
@@ -49,7 +50,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("deleteds")]
-        public async Task<ActionResult<IEnumerable<Profesional>>> GetDeletedsLibros()
+        public async Task<ActionResult<IEnumerable<Profesional>>> GetDeletedsProfesionales()
         {
             return await _context.Profesionales
                 .AsNoTracking()
@@ -61,7 +62,10 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Profesional>> GetProfesional(int id)
         {
-            var profesional = await _context.Profesionales.FindAsync(id);
+            var profesional = await _context.Profesionales
+                .Include(p => p.Pacientes)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.Id.Equals(id));
 
             if (profesional == null)
             {

@@ -8,15 +8,14 @@ public partial class ProfesionalesView : ContentPage
     public ProfesionalesView()
     {
         InitializeComponent();
-        BindingContext = new ProfesionalesViewModel();
+        //BindingContext = new ProfesionalesViewModel();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is ProfesionalesViewModel vm)
-        {
-            vm.ObtenerProfesionalesCommand.Execute(null);
-        }
+        var viewmodel = this.BindingContext as ProfesionalesViewModel;
+        viewmodel.ObtenerProfesionales();
+        viewmodel.SelectedProfessional = null;
     }
 }
