@@ -47,6 +47,7 @@ namespace AppMovil.ViewModels
             }
         }
 
+        //Esta lista es para guardar todos los profesionales y luego filtrar sobre ella
         private List<Profesional>? profesionalesListToFilter;
 
         private Profesional? selectedProfessional;
