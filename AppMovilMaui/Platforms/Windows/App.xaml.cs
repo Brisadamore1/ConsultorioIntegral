@@ -17,6 +17,13 @@ namespace AppMovil.WinUI
         public App()
         {
             this.InitializeComponent();
+
+            // Manejador global de excepciones para evitar que la app se detenga
+            Microsoft.UI.Xaml.Application.Current.UnhandledException += (sender, e) =>
+            {
+                // Puedes registrar el error si lo deseas: e.Message, e.Exception
+                e.Handled = true; // Evita que la app se cierre o se detenga la depuración
+            };
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
