@@ -25,6 +25,7 @@ namespace Service.Services
         {
             _httpClient = httpClient??new HttpClient();
             _memoryCache = memoryCache;
+
             //Esto es para que no importe si las propiedades del json vienen en mayuscula o minuscula.  
             _options = new JsonSerializerOptions { 
                 PropertyNameCaseInsensitive = true,
@@ -37,13 +38,17 @@ namespace Service.Services
             if (Properties.Resources.Remoto == "false")
                 urlApi = Properties.Resources.UrlApiLocal;
 
-            //_httpClient.BaseAddress = new Uri(urlApi);
+            // Crear HttpClient con handler que acepta cualquier certificado (solo desarrollo)
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+            _httpClient = httpClient ?? new HttpClient(handler)
+            {
+                BaseAddress = new Uri(urlApi)
+            };
 
             //este endpoint hace referencia a la api controller que se va a consumir pero en minuscula
             _endpoint = $"api/{ApiEndpoints.GetEndpoint(typeof(T).Name)}";
-
-            Console.WriteLine("URL completa que se va a llamar: " + _httpClient.BaseAddress + _endpoint);
-
 
 
         }

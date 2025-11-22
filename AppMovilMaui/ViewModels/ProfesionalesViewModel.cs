@@ -112,22 +112,11 @@ namespace AppMovil.ViewModels
 
         public async Task ObtenerProfesionales()
         {
-            try
-            {
-                IsRefreshing = true;
-                profesionalesListToFilter = await profesionalService.GetAllAsync();
-                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter ?? new List<Profesional>());
-            }
-            catch (Exception ex)
-            {
-                // mostrar error
-                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
+            FilterProfessionals = string.Empty;
+            IsRefreshing = true;
+            profesionalesListToFilter = await profesionalService.GetAllAsync();
+            Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+            IsRefreshing = false;
         }
     }
 }

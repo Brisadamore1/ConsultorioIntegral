@@ -8,7 +8,6 @@ public partial class ProfesionalesView : ContentPage
     public ProfesionalesView()
     {
         InitializeComponent();
-        //BindingContext = new ProfesionalesViewModel();
     }
 
     protected override void OnAppearing()
