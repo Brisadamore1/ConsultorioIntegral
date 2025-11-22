@@ -24,13 +24,13 @@ FirebaseApp.Create(new AppOptions
     Credential = credential
 });
 
-//builder.Services
-//    .AddAuthentication("Firebase")
-//    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("Firebase", null);
+builder.Services
+    .AddAuthentication("Firebase")
+    .AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>("Firebase", null);
 
-//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();
 
-// Add services to the container.
+// Add services to the container.   
 
 builder.Services.AddControllers();
 var configuration = new ConfigurationBuilder()

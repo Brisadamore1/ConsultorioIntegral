@@ -32,13 +32,18 @@ namespace Service.Services
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
 
-            if (_httpClient.BaseAddress is null)
-            {
-                _httpClient.BaseAddress = new Uri(Properties.Resources.UrlApi);
-            }
+            // Selección remoto/local
+            var urlApi = Properties.Resources.UrlApi;
+            if (Properties.Resources.Remoto == "false")
+                urlApi = Properties.Resources.UrlApiLocal;
+
+            //_httpClient.BaseAddress = new Uri(urlApi);
 
             //este endpoint hace referencia a la api controller que se va a consumir pero en minuscula
             _endpoint = $"api/{ApiEndpoints.GetEndpoint(typeof(T).Name)}";
+
+            Console.WriteLine("URL completa que se va a llamar: " + _httpClient.BaseAddress + _endpoint);
+
 
 
         }
