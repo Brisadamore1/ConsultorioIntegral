@@ -41,22 +41,19 @@ namespace AppMovil.ViewModels
         private ObservableCollection<Profesional> profesionales;
         public ObservableCollection<Profesional> Profesionales
         {
-            get => profesionales;
-            set
-            {
-                profesionales = value;
+            get{ return profesionales; } 
+            set{ profesionales = value;
                 OnPropertyChanged();
             }
         }
 
         private List<Profesional>? profesionalesListToFilter;
+
         private Profesional? selectedProfessional;
         public Profesional? SelectedProfessional
         {
-            get => selectedProfessional;
-            set
-            {
-                selectedProfessional = value;
+            get{ return selectedProfessional; } 
+            set{ selectedProfessional = value;
                 OnPropertyChanged();
                 EditarProfesionalCommand.ChangeCanExecute();
             }
@@ -72,13 +69,17 @@ namespace AppMovil.ViewModels
             ObtenerProfesionalesCommand = new Command(async () => await ObtenerProfesionales());
             FiltrarProfesionalesCommand = new Command(async () => await FiltrarProfesionales());
             AgregarProfesionalCommand = new Command(async () => await AgregarProfesional());
-            EditarProfesionalCommand = new Command(async () => await EditarProfesional(), () => SelectedProfessional != null);
+            EditarProfesionalCommand = new Command(async (obj) => await EditarProfesional(), PermitirEditar);
             _ = ObtenerProfesionales();
+        }
+
+        private bool PermitirEditar(object arg)
+        {
+            return SelectedProfessional!=null;
         }
 
         private async Task EditarProfesional()
         {
-            if (SelectedProfessional == null) return;
             var navigationParameter = new ShellNavigationQueryParameters
             {
                 { "ProfessionalToEdit", SelectedProfessional }
@@ -97,26 +98,34 @@ namespace AppMovil.ViewModels
 
         public async Task FiltrarProfesionales()
         {
-            if (string.IsNullOrWhiteSpace(filterProfessionals))
-            {
-                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter ?? new List<Profesional>());
-            }
-            else
-            {
-                var profesionalesFiltrados = profesionalesListToFilter?
-                    .Where(p => p.Nombre != null && p.Nombre.ToUpper().Contains(filterProfessionals.ToUpper()))
-                    .ToList() ?? new List<Profesional>();
-                Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
-            }
+            var profesionalesFiltrados = profesionalesListToFilter?
+                .Where(p => p.Nombre
+                .ToUpper()
+                .Contains(filterProfessionals.ToUpper()));
+            Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
+            
         }
 
         public async Task ObtenerProfesionales()
         {
-            FilterProfessionals = string.Empty;
-            IsRefreshing = true;
-            profesionalesListToFilter = await profesionalService.GetAllAsync();
-            Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
-            IsRefreshing = false;
+            try
+            {
+                FilterProfessionals = string.Empty;
+                IsRefreshing = true;
+                var result = await profesionalService.GetAllAsync();
+                profesionalesListToFilter = result ?? new List<Profesional>();
+                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+            }
+            catch (Exception ex)
+            {
+                profesionalesListToFilter = new List<Profesional>();
+                Profesionales = new ObservableCollection<Profesional>();
+                // Opcional: puedes mostrar un mensaje de error en la UI si tienes mecanismo
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
     }
 }
