@@ -30,13 +30,19 @@
         {
             menuStrip1 = new MenuStrip();
             Principal = new FontAwesome.Sharp.IconMenuItem();
+            profesionalesToolStripMenuItem = new ToolStripMenuItem();
+            pacientesToolStripMenuItem = new ToolStripMenuItem();
+            contactosDeEmergenciaToolStripMenuItem = new ToolStripMenuItem();
+            turnosToolStripMenuItem = new ToolStripMenuItem();
+            sesiónToolStripMenuItem = new ToolStripMenuItem();
+            menuSalirDelSistema = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, profesionalesToolStripMenuItem, pacientesToolStripMenuItem, contactosDeEmergenciaToolStripMenuItem, turnosToolStripMenuItem, sesiónToolStripMenuItem, menuSalirDelSistema });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
@@ -56,6 +62,43 @@
             Principal.Name = "Principal";
             Principal.Size = new Size(142, 39);
             Principal.Text = "Principal";
+            // 
+            // profesionalesToolStripMenuItem
+            // 
+            profesionalesToolStripMenuItem.Name = "profesionalesToolStripMenuItem";
+            profesionalesToolStripMenuItem.Size = new Size(111, 39);
+            profesionalesToolStripMenuItem.Text = "Profesionales";
+            // 
+            // pacientesToolStripMenuItem
+            // 
+            pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
+            pacientesToolStripMenuItem.Size = new Size(84, 39);
+            pacientesToolStripMenuItem.Text = "Pacientes";
+            // 
+            // contactosDeEmergenciaToolStripMenuItem
+            // 
+            contactosDeEmergenciaToolStripMenuItem.Name = "contactosDeEmergenciaToolStripMenuItem";
+            contactosDeEmergenciaToolStripMenuItem.Size = new Size(192, 39);
+            contactosDeEmergenciaToolStripMenuItem.Text = "Contactos de Emergencia";
+            // 
+            // turnosToolStripMenuItem
+            // 
+            turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
+            turnosToolStripMenuItem.Size = new Size(67, 39);
+            turnosToolStripMenuItem.Text = "Turnos";
+            // 
+            // sesiónToolStripMenuItem
+            // 
+            sesiónToolStripMenuItem.Name = "sesiónToolStripMenuItem";
+            sesiónToolStripMenuItem.Size = new Size(66, 39);
+            sesiónToolStripMenuItem.Text = "Sesión";
+            // 
+            // menuSalirDelSistema
+            // 
+            menuSalirDelSistema.Name = "menuSalirDelSistema";
+            menuSalirDelSistema.Size = new Size(52, 39);
+            menuSalirDelSistema.Text = "Salir";
+            menuSalirDelSistema.Click += menuSalirDelSistema_Click;
             // 
             // MenuPrincipalView
             // 
@@ -80,5 +123,11 @@
 
         private MenuStrip menuStrip1;
         private FontAwesome.Sharp.IconMenuItem Principal;
+        private ToolStripMenuItem profesionalesToolStripMenuItem;
+        private ToolStripMenuItem pacientesToolStripMenuItem;
+        private ToolStripMenuItem contactosDeEmergenciaToolStripMenuItem;
+        private ToolStripMenuItem turnosToolStripMenuItem;
+        private ToolStripMenuItem sesiónToolStripMenuItem;
+        private ToolStripMenuItem menuSalirDelSistema;
     }
 }

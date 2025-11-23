@@ -6,5 +6,10 @@ namespace Desktop
         {
             InitializeComponent();
         }
+
+        private void menuSalirDelSistema_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
