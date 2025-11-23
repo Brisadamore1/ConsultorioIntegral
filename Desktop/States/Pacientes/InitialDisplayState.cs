@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Desktop.States.Profesionales
+namespace Desktop.States.Pacientes
 {
     public class InitialDisplayState : IFormState
     {
-        private ProfesionalesView _form;
-        public InitialDisplayState(ProfesionalesView form)
+        private PacientesView _form;
+        public InitialDisplayState(PacientesView form)
         {
             _form = form ?? throw new ArgumentNullException(nameof(form), "El formulario no puede ser nulo.");
 
@@ -30,8 +30,9 @@ namespace Desktop.States.Profesionales
 
         public async Task UpdateUI()
         {
-            _form.ListProfesionales.DataSource = await _form.profesionalService.GetAllAsync(_form.txtFiltro.Text);
-            _form.dataGridProfesionalesView.DataSource = _form.ListProfesionales;
+            await CargarCombo();
+            _form.ListPacientes.DataSource = await _form.pacienteService.GetAllAsync(_form.txtFiltro.Text);
+            _form.dataGridPacientesView.DataSource = _form.ListPacientes;
 
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);
@@ -49,6 +50,13 @@ namespace Desktop.States.Profesionales
                         e.Cancel = true; // Deshabilita la pestaña de agregar/editar si no está en el estado inicial
                     }
             };
+        }
+        private async Task CargarCombo()
+        {
+            _form.comboProfesionales.DataSource = await _form.profesionalService.GetAllAsync(string.Empty);
+            _form.comboProfesionales.DisplayMember = "Nombre";
+            _form.comboProfesionales.ValueMember = "Id";
+            _form.comboProfesionales.SelectedIndex = -1;
         }
 
         public void OnAgregar() { }

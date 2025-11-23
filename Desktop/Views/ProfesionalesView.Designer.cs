@@ -59,6 +59,7 @@
             tabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridProfesionalesView).BeginInit();
             tabPageAgregarEditar.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -68,7 +69,7 @@
             tabControl1.Location = new Point(12, 77);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(823, 508);
+            tabControl1.Size = new Size(1159, 612);
             tabControl1.TabIndex = 0;
             // 
             // tabPageLista
@@ -79,7 +80,7 @@
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
-            tabPageLista.Size = new Size(815, 475);
+            tabPageLista.Size = new Size(1151, 579);
             tabPageLista.TabIndex = 0;
             tabPageLista.Text = "Lista";
             tabPageLista.UseVisualStyleBackColor = true;
@@ -89,7 +90,7 @@
             txtFiltro.Location = new Point(141, 20);
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Name = "txtFiltro";
-            txtFiltro.Size = new Size(564, 27);
+            txtFiltro.Size = new Size(980, 27);
             txtFiltro.TabIndex = 25;
             // 
             // label7
@@ -109,7 +110,7 @@
             dataGridProfesionalesView.Name = "dataGridProfesionalesView";
             dataGridProfesionalesView.RowHeadersWidth = 62;
             dataGridProfesionalesView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridProfesionalesView.Size = new Size(764, 389);
+            dataGridProfesionalesView.Size = new Size(1096, 493);
             dataGridProfesionalesView.TabIndex = 23;
             // 
             // tabPageAgregarEditar
@@ -131,7 +132,7 @@
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(815, 475);
+            tabPageAgregarEditar.Size = new Size(954, 547);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
@@ -280,7 +281,7 @@
             iconButtonSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButtonSalir.IconSize = 44;
             iconButtonSalir.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButtonSalir.Location = new Point(859, 436);
+            iconButtonSalir.Location = new Point(1195, 504);
             iconButtonSalir.Margin = new Padding(3, 4, 3, 4);
             iconButtonSalir.Name = "iconButtonSalir";
             iconButtonSalir.Size = new Size(123, 75);
@@ -300,7 +301,7 @@
             btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEliminar.IconSize = 44;
             btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEliminar.Location = new Point(859, 356);
+            btnEliminar.Location = new Point(1195, 424);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(123, 72);
@@ -320,7 +321,7 @@
             btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEditar.IconSize = 45;
             btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(859, 276);
+            btnEditar.Location = new Point(1195, 344);
             btnEditar.Margin = new Padding(3, 4, 3, 4);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(123, 72);
@@ -339,7 +340,7 @@
             btnAgregar.IconColor = Color.White;
             btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAgregar.Location = new Point(859, 196);
+            btnAgregar.Location = new Point(1195, 264);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(123, 72);
@@ -358,7 +359,7 @@
             btnBuscar.IconColor = Color.White;
             btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(859, 116);
+            btnBuscar.Location = new Point(1195, 184);
             btnBuscar.Margin = new Padding(3, 4, 3, 4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(123, 72);
@@ -372,10 +373,11 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.Tan;
+            panel1.Controls.Add(label1);
             panel1.Location = new Point(1, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(994, 70);
+            panel1.Size = new Size(1345, 70);
             panel1.TabIndex = 2;
             // 
             // label1
@@ -384,7 +386,7 @@
             label1.BackColor = Color.Tan;
             label1.Font = new Font("Copperplate Gothic Bold", 28.2F);
             label1.ForeColor = Color.Sienna;
-            label1.Location = new Point(272, 9);
+            label1.Location = new Point(491, 9);
             label1.Name = "label1";
             label1.Size = new Size(415, 53);
             label1.TabIndex = 0;
@@ -394,8 +396,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(994, 620);
-            Controls.Add(label1);
+            ClientSize = new Size(1345, 721);
             Controls.Add(panel1);
             Controls.Add(iconButtonSalir);
             Controls.Add(btnEliminar);
@@ -404,6 +405,7 @@
             Controls.Add(btnBuscar);
             Controls.Add(tabControl1);
             Name = "ProfesionalesView";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ProfesionalesView";
             tabControl1.ResumeLayout(false);
             tabPageLista.ResumeLayout(false);
@@ -411,8 +413,9 @@
             ((System.ComponentModel.ISupportInitialize)dataGridProfesionalesView).EndInit();
             tabPageAgregarEditar.ResumeLayout(false);
             tabPageAgregarEditar.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
