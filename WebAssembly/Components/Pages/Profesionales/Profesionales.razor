@@ -39,7 +39,7 @@ else
             <td class="id-column">@context.Id</td>
             <td class="name-column"><strong>@context.Nombre</strong></td>
             <td>@context.Profesion</td>
-            <td>@context.Especialidad</td>
+            <td>@(string.IsNullOrWhiteSpace(context.Especialidad) ? "sin asignar" : context.Especialidad)</td>
             <td>@context.Matricula</td>
             <td>@context.Email</td>
             <td>@context.Telefono</td>

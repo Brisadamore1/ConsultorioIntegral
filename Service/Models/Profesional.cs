@@ -16,7 +16,7 @@ namespace Service.Models
         [Required(ErrorMessage = "El campo Matricula es obligatorio.")]
         public string Matricula { get; set; } = null!;
 
-        [Required(ErrorMessage = "El campo Especialidad es obligatorio.")]
+        //[Required(ErrorMessage = "El campo Especialidad es obligatorio.")]
         public string Especialidad { get; set; } = null!;
 
         [EmailAddress(ErrorMessage = "El campo Email no tiene un formato válido.")]
