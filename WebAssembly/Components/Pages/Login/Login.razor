@@ -15,21 +15,23 @@
                 <div class="container">
                     <div class="row mb-3">
                         <div class="col-md-12 d-flex justify-content-center align-items-center">
-                            <label class="form-label me-2">Correo electrónico</label>
-                            <InputText class="form-control w-50" @bind-Value="email" placeholder="tu@email.com" />
+                            <label class="login-label me-2">Correo electrónico</label>
+                            <InputText class="login-input form-control w-50" @bind-Value="email" placeholder="tu@email.com" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12 d-flex justify-content-center align-items-center">
-                            <label class="form-label me-2">Contraseña</label>
-                            <InputText class="form-control w-50" @bind-Value="password" placeholder="••••••••" type="password" />
+                            <label class="login-label me-2">Contraseña</label>
+                            <InputText class="login-input form-control w-50" @bind-Value="password" placeholder="••••••••" type="password" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 d-flex justify-content-center gap-2">
-                            <button class="btn btn-primary" @onclick="Loguear">Iniciar Sesión</button>
-                            <button class="btn btn-secondary" @onclick="RegisterMe">Registrarse</button>
-                        </div>
+                    <div class="login-actions-horizontal">
+                        <button class="btn-login" @onclick="Loguear">
+                            Iniciar sesión
+                        </button>
+                        <button class="btn-register" @onclick="RegisterMe">
+                            Registrarse
+                        </button>
                     </div>
                 </div>
             </div>
@@ -43,12 +45,10 @@ else
 {
     <div class="card text-center">
         <div class="card-header">
-            Cerrar sesión
+            Finalizar sesión en Consultorio Integral Web
         </div>
         <div class="card-body">
-            <p class="card-header">Cerrar sesión de Consultorio Integral Web</p>
-
-            <button class="btn btn-primary" @onclick="Desloguear">Cerrar sesión</button>
+            <button class="btn-login" @onclick="Desloguear">Cerrar sesión</button>
         </div>
         <div class="card-footer text-body-secondary">
             Desarrollo Base de datos I - TSDS 
@@ -58,8 +58,8 @@ else
 
 @code {
     private bool isAuthenticated = false;
-    private string email;
-    private string password;
+    private string email = string.Empty;
+    private string password = string.Empty;
 
     private async Task Loguear()
     {
@@ -68,14 +68,9 @@ else
         {
             return;
         }
-        //GenericService<object>.jwtToken = jwt;
         isAuthenticated = await AuthService.IsUserAuthenticated();
         StateHasChanged();
-
-        //NavigationManager.NavigateTo($"/");
     }
-
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,12 +80,10 @@ else
     private async Task Desloguear()
     {
         AuthService.SignOut();
-        isAuthenticated =false;
+        isAuthenticated = false;
         StateHasChanged();
-        //NavigationManager.NavigateTo($"/");
     }
 
-    //Esto lleva al usuario a la página de registro cuando quiere registrarse
     private void RegisterMe()
     {
         NavigationManager.NavigateTo($"/signin");

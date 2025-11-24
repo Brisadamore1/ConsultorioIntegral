@@ -1,7 +1,4 @@
-﻿body {
-}
-
-.form-container {
+﻿.form-container {
     max-width: 520px;
     margin: 0.5rem auto 2rem auto;
     background: #fff;
@@ -105,7 +102,3 @@
     gap: 1.2rem;
     margin-top: 1.2rem;
 }
-
-
-
-

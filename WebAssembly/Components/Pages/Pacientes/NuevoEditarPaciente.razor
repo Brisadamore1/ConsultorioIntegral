@@ -56,11 +56,6 @@ else
             </div>
 
             <div class="form-group mb-2">
-                <label for="Direccion" class="form-label">Dirección:</label>
-                <InputText id="Direccion" class="form-control" @bind-Value="paciente.Direccion" placeholder="Calle, número, ciudad" />
-            </div>
-
-            <div class="form-group mb-2">
                 <label for="IdProfesional" class="form-label">Profesional:</label>
                 <InputSelect id="IdProfesional" class="form-select" @bind-Value="paciente.ProfesionalId">
                     <option value="">Seleccione un profesional</option>
@@ -71,18 +66,20 @@ else
                 </InputSelect>
             </div>
 
-            <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
-                @if (guardando)
-                {
-                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    <span>Guardando...</span>
-                }
-                else
-                {
-                    <span>Guardar</span>
-                }
-            </button>
-            <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-login mb-2" disabled="@guardando">
+                    @if (guardando)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span>Guardando...</span>
+                    }
+                    else
+                    {
+                        <span>Guardar</span>
+                    }
+                </button>
+                <button type="button" class="btn btn-register mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+            </div>
         </EditForm>
     </div>
 }

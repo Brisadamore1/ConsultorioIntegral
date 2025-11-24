@@ -11,58 +11,63 @@
 }
 else
 {
-    <EditForm Model="profesional" OnValidSubmit="Guardar">
-        <DataAnnotationsValidator />
+    <div class="form-container">
+        <EditForm Model="profesional" OnValidSubmit="Guardar">
+            <DataAnnotationsValidator />
 
-        <div class="form-group mb-2">
-            <label for="Nombre">Nombre: <span class="text-danger">*</span></label>
-            <InputText id="Nombre" class="form-control" @bind-Value="profesional.Nombre" />
-            <ValidationMessage For="@(() => profesional.Nombre)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Nombre" class="form-label">Nombre completo: <span class="text-danger">*</span></label>
+                <InputText id="Nombre" class="form-control" @bind-Value="profesional.Nombre" />
+                <ValidationMessage For="@(() => profesional.Nombre)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Profesion">Profesión: <span class="text-danger">*</span></label>
-            <InputText id="Profesion" class="form-control" @bind-Value="profesional.Profesion" />
-            <ValidationMessage For="@(() => profesional.Profesion)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Profesion" class="form-label">Profesión: <span class="text-danger">*</span></label>
+                <InputText id="Profesion" class="form-control" @bind-Value="profesional.Profesion" />
+                <ValidationMessage For="@(() => profesional.Profesion)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Matricula">Matrícula: <span class="text-danger">*</span></label>
-            <InputText id="Matricula" class="form-control" @bind-Value="profesional.Matricula" />
-            <ValidationMessage For="@(() => profesional.Matricula)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Especialidad" class="form-label">Especialidad: <span class="text-danger">*</span></label>
+                <InputText id="Especialidad" class="form-control" @bind-Value="profesional.Especialidad" />
+                <ValidationMessage For="@(() => profesional.Especialidad)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Especialidad">Especialidad: <span class="text-danger">*</span></label>
-            <InputText id="Especialidad" class="form-control" @bind-Value="profesional.Especialidad" />
-            <ValidationMessage For="@(() => profesional.Especialidad)" />
-        </div>
+            <div class="row-fields">
+                <div class="form-group mb-2 col-field">
+                    <label for="Matricula" class="form-label">Matrícula: <span class="text-danger">*</span></label>
+                    <InputText id="Matricula" class="form-control" @bind-Value="profesional.Matricula" />
+                    <ValidationMessage For="@(() => profesional.Matricula)" />
+                </div>
+                <div class="form-group mb-2 col-field">
+                    <label for="Telefono" class="form-label">Teléfono: <span class="text-danger">*</span></label>
+                    <InputText id="Telefono" class="form-control" @bind-Value="profesional.Telefono" />
+                    <ValidationMessage For="@(() => profesional.Telefono)" />
+                </div>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Email">Email:</label>
-            <InputText id="Email" class="form-control" @bind-Value="profesional.Email" placeholder="ejemplo@email.com" />
-            <ValidationMessage For="@(() => profesional.Email)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Email" class="form-label">Email:</label>
+                <InputText id="Email" class="form-control" @bind-Value="profesional.Email" placeholder="ejemplo@email.com" />
+                <ValidationMessage For="@(() => profesional.Email)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Telefono">Teléfono: <span class="text-danger">*</span></label>
-            <InputText id="Telefono" class="form-control" @bind-Value="profesional.Telefono" />
-            <ValidationMessage For="@(() => profesional.Telefono)" />
-        </div>
-
-        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
-            @if (guardando)
-            {
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                <span>Guardando...</span>
-            }
-            else
-            {
-                <span>Guardar</span>
-            }
-        </button>
-        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-    </EditForm>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-login mb-2" disabled="@guardando">
+                    @if (guardando)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span>Guardando...</span>
+                    }
+                    else
+                    {
+                        <span>Guardar</span>
+                    }
+                </button>
+                <button type="button" class="btn btn-register mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+            </div>
+        </EditForm>
+    </div>
 }
 
 @code {

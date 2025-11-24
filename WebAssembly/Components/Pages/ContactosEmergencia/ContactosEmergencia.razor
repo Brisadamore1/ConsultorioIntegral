@@ -31,18 +31,18 @@ else
                EmptyMessage="No hay contactos de emergencia registrados">
         <HeaderContent>
             <th>ID</th>
-            <th>Nombre</th>
+            <th>Contacto</th>
             <th>Relación</th>
-            <th>Teléfono</th>
             <th>Paciente</th>
+            <th>Teléfono</th>
             <th class="text-center">Acciones</th>
         </HeaderContent>
         <RowContent>
             <td>@context.Id</td>
             <td><strong>@context.Nombre</strong></td>
             <td>@context.Relacion</td>
-            <td>@context.Telefono</td>
             <td><strong>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</strong></td>
+            <td>@context.Telefono</td>
         </RowContent>
     </DataTable>
 }
