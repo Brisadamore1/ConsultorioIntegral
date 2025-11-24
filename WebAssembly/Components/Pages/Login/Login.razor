@@ -1,7 +1,7 @@
 ﻿@page "/login"
 @inject NavigationManager NavigationManager
 @inject FirebaseAuthService AuthService
-
+@inject SweetAlertService SweetAlert
 
 @if (!isAuthenticated)
 {
@@ -66,6 +66,7 @@ else
         var userId = await AuthService.SignInWithEmailPassword(email, password);
         if (string.IsNullOrEmpty(userId))
         {
+            await SweetAlert.FireAsync("Error de autenticación", "Correo o contraseña incorrectos.", SweetAlertIcon.Error);
             return;
         }
         isAuthenticated = await AuthService.IsUserAuthenticated();

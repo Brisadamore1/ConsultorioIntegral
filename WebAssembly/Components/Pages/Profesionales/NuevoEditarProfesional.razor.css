@@ -22,17 +22,77 @@
     min-width: 0;
 }
 
-.form-control, .form-select {
+.form-control {
     font-size: 1.05rem;
     font-family: inherit;
-    border-color: #ced4da !important;
+    border: 1.5px solid #ced4da !important;
     background-color: #fff !important;
     box-shadow: none !important;
+    border-radius: 0.6rem !important;
+    transition: border-color 0.2s;
+    color: #222;
+}
+
+.form-select {
+    font-size: 1.05rem;
+    font-family: inherit;
+    border: 1.5px solid #ced4da !important;
+    background-color: #fff !important;
+    color: #222;
+    border-radius: 0.6rem !important;
+    padding: 0.6rem 1.2rem;
+    box-shadow: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    outline: none;
+    min-height: 44px;
+    cursor: pointer;
+}
+
+.form-select:focus {
+    border-color: #888 !important;
+    background-color: #f5f5f5 !important;
+    color: #222 !important;
+    box-shadow: 0 0 0 2px #e3d4bf33;
+}
+
+.form-select option {
+    background: #fff;
+    color: #222;
+    padding: 0.5rem 1rem;
+    font-size: 1.05rem;
+    border-radius: 0.4rem;
+}
+
+.form-select option:checked, .form-select option:focus {
+    background: #e3d4bf !important;
+    color: #222 !important;
+}
+
+/* Custom arrow for select */
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='gray' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 6.646a.5.5 0 0 1 .708 0L8 9.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2em;
+}
+
+/* Remove default arrow in Chrome */
+.form-select::-ms-expand {
+    display: none;
+}
+.form-select::-webkit-select-placeholder {
+    color: #888;
+}
+.form-select:disabled {
+    background-color: #f2f2f2 !important;
+    color: #aaa !important;
+    cursor: not-allowed;
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: #86b7fe !important;
-    box-shadow: none !important;
+    border-color: #888 !important;
+    box-shadow: 0 0 0 2px #e3d4bf33;
 }
 
 .form-control.is-valid, .form-select.is-valid,
@@ -44,8 +104,8 @@
 
 .form-control:focus.is-valid, .form-select:focus.is-valid,
 .form-control:focus:valid, .form-select:focus:valid {
-    border-color: #86b7fe !important;
-    box-shadow: none !important;
+    border-color: #888 !important;
+    box-shadow: 0 0 0 2px #e3d4bf33;
 }
 
 /* Botón Guardar - Negro (igual a .btn-login) */
@@ -104,6 +164,28 @@
     align-items: center;
     gap: 1.2rem;
     margin-top: 1.2rem;
+}
+
+/* Estado Turno - solo texto coloreado */
+.estado-reservado {
+    color: #0dcaf0;
+    font-weight: 500;
+}
+.estado-confirmado {
+    color: #198754;
+    font-weight: 500;
+}
+.estado-cancelado {
+    color: #dc3545;
+    font-weight: 500;
+}
+.estado-atendido {
+    color: #0d6efd;
+    font-weight: 500;
+}
+.estado-ausente {
+    color: #ffc107;
+    font-weight: 500;
 }
 
 

@@ -13,83 +13,67 @@
 }
 else
 {
-    <EditForm Model="turno" OnValidSubmit="Guardar">
-        <DataAnnotationsValidator />
+    <div class="form-container">
+        <EditForm Model="turno" OnValidSubmit="Guardar">
+            <DataAnnotationsValidator />
 
-        <!-- Selector de Paciente -->
-        <div class="form-group mb-2">
-            <label for="IdPaciente">Paciente: <span class="text-danger">*</span></label>
-            <InputSelect id="IdPaciente" class="form-select" @bind-Value="turno.PacienteId">
-                <option value="">Seleccione un paciente</option>
-                @foreach (var paciente in pacientes)
-                {
-                    <option value="@paciente.Id">@paciente.Nombre</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => turno.PacienteId)" />
-        </div>
+            <!-- Fecha y Duración en la misma línea -->
+            <div class="row-fields">
+                <div class="form-group mb-2 col-field">
+                    <label for="FechaHora" class="form-label">Fecha y Hora: <span class="text-danger">*</span></label>
+                    <input type="datetime-local"
+                           id="FechaHora"
+                           class="form-control"
+                           value="@ObtenerFechaHoraParaInput()"
+                           @onchange="ActualizarFechaHora" />
+                    <ValidationMessage For="@(() => turno.FechaHora)" />
+                    @if (mostrarErrorFechaHora)
+                    {
+                        <div class="text-danger small">El campo Fecha y Hora es obligatorio.</div>
+                    }
+                </div>
+                <div class="form-group mb-2 col-field">
+                    <label for="DuracionMinutos" class="form-label">Duración (minutos): <span class="text-danger">*</span></label>
+                    <InputNumber id="DuracionMinutos" class="form-control" @bind-Value="turno.DuracionMinutos" />
+                    <ValidationMessage For="@(() => turno.DuracionMinutos)" />
+                </div>
+            </div>
 
-        <!-- Selector de Profesional -->
-        <div class="form-group mb-2">
-            <label for="IdProfesional">Profesional: <span class="text-danger">*</span></label>
-            <InputSelect id="IdProfesional" class="form-select" @bind-Value="turno.ProfesionalId">
-                <option value="">Seleccione un profesional</option>
-                @foreach (var profesional in profesionales)
-                {
-                    <option value="@profesional.Id">@profesional.Nombre</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => turno.ProfesionalId)" />
-        </div>
+            <!-- Selector de Estado personalizado (sin iconos, solo color #444444) -->
+            <div class="form-group mb-2">
+                <label class="form-label">Estado: <span class="text-danger">*</span></label>
+                <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    @foreach (var estado in Enum.GetValues<EstadoTurnoEnum>())
+                    {
+                        <button type="button"
+                                class="estado-pill"
+                                @onclick="() => SeleccionarEstado(estado)"
+                                aria-pressed="@(turno?.EstadoTurno == estado)"
+                                style="margin-bottom: 0.5em; width: 80%; text-align: center; color: #444444;">
+                            <span style="width: 100%; font-weight: 700; color: #444444;">@estado.ToString()</span>
+                        </button>
+                    }
+                </div>
+                <ValidationMessage For="@(() => turno.EstadoTurno)" />
+            </div>
 
-        <!-- Campo Fecha y Hora -->
-        <div class="form-group mb-2">
-            <label for="FechaHora">Fecha y Hora: <span class="text-danger">*</span></label>
-            <input type="datetime-local"
-                   id="FechaHora"
-                   class="form-control"
-                   value="@ObtenerFechaHoraParaInput()"
-                   @onchange="ActualizarFechaHora" />
-            <ValidationMessage For="@(() => turno.FechaHora)" />
-            @if (mostrarErrorFechaHora)
-            {
-                <div class="text-danger small">El campo Fecha y Hora es obligatorio.</div>
-            }
-        </div>
-
-        <!-- Campo Duración -->
-        <div class="form-group mb-2">
-            <label for="DuracionMinutos">Duración (minutos): <span class="text-danger">*</span></label>
-            <InputNumber id="DuracionMinutos" class="form-control" @bind-Value="turno.DuracionMinutos" />
-            <ValidationMessage For="@(() => turno.DuracionMinutos)" />
-        </div>
-
-        <!-- Selector de Estado -->
-        <div class="form-group mb-2">
-            <label for="EstadoTurno">Estado: <span class="text-danger">*</span></label>
-            <InputSelect id="EstadoTurno" class="form-select" @bind-Value="turno.EstadoTurno">
-                @foreach (var estado in Enum.GetValues<EstadoTurnoEnum>())
-                {
-                    <option value="@estado">@estado.ToString()</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => turno.EstadoTurno)" />
-        </div>
-
-        <!-- Botones de acción -->
-        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
-            @if (guardando)
-            {
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                <span>Guardando...</span>
-            }
-            else
-            {
-                <span>Guardar</span>
-            }
-        </button>
-        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-    </EditForm>
+            <!-- Botones de acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-login mb-2" disabled="@guardando">
+                    @if (guardando)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span>Guardando...</span>
+                    }
+                    else
+                    {
+                        <span>Guardar</span>
+                    }
+                </button>
+                <button type="button" class="btn btn-register mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+            </div>
+        </EditForm>
+    </div>
 }
 
 @code {
@@ -250,4 +234,20 @@ else
     {
         NavigationManager.NavigateTo("/turnos");
     }
+
+    private void SeleccionarEstado(EstadoTurnoEnum estado)
+    {
+        if (turno != null)
+            turno.EstadoTurno = estado;
+    }
+
+    private string GetEstadoCss(EstadoTurnoEnum estado) => estado switch
+    {
+        EstadoTurnoEnum.Atendido => "estado-atendido",
+        EstadoTurnoEnum.Reservado => "estado-reservado",
+        EstadoTurnoEnum.Cancelado => "estado-cancelado",
+        EstadoTurnoEnum.Confirmado => "estado-confirmado",
+        EstadoTurnoEnum.Ausente => "estado-ausente",
+        _ => ""
+    };
 }

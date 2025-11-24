@@ -17,13 +17,13 @@ else
             <DataAnnotationsValidator />
 
             <div class="form-group mb-2">
-                <label for="Nombre" class="form-label">Nombre: <span class="text-danger">*</span></label>
+                <label for="Nombre" class="form-label">Nombre del Contacto: <span class="text-danger">*</span></label>
                 <InputText id="Nombre" class="form-control" @bind-Value="contactoemergencia.Nombre" />
                 <ValidationMessage For="@(() => contactoemergencia.Nombre)" />
             </div>
 
             <div class="form-group mb-2">
-                <label for="Relacion" class="form-label">Relación: <span class="text-danger">*</span></label>
+                <label for="Relacion" class="form-label">Relación/Parentesco: <span class="text-danger">*</span></label>
                 <InputText id="Relacion" class="form-control" @bind-Value="contactoemergencia.Relacion" />
                 <ValidationMessage For="@(() => contactoemergencia.Relacion)" />
             </div>
