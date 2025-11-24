@@ -7,30 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Desktop.States.ContactosEmergencia
+namespace Desktop.States.Turnos
 {
     public class DeleteState : IFormState
     {
-        private ContactosEmergenciaView _form;
-        public DeleteState(ContactosEmergenciaView form)
+        private TurnosView _form;
+        public DeleteState(TurnosView form)
         {
             _form = form ?? throw new ArgumentNullException(nameof(form), "El formulario no puede ser nulo.");
         }
         public async void OnEliminar()
         {
-            _form.contactosEmergenciaCurrent = (ContactoEmergencia)_form.ListContactosEmergencia.Current;
-            if (_form.contactosEmergenciaCurrent == null)
+            _form.turnoCurrent = (Turno)_form.ListTurnos.Current;
+            if (_form.turnoCurrent == null)
             {
-                MessageBox.Show("Debe seleccionar un contacto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar un turno", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var result = MessageBox.Show($"¿Está seguro que desea eliminar el contacto {_form.contactosEmergenciaCurrent.Nombre}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show($"¿Está seguro que desea eliminar el turno {_form.turnoCurrent.Id}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                _form.contactosEmergenciaCurrent = (ContactoEmergencia)_form.ListContactosEmergencia.Current;
-                if (_form.contactosEmergenciaCurrent != null)
+                _form.turnoCurrent = (Turno)_form.ListTurnos.Current;
+                if (_form.turnoCurrent != null)
                 {
-                    await _form.contactosEmergenciaService.DeleteAsync(_form.contactosEmergenciaCurrent.Id);
+                    await _form.turnoService.DeleteAsync(_form.turnoCurrent.Id);
                     _form.SetState(_form.initialDisplayState);
                     _form.currentState.UpdateUI();
                     // await CargarGrilla();
@@ -40,7 +40,7 @@ namespace Desktop.States.ContactosEmergencia
             {
                 _form.SetState(_form.initialDisplayState);
             }
-            _form.contactosEmergenciaCurrent = null;
+            _form.turnoCurrent = null;
         }
 
         public Task UpdateUI()

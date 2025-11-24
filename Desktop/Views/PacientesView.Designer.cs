@@ -72,7 +72,7 @@
             btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSalir.IconSize = 44;
             btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSalir.Location = new Point(1198, 489);
+            btnSalir.Location = new Point(1193, 508);
             btnSalir.Margin = new Padding(3, 4, 3, 4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(123, 75);
@@ -92,7 +92,7 @@
             btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEliminar.IconSize = 44;
             btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEliminar.Location = new Point(1198, 409);
+            btnEliminar.Location = new Point(1193, 428);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(123, 72);
@@ -112,7 +112,7 @@
             btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEditar.IconSize = 45;
             btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(1198, 329);
+            btnEditar.Location = new Point(1193, 348);
             btnEditar.Margin = new Padding(3, 4, 3, 4);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(123, 72);
@@ -131,7 +131,7 @@
             btnAgregar.IconColor = Color.White;
             btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAgregar.Location = new Point(1198, 249);
+            btnAgregar.Location = new Point(1193, 268);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(123, 72);
@@ -150,7 +150,7 @@
             btnBuscar.IconColor = Color.White;
             btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(1198, 169);
+            btnBuscar.Location = new Point(1193, 188);
             btnBuscar.Margin = new Padding(3, 4, 3, 4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(123, 72);
@@ -261,7 +261,7 @@
             // dateTimeFecha
             // 
             dateTimeFecha.Format = DateTimePickerFormat.Short;
-            dateTimeFecha.Location = new Point(304, 164);
+            dateTimeFecha.Location = new Point(498, 181);
             dateTimeFecha.Name = "dateTimeFecha";
             dateTimeFecha.Size = new Size(120, 27);
             dateTimeFecha.TabIndex = 0;
@@ -271,7 +271,7 @@
             // 
             comboProfesionales.DropDownStyle = ComboBoxStyle.DropDownList;
             comboProfesionales.FormattingEnabled = true;
-            comboProfesionales.Location = new Point(304, 310);
+            comboProfesionales.Location = new Point(498, 332);
             comboProfesionales.Margin = new Padding(3, 4, 3, 4);
             comboProfesionales.Name = "comboProfesionales";
             comboProfesionales.Size = new Size(228, 28);
@@ -283,7 +283,7 @@
             btnCancelar.IconColor = Color.Black;
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(423, 368);
+            btnCancelar.Location = new Point(617, 385);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(109, 67);
@@ -299,7 +299,7 @@
             btnGuardar.IconColor = Color.Black;
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(232, 368);
+            btnGuardar.Location = new Point(426, 385);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(108, 67);
@@ -312,7 +312,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(192, 263);
+            label3.Location = new Point(386, 280);
             label3.Name = "label3";
             label3.Size = new Size(70, 20);
             label3.TabIndex = 31;
@@ -320,7 +320,7 @@
             // 
             // txtTelefono
             // 
-            txtTelefono.Location = new Point(304, 256);
+            txtTelefono.Location = new Point(498, 273);
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
             txtTelefono.Name = "txtTelefono";
             txtTelefono.Size = new Size(228, 27);
@@ -329,7 +329,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(196, 218);
+            label6.Location = new Point(390, 235);
             label6.Name = "label6";
             label6.Size = new Size(49, 20);
             label6.TabIndex = 30;
@@ -337,7 +337,7 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(304, 211);
+            txtEmail.Location = new Point(498, 228);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(228, 27);
@@ -346,7 +346,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(176, 318);
+            label8.Location = new Point(370, 335);
             label8.Name = "label8";
             label8.Size = new Size(86, 20);
             label8.TabIndex = 26;
@@ -355,7 +355,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(141, 164);
+            label5.Location = new Point(335, 181);
             label5.Name = "label5";
             label5.Size = new Size(152, 20);
             label5.TabIndex = 25;
@@ -363,7 +363,7 @@
             // 
             // txtDni
             // 
-            txtDni.Location = new Point(304, 105);
+            txtDni.Location = new Point(498, 122);
             txtDni.Margin = new Padding(3, 4, 3, 4);
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(228, 27);
@@ -372,7 +372,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(196, 115);
+            label4.Location = new Point(390, 132);
             label4.Name = "label4";
             label4.Size = new Size(35, 20);
             label4.TabIndex = 24;
@@ -380,7 +380,7 @@
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(304, 48);
+            txtNombre.Location = new Point(498, 65);
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(228, 27);
@@ -389,7 +389,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(195, 55);
+            label2.Location = new Point(389, 72);
             label2.Name = "label2";
             label2.Size = new Size(67, 20);
             label2.TabIndex = 20;

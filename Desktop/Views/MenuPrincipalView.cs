@@ -1,4 +1,5 @@
 using Desktop.Views;
+using Service.Models;
 
 namespace Desktop
 {
@@ -24,6 +25,18 @@ namespace Desktop
         {
             PacientesView pacientesView = new PacientesView();
             pacientesView.ShowDialog();
+        }
+
+        private void contactosDeEmergenciaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContactosEmergenciaView contactosEmergenciaView = new ContactosEmergenciaView();
+            contactosEmergenciaView.ShowDialog();
+        }
+
+        private void itemMenuTurnos_Click(object sender, EventArgs e)
+        {
+            TurnosView turnosView = new TurnosView();
+            turnosView.ShowDialog();
         }
     }
 }

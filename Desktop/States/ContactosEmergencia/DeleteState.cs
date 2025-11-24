@@ -7,30 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Desktop.States.ContactosEmergencia
+namespace Desktop.States.Pacientes
 {
     public class DeleteState : IFormState
     {
-        private ContactosEmergenciaView _form;
-        public DeleteState(ContactosEmergenciaView form)
+        private PacientesView _form;
+        public DeleteState(PacientesView form)
         {
             _form = form ?? throw new ArgumentNullException(nameof(form), "El formulario no puede ser nulo.");
         }
         public async void OnEliminar()
         {
-            _form.contactosEmergenciaCurrent = (ContactoEmergencia)_form.ListContactosEmergencia.Current;
-            if (_form.contactosEmergenciaCurrent == null)
+            _form.pacienteCurrent = (Paciente)_form.ListPacientes.Current;
+            if (_form.pacienteCurrent == null)
             {
-                MessageBox.Show("Debe seleccionar un contacto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar un paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var result = MessageBox.Show($"¿Está seguro que desea eliminar el contacto {_form.contactosEmergenciaCurrent.Nombre}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show($"¿Está seguro que desea eliminar el paciente {_form.pacienteCurrent.Nombre}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                _form.contactosEmergenciaCurrent = (ContactoEmergencia)_form.ListContactosEmergencia.Current;
-                if (_form.contactosEmergenciaCurrent != null)
+                _form.pacienteCurrent = (Paciente)_form.ListPacientes.Current;
+                if (_form.pacienteCurrent != null)
                 {
-                    await _form.contactosEmergenciaService.DeleteAsync(_form.contactosEmergenciaCurrent.Id);
+                    await _form.pacienteService.DeleteAsync(_form.pacienteCurrent.Id);
                     _form.SetState(_form.initialDisplayState);
                     _form.currentState.UpdateUI();
                     // await CargarGrilla();
@@ -40,7 +40,7 @@ namespace Desktop.States.ContactosEmergencia
             {
                 _form.SetState(_form.initialDisplayState);
             }
-            _form.contactosEmergenciaCurrent = null;
+            _form.pacienteCurrent = null;
         }
 
         public Task UpdateUI()
