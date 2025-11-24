@@ -1,0 +1,52 @@
+﻿body {
+}
+
+.form-container {
+    max-width: 520px;
+    margin: 0.5rem auto 2rem auto; /* Menos margen arriba */
+    background: #fff;
+    padding: 1rem 1.2rem; /* Menos espacio arriba y abajo */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13); /* Sombra más notoria */
+    border: 2px solid #e3d4bf; /* Borde más visible */
+}
+
+.row-fields {
+    display: flex;
+    gap: 1rem;
+}
+
+.col-field {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.form-control, .form-select {
+    font-size: 1.05rem;
+    font-family: inherit;
+    border-color: #ced4da !important;   /* Borde gris normal */
+    background-color: #fff !important;   /* Fondo normal */
+    box-shadow: none !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe !important; /* Borde azul de focus normal */
+    box-shadow: none !important;
+}
+
+.form-control.is-valid, .form-select.is-valid,
+.form-control:valid, .form-select:valid {
+    border-color: #ced4da !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus.is-valid, .form-select:focus.is-valid,
+.form-control:focus:valid, .form-select:focus:valid {
+    border-color: #86b7fe !important;
+    box-shadow: none !important;
+}
+
+
+
+

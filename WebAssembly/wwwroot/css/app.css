@@ -56,11 +56,12 @@ a, .btn-link {
     }
 
 .blazor-error-boundary {
-    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJyYW5zbGF0ZSgtMjM1IC01MSk+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA9OU4uNjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMtNTgwMyA1M1pNMjYzLjU4NiA2Ni4wMTgzQzI2MC43MzggNik2LjAwMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDg
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJyYW5zbGF0ZSgtMjM1IC01MSk+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA9OU4uNjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMtNTgwMyA1M1pNMjYzLjU4NiA2Ni4wMTgzQzI2MC43MzggNik2LjAwMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDg
+}
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .loading-progress {
     position: relative;
@@ -99,76 +100,43 @@ code {
     color: #c02d76;
 }
 
-/* Estilos para botones de acción */
-.btn-sm {
-    font-weight: 500;
-    padding: 0.375rem 1rem;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-    font-size: 0.875rem;
-    background-color: transparent;
+/* Siempre borde gris claro, nunca verde ni azul, ni en validación ni en autocompletado */
+.form-control,
+.form-control:focus,
+.form-control.is-valid,
+.form-control:focus.is-valid,
+.form-control:valid,
+.form-control:focus:valid,
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active,
+.form-control:-webkit-autofill:hover {
+    border-color: #ced4da !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    transition: none !important;
+    color-scheme: light;
 }
 
-/* Botón Editar - Lila claro */
-.btn-warning {
-    background-color: transparent !important;
-    border: 2px solid #c7b3e5 !important;
-    color: #8b7ba8 !important;
+/* Elimina el fondo amarillo/azul del autocompletado en Chrome/Edge */
+input.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #212529 !important;
 }
 
-.btn-warning:hover {
-    background-color: #c7b3e5 !important;
-    border-color: #9370c7 !important;
-    color: #5a4875 !important;
+/* Elimina borde verde y fondo celeste de validación en todos los formularios (Bootstrap) */
+.form-control.is-valid, .form-select.is-valid,
+.form-control:valid, .form-select:valid {
+    border-color: #ced4da !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
 }
 
-/* Botón Eliminar - Rojo claro */
-.btn-danger {
-    background-color: transparent !important;
-    border: 2px solid #ef9a9a !important;
-    color: #c0605f !important;
+.form-control:focus.is-valid, .form-select:focus.is-valid,
+.form-control:focus:valid, .form-select:focus:valid {
+    border-color: #ced4da !important;
+    box-shadow: none !important;
 }
 
-.btn-danger:hover {
-    background-color: #f8d7da !important;
-    border-color: #dc3545 !important;
-    color: #721c24 !important;
-}
-
-/* Estilo para los encabezados de la tabla DataTable */
-table.custom-table thead tr th {
-    color: #3B3B3B !important;
-    font-size: 1.35rem !important;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.01em !important;
-}
-
-.page-content, .main-content {
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-    font-size: 1.18rem;
-    font-weight: 400;
-    color: #444444;
-    letter-spacing: 0.01em;
-}
-
-/* NavMenu: color de texto e iconos */
-.nav-item .nav-link,
-.nav-item .nav-link span.bi {
-    color: #8b7ba8 !important;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
-    font-size: 1.15rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.01em !important;
-    display: flex;
-    align-items: center;
-}
-
-/* Ítem activo y hover: fondo y color */
-.nav-item .nav-link.active,
-.nav-item .nav-link:hover,
-.nav-item .nav-link.active span.bi,
-.nav-item .nav-link:hover span.bi {
-    background-color: #CCBCA5 !important;
-    color: #8b7ba8 !important;
-}

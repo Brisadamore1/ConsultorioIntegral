@@ -1,6 +1,6 @@
 ﻿h2 {
-   /* creamos un titulo moderno con un estilo profesional*/
-   font-size: 3rem;
+    /* creamos un titulo moderno con un estilo profesional*/
+    font-size: 3rem;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 1rem;
@@ -8,7 +8,7 @@
     letter-spacing: -0.02em;
     font-family: 'Times New Roman', Times, Georgia, serif;
     line-height: 1.2;
-    margin-top: 0;
+    margin-top: -0.5rem;
     padding-top: 0;
     padding-bottom: 0;
 }

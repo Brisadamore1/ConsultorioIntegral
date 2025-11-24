@@ -12,76 +12,79 @@
 }
 else
 {
-    <EditForm Model="paciente" OnValidSubmit="Guardar">
-        <DataAnnotationsValidator />
+    <div class="form-container">
+        <EditForm Model="paciente" OnValidSubmit="Guardar">
+            <DataAnnotationsValidator />
 
-        <div class="form-group mb-2">
-            <label for="Nombre">Nombre: <span class="text-danger">*</span></label>
-            <InputText id="Nombre" class="form-control" @bind-Value="paciente.Nombre" />
-            <ValidationMessage For="@(() => paciente.Nombre)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Nombre" class="form-label">Nombre: <span class="text-danger">*</span></label>
+                <InputText id="Nombre" class="form-control" @bind-Value="paciente.Nombre" />
+                <ValidationMessage For="@(() => paciente.Nombre)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Dni">DNI: <span class="text-danger">*</span></label>
-            <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
-            <ValidationMessage For="@(() => paciente.Dni)" />
-        </div>
+            <div class="row-fields">
+                <div class="form-group mb-2 col-field">
+                    <label for="Dni" class="form-label">DNI: <span class="text-danger">*</span></label>
+                    <InputText id="Dni" class="form-control" @bind-Value="paciente.Dni" />
+                    <ValidationMessage For="@(() => paciente.Dni)" />
+                </div>
+                <div class="form-group mb-2 col-field">
+                    <label for="FechaNacimiento" class="form-label">Fecha de nacimiento: <span class="text-danger">*</span></label>
+                    <input type="date"
+                           id="FechaNacimiento"
+                           class="form-control"
+                           value="@ObtenerFechaParaInput()"
+                           @onchange="ActualizarFecha" />
+                    <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
+                    @if (mostrarErrorFecha)
+                    {
+                        <div class="text-danger small">El campo Fecha de Nacimiento es obligatorio.</div>
+                    }
+                </div>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Telefono">Teléfono: <span class="text-danger">*</span></label>
-            <InputText id="Telefono" class="form-control" @bind-Value="paciente.Telefono" />
-            <ValidationMessage For="@(() => paciente.Telefono)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Telefono" class="form-label">Teléfono: <span class="text-danger">*</span></label>
+                <InputText id="Telefono" class="form-control" @bind-Value="paciente.Telefono" />
+                <ValidationMessage For="@(() => paciente.Telefono)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Email">Email:</label>
-            <InputText id="Email" class="form-control" @bind-Value="paciente.Email" />
-            <ValidationMessage For="@(() => paciente.Email)" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Email" class="form-label">Email:</label>
+                <InputText id="Email" class="form-control" @bind-Value="paciente.Email" />
+                <ValidationMessage For="@(() => paciente.Email)" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="Direccion">Dirección:</label>
-            <InputText id="Direccion" class="form-control" @bind-Value="paciente.Direccion" placeholder="Calle, número, ciudad" />
-        </div>
+            <div class="form-group mb-2">
+                <label for="Direccion" class="form-label">Dirección:</label>
+                <InputText id="Direccion" class="form-control" @bind-Value="paciente.Direccion" placeholder="Calle, número, ciudad" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="FechaNacimiento">Fecha de nacimiento: <span class="text-danger">*</span></label>
-            <input type="date" 
-                   id="FechaNacimiento" 
-                   class="form-control" 
-                   value="@ObtenerFechaParaInput()"
-                   @onchange="ActualizarFecha" />
-            <ValidationMessage For="@(() => paciente.FechaNacimiento)" />
-            @if (mostrarErrorFecha)
-            {
-                <div class="text-danger small">El campo Fecha de Nacimiento es obligatorio.</div>
-            }
-        </div>
+            <div class="form-group mb-2">
+                <label for="IdProfesional" class="form-label">Profesional:</label>
+                <InputSelect id="IdProfesional" class="form-select" @bind-Value="paciente.ProfesionalId">
+                    <option value="">Seleccione un profesional</option>
+                    @foreach (var profesional in profesionales)
+                    {
+                        <option value="@profesional.Id">@profesional.Nombre</option>
+                    }
+                </InputSelect>
+            </div>
 
-        <div class="form-group mb-2">
-            <label for="IdProfesional">Profesional:</label>
-            <InputSelect id="IdProfesional" class="form-select" @bind-Value="paciente.ProfesionalId">
-                <option value="">Seleccione un profesional</option>
-                @foreach (var profesional in profesionales)
+            <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
+                @if (guardando)
                 {
-                    <option value="@profesional.Id">@profesional.Nombre</option>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    <span>Guardando...</span>
                 }
-            </InputSelect>
-        </div>
-
-        <button type="submit" class="btn btn-primary mb-2" disabled="@guardando">
-            @if (guardando)
-            {
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                <span>Guardando...</span>
-            }
-            else
-            {
-                <span>Guardar</span>
-            }
-        </button>
-        <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-    </EditForm>
+                else
+                {
+                    <span>Guardar</span>
+                }
+            </button>
+            <button type="button" class="btn btn-secondary mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+        </EditForm>
+    </div>
 }
 
 @code {
