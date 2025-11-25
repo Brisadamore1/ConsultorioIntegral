@@ -12,10 +12,26 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Cliente HTTP para comunicarse con el backend
-builder.Services.AddScoped(sp => new HttpClient
+//builder.Services.AddScoped(sp => new HttpClient
+//{
+//    BaseAddress = new Uri("https://backendconsultorio.azurewebsites.net/api/")
+//});
+
+
+var host = builder.HostEnvironment;
+
+string apiBaseUrl;
+
+if (host.BaseAddress.Contains("localhost"))
 {
-    BaseAddress = new Uri("https://backendconsultorio.azurewebsites.net/api/")
-});
+    apiBaseUrl = "https://localhost:7107/api"; // ← TU API LOCAL
+}
+else
+{
+    apiBaseUrl = "https://backendconsultorio.azurewebsites.net/api"; // ← TU API EN AZURE
+}
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IProfesionalService, ProfesionalService>();
