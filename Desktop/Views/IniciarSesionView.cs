@@ -64,7 +64,6 @@ namespace Desktop.Views
                     var token = await user.User.GetIdTokenAsync();
                     GenericService<object>.jwtToken = token;
                 }
-
             }
             catch (FirebaseAuthException error)
             {
@@ -74,7 +73,6 @@ namespace Desktop.Views
                 if (intentos == 3)
                 {
                     MessageBox.Show("Se ha superado la cantidad de intentos permitidos, el sistema se cerrará");
-                    //OnLoginSuccess.Invoke(this, false);
                     this.Close();
                 }
                 return;
@@ -87,16 +85,15 @@ namespace Desktop.Views
                 if (intentos == 3)
                 {
                     MessageBox.Show("Se ha superado la cantidad de intentos permitidos, el sistema se cerrará");
-                    //OnLoginSuccess.Invoke(this, false);
                     this.Close();
                 }
                 return;
             }
 
 
-            SplashView frmSplashView = new SplashView();
-            this.Visible = false;
-            frmSplashView.ShowDialog();
+            // Login exitoso
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
        

@@ -25,9 +25,18 @@ namespace Desktop.Views
 
         private async void SplashView_Activated(object sender, EventArgs e)
         {
-            var conectarDbTask = ConectarConDb();
-            var imprimirReporteTask = ImprimirReporte();
-            await Task.WhenAll(conectarDbTask, imprimirReporteTask);
+            try
+            {
+                var conectarDbTask = ConectarConDb();
+                var imprimirReporteTask = ImprimirReporte();
+                await Task.WhenAll(conectarDbTask, imprimirReporteTask);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en SplashView: " + ex.Message);
+                this.DialogResult = DialogResult.Abort;
+                this.Close();
+            }
         }
 
         private void timer_Tick_1(object sender, EventArgs e)
@@ -37,28 +46,16 @@ namespace Desktop.Views
             if (dataReady && printReady)
             {
                 timer.Enabled = false;
-                this.Visible = false;
-                var menuPrincipalView = new MenuPrincipalView();
-                menuPrincipalView.ShowDialog();
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
 
         private async Task ImprimirReporte()
         {
-            await Task.Run(() =>
-            {
-
-                ReportViewer reporte = new ReportViewer();
-                reporte.LocalReport.ReportEmbeddedResource = "Desktop.Reports.PacientesReport.rdlc";
-                var pacientes = new List<Paciente> { new Paciente() { Id = 1, Nombre = "Natalia Sosa", Dni = "44785214", FechaNacimiento= DateTime.Now, Email= "sosanatalia@gmail.com", Telefono= "3498484865" } };
-                reporte.LocalReport.DataSources.Add(new ReportDataSource("DSPacientes", pacientes));
-                reporte.SetDisplayMode(DisplayMode.PrintLayout);
-                reporte.RefreshReport();
-                printReady = true;
-
-            });
-
+            // Simula una tarea de carga, pero NO crees ReportViewer aquí
+            await Task.Delay(500); // o el tiempo que quieras simular
+            printReady = true;
         }
 
         private async Task ConectarConDb()
