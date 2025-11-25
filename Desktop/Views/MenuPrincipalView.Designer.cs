@@ -34,15 +34,16 @@
             itemMenuPacientes = new ToolStripMenuItem();
             contactosDeEmergenciaToolStripMenuItem = new ToolStripMenuItem();
             itemMenuTurnos = new ToolStripMenuItem();
-            itemMenuSeesion = new ToolStripMenuItem();
             menuSalirDelSistema = new ToolStripMenuItem();
+            reportesToolStripMenuItem = new ToolStripMenuItem();
+            pacientesToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, itemMenuSeesion, menuSalirDelSistema });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, menuSalirDelSistema, reportesToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
@@ -91,18 +92,26 @@
             itemMenuTurnos.Text = "Turnos";
             itemMenuTurnos.Click += itemMenuTurnos_Click;
             // 
-            // itemMenuSeesion
-            // 
-            itemMenuSeesion.Name = "itemMenuSeesion";
-            itemMenuSeesion.Size = new Size(66, 39);
-            itemMenuSeesion.Text = "Sesión";
-            // 
             // menuSalirDelSistema
             // 
             menuSalirDelSistema.Name = "menuSalirDelSistema";
             menuSalirDelSistema.Size = new Size(52, 39);
             menuSalirDelSistema.Text = "Salir";
             menuSalirDelSistema.Click += menuSalirDelSistema_Click;
+            // 
+            // reportesToolStripMenuItem
+            // 
+            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pacientesToolStripMenuItem });
+            reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
+            reportesToolStripMenuItem.Size = new Size(82, 39);
+            reportesToolStripMenuItem.Text = "Reportes";
+            // 
+            // pacientesToolStripMenuItem
+            // 
+            pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
+            pacientesToolStripMenuItem.Size = new Size(224, 26);
+            pacientesToolStripMenuItem.Text = "Pacientes";
+            pacientesToolStripMenuItem.Click += pacientesToolStripMenuItem_Click;
             // 
             // MenuPrincipalView
             // 
@@ -131,7 +140,8 @@
         private ToolStripMenuItem itemMenuPacientes;
         private ToolStripMenuItem contactosDeEmergenciaToolStripMenuItem;
         private ToolStripMenuItem itemMenuTurnos;
-        private ToolStripMenuItem itemMenuSeesion;
         private ToolStripMenuItem menuSalirDelSistema;
+        private ToolStripMenuItem reportesToolStripMenuItem;
+        private ToolStripMenuItem pacientesToolStripMenuItem;
     }
 }

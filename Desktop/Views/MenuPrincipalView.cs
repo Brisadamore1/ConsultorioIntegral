@@ -1,3 +1,4 @@
+using Desktop.ViewReports;
 using Desktop.Views;
 using Service.Models;
 
@@ -37,6 +38,12 @@ namespace Desktop
         {
             TurnosView turnosView = new TurnosView();
             turnosView.ShowDialog();
+        }
+
+        private void pacientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PacientesViewReport pacientesViewReport = new PacientesViewReport();
+            pacientesViewReport.ShowDialog();
         }
     }
 }
