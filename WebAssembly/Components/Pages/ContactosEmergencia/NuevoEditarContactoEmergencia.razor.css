@@ -1,11 +1,22 @@
-﻿.form-container {
+﻿body {
+}
+
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 70vh;
+}
+
+.form-container {
     max-width: 520px;
-    margin: 0.5rem auto 2rem auto;
+    width: 100%;
+    margin: 2rem auto 2rem auto;
     background: #fff;
     padding: 1rem 1.2rem;
     border-radius: 0.75rem;
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
-    border: 2px solid #e3d4bf;
+    border: 1.5px solid #e3d4bf;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
@@ -87,19 +98,20 @@
     cursor: not-allowed;
 }
 
-.form-control.is-valid,
-.form-select.is-valid,
-.form-control:valid,
-.form-select:valid {
+.form-control:focus, .form-select:focus {
+    border-color: #888 !important;
+    box-shadow: 0 0 0 2px #e3d4bf33;
+}
+
+.form-control.is-valid, .form-select.is-valid,
+.form-control:valid, .form-select:valid {
     border-color: #ced4da !important;
     background-color: #fff !important;
     box-shadow: none !important;
 }
 
-.form-control:focus.is-valid,
-.form-select:focus.is-valid,
-.form-control:focus:valid,
-.form-select:focus:valid {
+.form-control:focus.is-valid, .form-select:focus.is-valid,
+.form-control:focus:valid, .form-select:focus:valid {
     border-color: #888 !important;
     box-shadow: 0 0 0 2px #e3d4bf33;
 }

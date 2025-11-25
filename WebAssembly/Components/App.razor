@@ -1,15 +1,18 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <PageTitle>No encontrado</PageTitle>
-        <LayoutView Layout="@typeof(Layout.MainLayout)">
-            <div class="alert alert-warning" role="alert">
-                <h4>Error 404</h4>
-                <p>Lo sentimos, no hay nada en esta dirección.</p>
-            </div>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<ErrorBoundary>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>No encontrado</PageTitle>
+            <LayoutView Layout="@typeof(Layout.MainLayout)">
+                <div class="alert alert-warning" role="alert">
+                    <h4>Error 404</h4>
+                    <p>Lo sentimos, no hay nada en esta dirección.</p>
+                </div>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</ErrorBoundary>
+

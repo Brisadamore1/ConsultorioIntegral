@@ -63,27 +63,38 @@ a, .btn-link {
     content: "An error has occurred."
 }
 
+/* Loader Blazor WebAssembly original */
 .loading-progress {
-    position: relative;
     display: block;
-    width: 8rem;
-    height: 8rem;
-    margin: 20vh auto 1rem auto;
+    margin: 60px auto 20px auto;
+    width: 100px;
+    height: 100px;
 }
 
-    .loading-progress circle {
-        fill: none;
-        stroke: #e0e0e0;
-        stroke-width: 0.6rem;
-        transform-origin: 50% 50%;
-        transform: rotate(-90deg);
-    }
+.loading-progress circle {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 10;
+}
 
-        .loading-progress circle:last-child {
-            stroke: #1b6ec2;
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-            transition: stroke-dasharray 0.05s ease-in-out;
-        }
+.loading-progress circle:first-child {
+    stroke: #0078d7;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 75;
+    animation: loading-progress-circular 1.5s linear infinite;
+}
+
+@keyframes loading-progress-circular {
+    0% {
+        stroke-dashoffset: 283;
+        transform: rotate(0deg);
+    }
+    100% {
+        stroke-dashoffset: 75;
+        transform: rotate(360deg);
+    }
+}
 
 .loading-progress-text {
     position: absolute;

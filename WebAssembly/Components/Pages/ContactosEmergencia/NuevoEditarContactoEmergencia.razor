@@ -12,54 +12,55 @@
 }
 else
 {
-    <div class="form-container">
-        <EditForm Model="contactoemergencia" OnValidSubmit="Guardar">
-            <DataAnnotationsValidator />
+    <div class="page-wrapper">
+        <div class="form-container">
+            <EditForm Model="contactoemergencia" OnValidSubmit="Guardar">
+                <DataAnnotationsValidator />
 
-            <div class="form-group mb-2">
-                <label for="Nombre" class="form-label">Nombre del Contacto: <span class="text-danger">*</span></label>
-                <InputText id="Nombre" class="form-control" @bind-Value="contactoemergencia.Nombre" />
-                <ValidationMessage For="@(() => contactoemergencia.Nombre)" />
-            </div>
+                <div class="form-group mb-2">
+                    <label for="Nombre" class="form-label">Nombre del Contacto: <span class="text-danger">*</span></label>
+                    <InputText id="Nombre" class="form-control" @bind-Value="contactoemergencia.Nombre" />
+                    <ValidationMessage For="@(() => contactoemergencia.Nombre)" />
+                </div>
 
-            <div class="form-group mb-2">
-                <label for="Relacion" class="form-label">Relación/Parentesco: <span class="text-danger">*</span></label>
-                <InputText id="Relacion" class="form-control" @bind-Value="contactoemergencia.Relacion" />
-                <ValidationMessage For="@(() => contactoemergencia.Relacion)" />
-            </div>
+                <div class="form-group mb-2">
+                    <label for="Relacion" class="form-label">Relación/Parentesco: <span class="text-danger">*</span></label>
+                    <InputText id="Relacion" class="form-control" @bind-Value="contactoemergencia.Relacion" />
+                    <ValidationMessage For="@(() => contactoemergencia.Relacion)" />
+                </div>
 
-            <div class="form-group mb-2">
-                <label for="IdPaciente" class="form-label">Paciente:</label>
-                <InputSelect id="IdPaciente" class="form-select" @bind-Value="contactoemergencia.PacienteId">
-                    <option value="">Seleccione un paciente</option>
-                    @foreach (var paciente in pacientes)
-                    {
-                        <option value="@paciente.Id">@paciente.Nombre</option>
-                    }
-                </InputSelect>
-            </div>
+                <div class="form-group mb-2">
+                    <label for="IdPaciente" class="form-label">Paciente:</label>
+                    <InputSelect id="IdPaciente" class="form-select" @bind-Value="contactoemergencia.PacienteId">
+                        <option value="">Seleccione un paciente</option>
+                        @foreach (var paciente in pacientes)
+                        {
+                            <option value="@paciente.Id">@paciente.Nombre</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="Telefono" class="form-label">Teléfono: <span class="text-danger">*</span></label>
+                    <InputText id="Telefono" class="form-control" @bind-Value="contactoemergencia.Telefono" />
+                    <ValidationMessage For="@(() => contactoemergencia.Telefono)" />
+                </div>
 
-            <div class="form-group mb-2">
-                <label for="Telefono" class="form-label">Teléfono: <span class="text-danger">*</span></label>
-                <InputText id="Telefono" class="form-control" @bind-Value="contactoemergencia.Telefono" />
-                <ValidationMessage For="@(() => contactoemergencia.Telefono)" />
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-login mb-2" disabled="@guardando">
-                    @if (guardando)
-                    {
-                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        <span>Guardando...</span>
-                    }
-                    else
-                    {
-                        <span>Guardar</span>
-                    }
-                </button>
-                <button type="button" class="btn btn-register mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
-            </div>
-        </EditForm>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-login mb-2" disabled="@guardando">
+                        @if (guardando)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            <span>Guardando...</span>
+                        }
+                        else
+                        {
+                            <span>Guardar</span>
+                        }
+                    </button>
+                    <button type="button" class="btn btn-register mb-2" @onclick="Cancelar" disabled="@guardando">Cancelar</button>
+                </div>
+            </EditForm>
+        </div>
     </div>
 }
 

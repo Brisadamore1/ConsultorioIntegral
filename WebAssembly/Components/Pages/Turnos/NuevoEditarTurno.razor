@@ -17,6 +17,32 @@ else
         <EditForm Model="turno" OnValidSubmit="Guardar">
             <DataAnnotationsValidator />
 
+            <!-- Profesional -->
+            <div class="form-group mb-2">
+                <label for="ProfesionalId" class="form-label">Profesional: <span class="text-danger">*</span></label>
+                <InputSelect id="ProfesionalId" class="form-select" @bind-Value="turno.ProfesionalId">
+                    <option value="">Seleccione un profesional</option>
+                    @foreach (var profesional in profesionales)
+                    {
+                        <option value="@profesional.Id">@profesional.Nombre</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => turno.ProfesionalId)" />
+            </div>
+
+            <!-- Paciente -->
+            <div class="form-group mb-2">
+                <label for="PacienteId" class="form-label">Paciente: <span class="text-danger">*</span></label>
+                <InputSelect id="PacienteId" class="form-select" @bind-Value="turno.PacienteId">
+                    <option value="">Seleccione un paciente</option>
+                    @foreach (var paciente in pacientes)
+                    {
+                        <option value="@paciente.Id">@paciente.Nombre</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => turno.PacienteId)" />
+            </div>
+
             <!-- Fecha y Duración en la misma línea -->
             <div class="row-fields">
                 <div class="form-group mb-2 col-field">
@@ -39,21 +65,15 @@ else
                 </div>
             </div>
 
-            <!-- Selector de Estado personalizado (sin iconos, solo color #444444) -->
+            <!-- Estado como lista desplegable -->
             <div class="form-group mb-2">
-                <label class="form-label">Estado: <span class="text-danger">*</span></label>
-                <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <label for="EstadoTurno" class="form-label">Estado: <span class="text-danger">*</span></label>
+                <InputSelect id="EstadoTurno" class="form-select" @bind-Value="turno.EstadoTurno">
                     @foreach (var estado in Enum.GetValues<EstadoTurnoEnum>())
                     {
-                        <button type="button"
-                                class="estado-pill"
-                                @onclick="() => SeleccionarEstado(estado)"
-                                aria-pressed="@(turno?.EstadoTurno == estado)"
-                                style="margin-bottom: 0.5em; width: 80%; text-align: center; color: #444444;">
-                            <span style="width: 100%; font-weight: 700; color: #444444;">@estado.ToString()</span>
-                        </button>
+                        <option value="@estado">@estado.ToString()</option>
                     }
-                </div>
+                </InputSelect>
                 <ValidationMessage For="@(() => turno.EstadoTurno)" />
             </div>
 
@@ -234,20 +254,4 @@ else
     {
         NavigationManager.NavigateTo("/turnos");
     }
-
-    private void SeleccionarEstado(EstadoTurnoEnum estado)
-    {
-        if (turno != null)
-            turno.EstadoTurno = estado;
-    }
-
-    private string GetEstadoCss(EstadoTurnoEnum estado) => estado switch
-    {
-        EstadoTurnoEnum.Atendido => "estado-atendido",
-        EstadoTurnoEnum.Reservado => "estado-reservado",
-        EstadoTurnoEnum.Cancelado => "estado-cancelado",
-        EstadoTurnoEnum.Confirmado => "estado-confirmado",
-        EstadoTurnoEnum.Ausente => "estado-ausente",
-        _ => ""
-    };
 }
