@@ -1,5 +1,10 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 h1:focus {
@@ -149,5 +154,32 @@ input.form-control:-webkit-autofill {
 .form-control:focus:valid, .form-select:focus:valid {
     border-color: #ced4da !important;
     box-shadow: none !important;
+}
+
+/* Spinner de carga global centrado */
+#global-loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fff;
+    z-index: 9999;
+    padding-top: 40vh; /* Más centrado verticalmente */
+    box-sizing: border-box;
+}
+
+#global-loading-spinner .spinner-border {
+    width: 4rem !important;
+    height: 4rem !important;
+    border-width: 0.5rem !important; /* Más grueso */
+}
+
+#global-loading-spinner .mt-2 {
+    text-align: center;
 }
 
