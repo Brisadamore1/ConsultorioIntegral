@@ -28,7 +28,7 @@ if (host.BaseAddress.Contains("localhost"))
 }
 else
 {
-    apiBaseUrl = "https://backendconsultorio.azurewebsites.net/api"; // ← TU API EN AZURE
+    apiBaseUrl = "https://backendconsultorio.azurewebsites.net/api/"; // ← TU API EN AZURE
 }
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
