@@ -3,10 +3,7 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Consultorio Integral Web</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <span class="navbar-brand">Consultorio Integral Web</span>
     </div>
 </div>
 
@@ -49,11 +46,14 @@
 </div>
 
 @code {
+    
     private bool collapseNavMenu = true;
     private bool isAuthenticated = false;
+
     //Define el texto del link de login según el estado de autenticación
     private string textoLogin => isAuthenticated ? "Cerrar sesión" : "Login";
 
+    //Esto define la clase CSS para el menú de navegación que 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()

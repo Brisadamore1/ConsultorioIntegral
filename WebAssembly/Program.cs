@@ -11,25 +11,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Cliente HTTP para comunicarse con el backend
-//builder.Services.AddScoped(sp => new HttpClient
-//{
-//    BaseAddress = new Uri("https://backendconsultorio.azurewebsites.net/api/")
-//});
-
 
 var host = builder.HostEnvironment;
 
-string apiBaseUrl;
-
-if (host.BaseAddress.Contains("localhost"))
-{
-    apiBaseUrl = "https://localhost:7214/api/"; // ← API BACKEND LOCAL
-}
-else
-{
-    apiBaseUrl = "https://backendconsultorio.azurewebsites.net/api/"; // ← API EN AZURE
-}
+var remotoStr = Service.Properties.Resources.Remoto?.ToLowerInvariant();
+bool remoto = remotoStr == "true";
+string apiBaseUrl = remoto
+    ? Service.Properties.Resources.UrlApi
+    : Service.Properties.Resources.UrlApiLocal;
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 
