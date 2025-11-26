@@ -24,7 +24,7 @@ string apiBaseUrl;
 
 if (host.BaseAddress.Contains("localhost"))
 {
-    apiBaseUrl = "https://localhost:7107/api"; // ← TU API LOCAL
+    apiBaseUrl = "https://localhost:7107/"; // ← TU API LOCAL
 }
 else
 {
