@@ -85,6 +85,7 @@ else
 }
 
 @code {
+    //Define un parámetro que llega como variable que indica si se crea o se edita un paciente
     [SupplyParameterFromQuery]
     [Parameter]
     public int IdPacienteEditado { get; set; }
@@ -167,6 +168,7 @@ else
 
         try
         {
+            // Deshabilitar el botón de guardar
             guardando = true;
             StateHasChanged();
 
@@ -207,6 +209,7 @@ else
         }
         finally
         {
+            // Rehabilitar el botón de guardar
             guardando = false;
         }
     }

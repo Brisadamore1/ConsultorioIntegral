@@ -65,6 +65,7 @@ else
 }
 
 @code {
+    //Define un parámetro que llega como variable que indica si se crea o se edita un paciente
     [SupplyParameterFromQuery]
     [Parameter]
     public int IdContactoEmergenciaEditado { get; set; }
@@ -81,6 +82,7 @@ else
             
             if (IdContactoEmergenciaEditado != 0)
             {
+                // Cargar el registro existente para editar
                 contactoemergencia = await ContactoEmergenciaService.GetByIdAsync(IdContactoEmergenciaEditado);
                 if (contactoemergencia == null)
                 {
@@ -90,6 +92,7 @@ else
             }
             else
             {
+                // Crear un nuevo registro
                 contactoemergencia = new ContactoEmergencia();
             }
         }

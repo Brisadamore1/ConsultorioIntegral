@@ -97,12 +97,11 @@ else
 }
 
 @code {
-    // Parámetro que indica si estamos editando (tiene un ID) o creando (ID = 0)
+    //Define un parámetro que llega como variable que indica si se crea o se edita un paciente
     [SupplyParameterFromQuery]
     [Parameter]
     public int IdTurnoEditado { get; set; }
 
-    // Variables del componente
     private Turno? turno;
     private List<Paciente>? pacientes;
     private List<Profesional>? profesionales;
@@ -114,13 +113,13 @@ else
     {
         try
         {
-            // Cargar listas de pacientes y profesionales para los dropdowns
+            // Cargar listas de pacientes y profesionales para la lista desplegable
             pacientes = await PacienteService.GetAllAsync(string.Empty);
             profesionales = await ProfesionalService.GetAllAsync(string.Empty);
 
             if (IdTurnoEditado != 0)
             {
-                // Modo edición: cargar el turno existente
+                // Cargar el turno existente para editar
                 turno = await TurnoService.GetByIdAsync(IdTurnoEditado);
                 if (turno == null)
                 {
@@ -130,7 +129,7 @@ else
             }
             else
             {
-                // Modo creación: crear un turno nuevo con valores por defecto
+                // Crear un turno nuevo con valores por defecto
                 turno = new Turno
                 {
                     EstadoTurno = EstadoTurnoEnum.Reservado,
@@ -147,7 +146,7 @@ else
         }
     }
 
-    // Convierte la fecha del turno al formato que requiere el input datetime-local
+    // Convierte la fecha del turno al formato que requiere el input datetime-local (por ej, 2025-05-15 10:00).
     private string ObtenerFechaHoraParaInput()
     {
         if (turno?.FechaHora != null &&
@@ -199,28 +198,9 @@ else
 
             if (turno != null)
             {
-                // Limpiar campos opcionales
-                turno.MotivoCancelacion = null;
-
                 // Limpiar relaciones para evitar referencia circular al serializar
                 turno.Paciente = null;
                 turno.Profesional = null;
-
-                // Gestionar el campo CanceladoPorProfesional
-                if (IdTurnoEditado != 0)
-                {
-                    // Al editar: mantener el valor original de CanceladoPorProfesional
-                    var turnoOriginal = await TurnoService.GetByIdAsync(IdTurnoEditado);
-                    if (turnoOriginal != null)
-                    {
-                        turno.CanceladoPorProfesional = turnoOriginal.CanceladoPorProfesional;
-                    }
-                }
-                else
-                {
-                    // Al crear: siempre es false
-                    turno.CanceladoPorProfesional = false;
-                }
 
                 // Guardar según el modo (crear o editar)
                 if (IdTurnoEditado == 0)

@@ -26,7 +26,7 @@ else
 {
     <DataTable TItem="ContactoEmergencia" 
                Items="contactosemergencia" 
-               OnEdit="EditarContactoEmergenciaObj"
+               OnEdit="EditarContactoEmergencia"
                OnDelete="Eliminar"
                EmptyMessage="No hay contactos de emergencia registrados">
         <HeaderContent>
@@ -91,7 +91,7 @@ else
         NavigationManager.NavigateTo("/nuevoeditarcontactoemergencia");
     }
 
-    private void EditarContactoEmergenciaObj(ContactoEmergencia contacto)
+    private void EditarContactoEmergencia(ContactoEmergencia contacto)
     {
         NavigationManager.NavigateTo($"/nuevoeditarcontactoemergencia?IdContactoEmergenciaEditado={contacto.Id}");
     }

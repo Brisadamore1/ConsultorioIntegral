@@ -22,7 +22,7 @@ else
 {
     <DataTable TItem="Turno" 
                Items="turnos" 
-               OnEdit="EditarTurnoObj"
+               OnEdit="EditarTurno"
                OnDelete="Eliminar"
                EmptyMessage="No hay turnos registrados">
         <HeaderContent>
@@ -36,8 +36,8 @@ else
         </HeaderContent>
         <RowContent>
             <td class="id-column">@context.Id</td>
-            <td class="name-column"><strong>@(context.Profesional != null ? context.Profesional.Nombre : "Sin asignar")</strong></td>
-            <td class="name-column"><strong>@(context.Paciente != null ? context.Paciente.Nombre : "Sin asignar")</strong></td>
+            <td class="name-column"><strong>@context.Profesional.Nombre</strong></td>
+            <td class="name-column"><strong>@context.Paciente.Nombre</strong></td>
             <td>@FormatearFechaHora(context.FechaHora)</td>
             <td>@context.DuracionMinutos</td>
             <td>
@@ -63,16 +63,11 @@ else
         {
             turnos = await TurnoService.GetAllAsync(string.Empty);
             Logger.LogInformation($"Turnos obtenidos: {turnos?.Count}");
-
-// Se elimina el filtro de turnos cancelados ya que ahora se maneja en el servicio.
-            // if (turnos != null)
-            // {
-            //     turnos = turnos.Where(t => !t.CanceladoPorProfesional).ToList();
-            // }
         }
         catch (Exception ex)
         {
             await SweetAlert.FireAsync("Error", $"Error al cargar turnos: {ex.Message}", SweetAlertIcon.Error);
+            //Evita fallos en la visualización si ocurre un error al obtener los datos.
             turnos = new List<Turno>();
         }
     }
@@ -86,38 +81,12 @@ else
         return fechaHora.ToString("dd/MM/yyyy") + " a las " + fechaHora.ToString("HH:mm");
     }
 
-    private string ObtenerClaseEstado(EstadoTurnoEnum estado)
-    {
-        return estado switch
-        {
-            EstadoTurnoEnum.Reservado => "bg-info",
-            EstadoTurnoEnum.Confirmado => "bg-success",
-            EstadoTurnoEnum.Cancelado => "bg-danger",
-            EstadoTurnoEnum.Atendido => "bg-primary",
-            EstadoTurnoEnum.Ausente => "bg-warning",
-            _ => "bg-secondary"
-        };
-    }
-
-    private string ObtenerClaseEstadoTexto(EstadoTurnoEnum estado)
-    {
-        return estado switch
-        {
-            EstadoTurnoEnum.Reservado => "text-info",
-            EstadoTurnoEnum.Confirmado => "text-success",
-            EstadoTurnoEnum.Cancelado => "text-danger",
-            EstadoTurnoEnum.Atendido => "text-primary",
-            EstadoTurnoEnum.Ausente => "text-warning",
-            _ => string.Empty
-        };
-    }
-
     private void AgregarTurno()
     {
         NavigationManager.NavigateTo("/nuevoeditarturno");
     }
 
-    private void EditarTurnoObj(Turno turno)
+    private void EditarTurno(Turno turno)
     {
         NavigationManager.NavigateTo($"/nuevoeditarturno?IdTurnoEditado={turno.Id}");
     }

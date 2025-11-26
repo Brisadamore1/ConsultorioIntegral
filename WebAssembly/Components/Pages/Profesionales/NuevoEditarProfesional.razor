@@ -71,6 +71,7 @@ else
 }
 
 @code {
+    //Define un parámetro que llega como variable que indica si se crea o se edita un paciente
     [SupplyParameterFromQuery]
     [Parameter]
     public int IdProfesionalEditado { get; set; }
@@ -82,6 +83,7 @@ else
     {
         try
         {
+            //Carga el profesional existente para editar
             if (IdProfesionalEditado != 0)
             {
                 profesional = await ProfesionalService.GetByIdAsync(IdProfesionalEditado);
@@ -93,6 +95,7 @@ else
             }
             else
             {
+                //Crea un registro nuevo
                 profesional = new Profesional();
             }
         }

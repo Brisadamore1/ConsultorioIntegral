@@ -7,8 +7,10 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+
+<div class="nav-scrollable">
     <nav class="flex-column">
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
@@ -46,31 +48,22 @@
 </div>
 
 @code {
-    
-    private bool collapseNavMenu = true;
     private bool isAuthenticated = false;
 
     //Define el texto del link de login según el estado de autenticación
     private string textoLogin => isAuthenticated ? "Cerrar sesión" : "Login";
 
-    //Esto define la clase CSS para el menú de navegación que 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        //Pide al servicio y se fija si está autenticado
+        //Pide al servicio y se fija si el usuario está autenticado 
         isAuthenticated = await AuthService.IsUserAuthenticated();
-        //Conecta el evento OnChangeLogin con el método ChequeoEstadoLogin
+        //Conecta el evento OnChangeLogin con el método ChequeoEstadoLogin para que se dispare cuando cambie el estado de login
         AuthService.OnChangeLogin += ChequeoEstadoLogin;
     }
 
     public async void ChequeoEstadoLogin()
     {
+        //Cuando se dispara el evento, vuelve a chequear el estado de autenticación
         isAuthenticated = await AuthService.IsUserAuthenticated();
         //Se redibuja el componente y aparecen los otros menús
         StateHasChanged();
