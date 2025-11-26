@@ -79,7 +79,7 @@ namespace Service.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a true.
+        ///   Busca una cadena traducida similar a false.
         /// </summary>
         public static string Remoto {
             get {
