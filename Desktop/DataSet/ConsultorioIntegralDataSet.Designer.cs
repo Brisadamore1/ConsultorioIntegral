@@ -388,6 +388,10 @@ namespace Desktop.DataSet {
             
             private global::System.Data.DataColumn columnId;
             
+            private global::System.Data.DataColumn columnProfesional;
+            
+            private global::System.Data.DataColumn columnPaciente;
+            
             private global::System.Data.DataColumn columnFechaHora;
             
             private global::System.Data.DataColumn columnDuracion;
@@ -434,6 +438,22 @@ namespace Desktop.DataSet {
             public global::System.Data.DataColumn IdColumn {
                 get {
                     return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ProfesionalColumn {
+                get {
+                    return this.columnProfesional;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn PacienteColumn {
+                get {
+                    return this.columnPaciente;
                 }
             }
             
@@ -498,10 +518,12 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DSTurnosRow AddDSTurnosRow(int Id, string FechaHora, string Duracion, string Estado) {
+            public DSTurnosRow AddDSTurnosRow(int Id, string Profesional, string Paciente, string FechaHora, string Duracion, string Estado) {
                 DSTurnosRow rowDSTurnosRow = ((DSTurnosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
+                        Profesional,
+                        Paciente,
                         FechaHora,
                         Duracion,
                         Estado};
@@ -528,6 +550,8 @@ namespace Desktop.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
+                this.columnProfesional = base.Columns["Profesional"];
+                this.columnPaciente = base.Columns["Paciente"];
                 this.columnFechaHora = base.Columns["FechaHora"];
                 this.columnDuracion = base.Columns["Duracion"];
                 this.columnEstado = base.Columns["Estado"];
@@ -538,6 +562,10 @@ namespace Desktop.DataSet {
             private void InitClass() {
                 this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnId);
+                this.columnProfesional = new global::System.Data.DataColumn("Profesional", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProfesional);
+                this.columnPaciente = new global::System.Data.DataColumn("Paciente", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaciente);
                 this.columnFechaHora = new global::System.Data.DataColumn("FechaHora", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFechaHora);
                 this.columnDuracion = new global::System.Data.DataColumn("Duracion", typeof(string), null, global::System.Data.MappingType.Element);
@@ -689,6 +717,8 @@ namespace Desktop.DataSet {
             
             private global::System.Data.DataColumn columnTelefono;
             
+            private global::System.Data.DataColumn columnProfesional;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public DSPacientesDataTable() {
@@ -774,6 +804,14 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ProfesionalColumn {
+                get {
+                    return this.columnProfesional;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -809,7 +847,7 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DSPacientesRow AddDSPacientesRow(int Id, string Nombre, string Dni, string FechaNacimiento, string Email, string Telefono) {
+            public DSPacientesRow AddDSPacientesRow(int Id, string Nombre, string Dni, string FechaNacimiento, string Email, string Telefono, string Profesional) {
                 DSPacientesRow rowDSPacientesRow = ((DSPacientesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -817,7 +855,8 @@ namespace Desktop.DataSet {
                         Dni,
                         FechaNacimiento,
                         Email,
-                        Telefono};
+                        Telefono,
+                        Profesional};
                 rowDSPacientesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDSPacientesRow);
                 return rowDSPacientesRow;
@@ -846,6 +885,7 @@ namespace Desktop.DataSet {
                 this.columnFechaNacimiento = base.Columns["FechaNacimiento"];
                 this.columnEmail = base.Columns["Email"];
                 this.columnTelefono = base.Columns["Telefono"];
+                this.columnProfesional = base.Columns["Profesional"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -863,6 +903,8 @@ namespace Desktop.DataSet {
                 base.Columns.Add(this.columnEmail);
                 this.columnTelefono = new global::System.Data.DataColumn("Telefono", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTelefono);
+                this.columnProfesional = new global::System.Data.DataColumn("Profesional", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProfesional);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1002,11 +1044,9 @@ namespace Desktop.DataSet {
             
             private global::System.Data.DataColumn columnProfesion;
             
-            private global::System.Data.DataColumn columnMatricula;
-            
             private global::System.Data.DataColumn columnEspecialidad;
             
-            private global::System.Data.DataColumn columnEmail;
+            private global::System.Data.DataColumn columnMatricula;
             
             private global::System.Data.DataColumn columnTelefono;
             
@@ -1071,14 +1111,6 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn MatriculaColumn {
-                get {
-                    return this.columnMatricula;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn EspecialidadColumn {
                 get {
                     return this.columnEspecialidad;
@@ -1087,9 +1119,9 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn EmailColumn {
+            public global::System.Data.DataColumn MatriculaColumn {
                 get {
-                    return this.columnEmail;
+                    return this.columnMatricula;
                 }
             }
             
@@ -1138,15 +1170,14 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DSProfesionalesRow AddDSProfesionalesRow(int Id, string Nombre, string Profesion, string Matricula, string Especialidad, string Email, string Telefono) {
+            public DSProfesionalesRow AddDSProfesionalesRow(int Id, string Nombre, string Profesion, string Especialidad, string Matricula, string Telefono) {
                 DSProfesionalesRow rowDSProfesionalesRow = ((DSProfesionalesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
                         Nombre,
                         Profesion,
-                        Matricula,
                         Especialidad,
-                        Email,
+                        Matricula,
                         Telefono};
                 rowDSProfesionalesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDSProfesionalesRow);
@@ -1173,9 +1204,8 @@ namespace Desktop.DataSet {
                 this.columnId = base.Columns["Id"];
                 this.columnNombre = base.Columns["Nombre"];
                 this.columnProfesion = base.Columns["Profesion"];
-                this.columnMatricula = base.Columns["Matricula"];
                 this.columnEspecialidad = base.Columns["Especialidad"];
-                this.columnEmail = base.Columns["Email"];
+                this.columnMatricula = base.Columns["Matricula"];
                 this.columnTelefono = base.Columns["Telefono"];
             }
             
@@ -1188,12 +1218,10 @@ namespace Desktop.DataSet {
                 base.Columns.Add(this.columnNombre);
                 this.columnProfesion = new global::System.Data.DataColumn("Profesion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProfesion);
-                this.columnMatricula = new global::System.Data.DataColumn("Matricula", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMatricula);
                 this.columnEspecialidad = new global::System.Data.DataColumn("Especialidad", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEspecialidad);
-                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmail);
+                this.columnMatricula = new global::System.Data.DataColumn("Matricula", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMatricula);
                 this.columnTelefono = new global::System.Data.DataColumn("Telefono", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTelefono);
             }
@@ -1335,6 +1363,8 @@ namespace Desktop.DataSet {
             
             private global::System.Data.DataColumn columnRelacion;
             
+            private global::System.Data.DataColumn columnPaciente;
+            
             private global::System.Data.DataColumn columnTelefono;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1398,6 +1428,14 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn PacienteColumn {
+                get {
+                    return this.columnPaciente;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn TelefonoColumn {
                 get {
                     return this.columnTelefono;
@@ -1441,12 +1479,13 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DSContactosEmergenciaRow AddDSContactosEmergenciaRow(int Id, string Nombre, string Relacion, string Telefono) {
+            public DSContactosEmergenciaRow AddDSContactosEmergenciaRow(int Id, string Nombre, string Relacion, string Paciente, string Telefono) {
                 DSContactosEmergenciaRow rowDSContactosEmergenciaRow = ((DSContactosEmergenciaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
                         Nombre,
                         Relacion,
+                        Paciente,
                         Telefono};
                 rowDSContactosEmergenciaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDSContactosEmergenciaRow);
@@ -1473,6 +1512,7 @@ namespace Desktop.DataSet {
                 this.columnId = base.Columns["Id"];
                 this.columnNombre = base.Columns["Nombre"];
                 this.columnRelacion = base.Columns["Relacion"];
+                this.columnPaciente = base.Columns["Paciente"];
                 this.columnTelefono = base.Columns["Telefono"];
             }
             
@@ -1485,6 +1525,8 @@ namespace Desktop.DataSet {
                 base.Columns.Add(this.columnNombre);
                 this.columnRelacion = new global::System.Data.DataColumn("Relacion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRelacion);
+                this.columnPaciente = new global::System.Data.DataColumn("Paciente", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaciente);
                 this.columnTelefono = new global::System.Data.DataColumn("Telefono", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTelefono);
                 this.columnRelacion.Caption = "Profesion";
@@ -1646,6 +1688,38 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Profesional {
+                get {
+                    try {
+                        return ((string)(this[this.tableDSTurnos.ProfesionalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Profesional\' de la tabla \'DSTurnos\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDSTurnos.ProfesionalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Paciente {
+                get {
+                    try {
+                        return ((string)(this[this.tableDSTurnos.PacienteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Paciente\' de la tabla \'DSTurnos\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDSTurnos.PacienteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string FechaHora {
                 get {
                     try {
@@ -1702,6 +1776,30 @@ namespace Desktop.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetIdNull() {
                 this[this.tableDSTurnos.IdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsProfesionalNull() {
+                return this.IsNull(this.tableDSTurnos.ProfesionalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetProfesionalNull() {
+                this[this.tableDSTurnos.ProfesionalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsPacienteNull() {
+                return this.IsNull(this.tableDSTurnos.PacienteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetPacienteNull() {
+                this[this.tableDSTurnos.PacienteColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1853,6 +1951,22 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Profesional {
+                get {
+                    try {
+                        return ((string)(this[this.tableDSPacientes.ProfesionalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Profesional\' de la tabla \'DSPacientes\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDSPacientes.ProfesionalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsIdNull() {
                 return this.IsNull(this.tableDSPacientes.IdColumn);
             }
@@ -1922,6 +2036,18 @@ namespace Desktop.DataSet {
             public void SetTelefonoNull() {
                 this[this.tableDSPacientes.TelefonoColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsProfesionalNull() {
+                return this.IsNull(this.tableDSPacientes.ProfesionalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetProfesionalNull() {
+                this[this.tableDSPacientes.ProfesionalColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -1988,22 +2114,6 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Matricula {
-                get {
-                    try {
-                        return ((string)(this[this.tableDSProfesionales.MatriculaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Matricula\' de la tabla \'DSProfesionales\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableDSProfesionales.MatriculaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Especialidad {
                 get {
                     try {
@@ -2020,17 +2130,17 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Email {
+            public string Matricula {
                 get {
                     try {
-                        return ((string)(this[this.tableDSProfesionales.EmailColumn]));
+                        return ((string)(this[this.tableDSProfesionales.MatriculaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Email\' de la tabla \'DSProfesionales\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Matricula\' de la tabla \'DSProfesionales\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDSProfesionales.EmailColumn] = value;
+                    this[this.tableDSProfesionales.MatriculaColumn] = value;
                 }
             }
             
@@ -2088,18 +2198,6 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsMatriculaNull() {
-                return this.IsNull(this.tableDSProfesionales.MatriculaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetMatriculaNull() {
-                this[this.tableDSProfesionales.MatriculaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsEspecialidadNull() {
                 return this.IsNull(this.tableDSProfesionales.EspecialidadColumn);
             }
@@ -2112,14 +2210,14 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsEmailNull() {
-                return this.IsNull(this.tableDSProfesionales.EmailColumn);
+            public bool IsMatriculaNull() {
+                return this.IsNull(this.tableDSProfesionales.MatriculaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetEmailNull() {
-                this[this.tableDSProfesionales.EmailColumn] = global::System.Convert.DBNull;
+            public void SetMatriculaNull() {
+                this[this.tableDSProfesionales.MatriculaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2199,6 +2297,22 @@ namespace Desktop.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Paciente {
+                get {
+                    try {
+                        return ((string)(this[this.tableDSContactosEmergencia.PacienteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Paciente\' de la tabla \'DSContactosEmergencia\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDSContactosEmergencia.PacienteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Telefono {
                 get {
                     try {
@@ -2247,6 +2361,18 @@ namespace Desktop.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetRelacionNull() {
                 this[this.tableDSContactosEmergencia.RelacionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsPacienteNull() {
+                return this.IsNull(this.tableDSContactosEmergencia.PacienteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetPacienteNull() {
+                this[this.tableDSContactosEmergencia.PacienteColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
