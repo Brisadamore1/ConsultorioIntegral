@@ -24,6 +24,7 @@ else
                Items="turnos" 
                OnEdit="EditarTurno"
                OnDelete="Eliminar"
+               OnAttend="AtenderTurno"
                EmptyMessage="No hay turnos registrados">
         <HeaderContent>
             <th>ID</th>
@@ -36,8 +37,8 @@ else
         </HeaderContent>
         <RowContent>
             <td class="id-column">@context.Id</td>
-            <td class="name-column"><strong>@context.Profesional.Nombre</strong></td>
-            <td class="name-column"><strong>@context.Paciente.Nombre</strong></td>
+            <td class="name-column"><strong>@(context.Profesional?.Nombre)</strong></td>
+            <td class="name-column"><strong>@(context.Paciente?.Nombre)</strong></td>
             <td>@FormatearFechaHora(context.FechaHora)</td>
             <td>@context.DuracionMinutos</td>
             <td>
@@ -115,6 +116,51 @@ else
         catch (Exception ex)
         {
             await SweetAlert.FireAsync("Error", $"Error al eliminar: {ex.Message}", SweetAlertIcon.Error);
+        }
+    }
+
+    private async Task AtenderTurno(Turno turno)
+    {
+        try
+        {
+            if (turno.EstadoTurno == EstadoTurnoEnum.Atendido)
+            {
+                await SweetAlert.FireAsync("Información", "El turno ya está marcado como Atendido", SweetAlertIcon.Info);
+                return;
+            }
+
+            // Crear copia para actualizar (evitamos romper las referencias usadas en la UI)
+            var turnoUpdate = new Turno
+            {
+                Id = turno.Id,
+                PacienteId = turno.PacienteId,
+                ProfesionalId = turno.ProfesionalId,
+                FechaHora = turno.FechaHora,
+                DuracionMinutos = turno.DuracionMinutos,
+                EstadoTurno = EstadoTurnoEnum.Atendido,
+                CanceladoPorProfesional = turno.CanceladoPorProfesional,
+                MotivoCancelacion = turno.MotivoCancelacion,
+                IsDeleted = turno.IsDeleted
+            };
+
+            var actualizado = await TurnoService.UpdateAsync(turnoUpdate);
+            if (actualizado)
+            {
+                // Actualizamos el objeto original para reflejar el nuevo estado inmediatamente
+                turno.EstadoTurno = EstadoTurnoEnum.Atendido;
+                await SweetAlert.FireAsync("Éxito", "El turno fue marcado como Atendido", SweetAlertIcon.Success);
+                // Recargamos la lista completa para asegurar coherencia
+                await CargarTurnos();
+                StateHasChanged();
+            }
+            else
+            {
+                await SweetAlert.FireAsync("Error", "No se pudo actualizar el turno", SweetAlertIcon.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            await SweetAlert.FireAsync("Error", $"Error al marcar como atendido: {ex.Message}", SweetAlertIcon.Error);
         }
     }
 }

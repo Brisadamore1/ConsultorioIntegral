@@ -132,6 +132,19 @@
     color: #721c24 !important;
 }
 
+/* Botón Atendido - Verde claro */
+.btn-success {
+    background-color: transparent !important;
+    border: 2px solid #a5d6a7 !important;
+    color: #4f794f !important;
+}
+
+.btn-success:hover {
+    background-color: #a5d6a7 !important;
+    border-color: #66bb6a !important;
+    color: #2e5632 !important;
+}
+
 .btn {
     font-weight: 500;
     padding: 0.625rem 1.5rem;
