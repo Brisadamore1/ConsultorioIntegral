@@ -21,5 +21,11 @@ namespace Service.Models
         public bool Pagado { get; set; } // Indica si la sesión ha sido pagada o no.
 
         public bool IsDeleted { get; set; } = false;
+
+        // Propiedades de solo lectura para facilitar el binding en WinForms
+        public string? ProfesionalNombre => Turno?.Profesional?.Nombre;
+        public string? PacienteNombre => Turno?.Paciente?.Nombre;
+        public string? FechaHoraTurno => Turno != null ? Turno.FechaHora.ToString("dd/MM/yyyy HH:mm") : null;
+        public string? TurnoDisplayName => Turno?.DisplayName;
     }
 }

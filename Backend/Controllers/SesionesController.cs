@@ -21,8 +21,18 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sesion>>> GetSesiones([FromQuery] string? filtro = "")
         {
+            filtro = filtro ?? string.Empty;
+
             return await _context.Sesiones
-               .Where(c => c.Notas.ToUpper().Contains(filtro.ToUpper()))
+               .Include(s => s.Turno)
+                   .ThenInclude(t => t!.Paciente)
+               .Include(s => s.Turno)
+                   .ThenInclude(t => t!.Profesional)
+               .Where(s =>
+                    (s.Notas != null && s.Notas.ToUpper().Contains(filtro.ToUpper()))
+                    || (s.Turno != null && s.Turno.Paciente != null && s.Turno.Paciente.Nombre != null && s.Turno.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                    || (s.Turno != null && s.Turno.Profesional != null && s.Turno.Profesional.Nombre != null && s.Turno.Profesional.Nombre.ToUpper().Contains(filtro.ToUpper()))
+               )
                .ToListAsync();
         }
 
@@ -99,7 +109,7 @@ namespace Backend.Controllers
         }
         private bool SesionExists(int id)
         {
-            return _context.Deudas.Any(e => e.Id == id);
+            return _context.Sesiones.Any(e => e.Id == id);
         }
     }
 }

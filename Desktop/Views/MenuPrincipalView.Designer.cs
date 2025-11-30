@@ -37,13 +37,14 @@
             menuSalirDelSistema = new ToolStripMenuItem();
             reportesToolStripMenuItem = new ToolStripMenuItem();
             pacientesToolStripMenuItem = new ToolStripMenuItem();
+            sesionesToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, menuSalirDelSistema, reportesToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, reportesToolStripMenuItem, sesionesToolStripMenuItem, menuSalirDelSistema });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
@@ -109,9 +110,16 @@
             // pacientesToolStripMenuItem
             // 
             pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            pacientesToolStripMenuItem.Size = new Size(224, 26);
+            pacientesToolStripMenuItem.Size = new Size(153, 26);
             pacientesToolStripMenuItem.Text = "Pacientes";
             pacientesToolStripMenuItem.Click += pacientesToolStripMenuItem_Click;
+            // 
+            // sesionesToolStripMenuItem
+            // 
+            sesionesToolStripMenuItem.Name = "sesionesToolStripMenuItem";
+            sesionesToolStripMenuItem.Size = new Size(80, 39);
+            sesionesToolStripMenuItem.Text = "Sesiones";
+            sesionesToolStripMenuItem.Click += sesionesToolStripMenuItem_Click;
             // 
             // MenuPrincipalView
             // 
@@ -143,5 +151,6 @@
         private ToolStripMenuItem menuSalirDelSistema;
         private ToolStripMenuItem reportesToolStripMenuItem;
         private ToolStripMenuItem pacientesToolStripMenuItem;
+        private ToolStripMenuItem sesionesToolStripMenuItem;
     }
 }

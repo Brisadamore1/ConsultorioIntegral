@@ -25,7 +25,26 @@ namespace Backend.Controllers
             return await _context.Turnos
                 .Include(c => c.Paciente)
                 .Include(c => c.Profesional)
-                .Where(c => c.Paciente != null && c.Paciente.Nombre != null && c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                .Where(c => string.IsNullOrEmpty(filtro)
+                            || (c.Paciente != null && c.Paciente.Nombre != null && c.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                            || (c.Profesional != null && c.Profesional.Nombre != null && c.Profesional.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                )
+                .ToListAsync();
+        }
+
+        // GET: api/Turnos/atendidos
+        [HttpGet("atendidos")]
+        public async Task<ActionResult<IEnumerable<Turno>>> GetTurnosAtendidos([FromQuery] string? filtro = "")
+        {
+            filtro = filtro ?? string.Empty;
+            return await _context.Turnos
+                .Include(t => t.Paciente)
+                .Include(t => t.Profesional)
+                .Where(t => t.EstadoTurno == Service.Enums.EstadoTurnoEnum.Atendido &&
+                            (
+                                (t.Paciente != null && t.Paciente.Nombre != null && t.Paciente.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                                || (t.Profesional != null && t.Profesional.Nombre != null && t.Profesional.Nombre.ToUpper().Contains(filtro.ToUpper()))
+                            ))
                 .ToListAsync();
         }
 

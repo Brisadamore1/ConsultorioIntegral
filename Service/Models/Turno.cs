@@ -32,5 +32,8 @@ namespace Service.Models
         public string? MotivoCancelacion { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public string DisplayName =>
+       $"{Paciente?.Nombre} - {Profesional?.Nombre} - {FechaHora:dd/MM/yyyy HH:mm}";
     }
 }

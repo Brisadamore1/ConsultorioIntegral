@@ -45,5 +45,11 @@ namespace Desktop
             PacientesViewReport pacientesViewReport = new PacientesViewReport();
             pacientesViewReport.ShowDialog();
         }
+
+        private void sesionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SesionesView sesionesView = new SesionesView();
+            sesionesView.ShowDialog();
+        }
     }
 }
