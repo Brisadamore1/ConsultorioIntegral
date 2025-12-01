@@ -4,11 +4,12 @@
              x:Class="AppMovil.ContentViews.FlyoutHeader">
     <Grid BackgroundColor="Black">
         <Image Aspect="AspectFit" 
-           Source="dotnet_bot.png" 
+           Source="consultorio.jpg" 
            Opacity="0.3" />
-        <Label Text="Consultorio" 
+        <Label Text="Consultorio Integral" 
            TextColor="White" 
            FontAttributes="Bold" 
+           FontSize="22"
            HorizontalTextAlignment="Center"
            VerticalTextAlignment="Center" />
     </Grid>

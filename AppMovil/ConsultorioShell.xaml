@@ -9,13 +9,22 @@
     xmlns:contentviews="clr-namespace:AppMovil.ContentViews"
     FlyoutBehavior="Disabled"
     Title="AppMovil"
+    FlyoutBackgroundImage="logo.png"
+     FlyoutBackgroundImageAspect="AspectFill"
     FlyoutHeaderBehavior="CollapseOnScroll">
 
     <Shell.BindingContext>
         <viewsmodels:ConsultorioShellViewModel />
     </Shell.BindingContext>
+    
+    <Shell.FlyoutHeader>
+        <contentviews:FlyoutHeader />
+    </Shell.FlyoutHeader>
 
-    <!-- Header/Footer del Flyout deshabilitados temporalmente para evitar problemas de inicialización en Windows -->
+    <Shell.FlyoutFooter>
+        <contentviews:FlyoutFooter />
+    </Shell.FlyoutFooter>
+
 
     <FlyoutItem Route="nuestra_app"
                 FlyoutDisplayOptions="AsMultipleItems"
@@ -24,11 +33,12 @@
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="casa.png"
             Route="MainPage" />
         <ShellContent
             Title="Profesionales Destacados"
             ContentTemplate="{DataTemplate views:ProfesionalesDestacadosView}"
-            Icon="oferta.png"
+            Icon="destacado.png"
             Route="Destacados" />
         
         <Tab Title="Profesionales"
@@ -36,11 +46,13 @@
 
             <ShellContent
                 Title="Lista de Profesionales"
+                Icon="medico.png"
                 ContentTemplate="{DataTemplate views:ProfesionalesView}"
                 Route="ListaProfesionales" />
 
             <ShellContent
                 Title="Agregar profesional"
+                Icon="historial.png"
                 ContentTemplate="{DataTemplate views:AddEditProfesionalView}"
                 Route="AgregarEditarProfesional" />
 
@@ -48,7 +60,8 @@
     </FlyoutItem>
 
     <MenuItem Text="Cerrar sesión"
-              Command="{Binding LogoutCommand}" />
+              Command="{Binding LogoutCommand}"  
+              IconImageSource="cerrar.png"/>
 
     <ShellContent
         Title="Login"

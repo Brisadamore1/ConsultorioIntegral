@@ -70,8 +70,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<None Remove="Resources\Images\cat.png" />
-		<None Remove="Resources\Images\dog.png" />
 		<None Remove="Resources\Images\paw.png" />
 		<None Remove="Resources\Images\photo.jpg" />
 		<None Remove="Resources\Images\random.png" />
