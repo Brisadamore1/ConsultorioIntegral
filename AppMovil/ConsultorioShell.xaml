@@ -9,21 +9,13 @@
     xmlns:contentviews="clr-namespace:AppMovil.ContentViews"
     FlyoutBehavior="Disabled"
     Title="AppMovil"
-    FlyoutBackgroundImage="photo.jpg"
-    FlyoutBackgroundImageAspect="AspectFill"
     FlyoutHeaderBehavior="CollapseOnScroll">
 
     <Shell.BindingContext>
         <viewsmodels:ConsultorioShellViewModel />
     </Shell.BindingContext>
 
-    <Shell.FlyoutHeader>
-        <contentviews:FlyoutHeader />
-    </Shell.FlyoutHeader>
-
-    <Shell.FlyoutFooter>
-        <contentviews:FlyoutFooter />
-    </Shell.FlyoutFooter>
+    <!-- Header/Footer del Flyout deshabilitados temporalmente para evitar problemas de inicialización en Windows -->
 
     <FlyoutItem Route="nuestra_app"
                 FlyoutDisplayOptions="AsMultipleItems"
@@ -35,18 +27,15 @@
             Route="MainPage" />
 
         <Tab Title="Profesionales"
-             Route="profesionales"
-             Icon="paw.png">
+             Route="profesionales">
 
             <ShellContent
                 Title="Lista"
-                Icon="cat.png"
                 ContentTemplate="{DataTemplate views:ProfesionalesView}"
                 Route="ListaProfesionales" />
 
             <ShellContent
                 Title="Agregar profesional"
-                Icon="dog.png"
                 ContentTemplate="{DataTemplate views:AddEditProfesionalView}"
                 Route="AgregarEditarProfesional" />
 
@@ -54,8 +43,7 @@
     </FlyoutItem>
 
     <MenuItem Text="Cerrar sesión"
-              Command="{Binding LogoutCommand}"
-              IconImageSource="random.png" />
+              Command="{Binding LogoutCommand}" />
 
     <ShellContent
         Title="Login"

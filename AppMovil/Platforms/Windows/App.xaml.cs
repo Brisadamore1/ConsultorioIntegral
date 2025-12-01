@@ -21,8 +21,19 @@ namespace AppMovil.WinUI
             // Manejador global de excepciones para evitar que la app se detenga
             Microsoft.UI.Xaml.Application.Current.UnhandledException += (sender, e) =>
             {
-                // Puedes registrar el error si lo deseas: e.Message, e.Exception
-                e.Handled = true; // Evita que la app se cierre o se detenga la depuración
+                // Registra el error y evita cierre/JIT; en Windows algunas excepciones de inicio pueden emerger como Win32
+                System.Diagnostics.Debug.WriteLine($"UnhandledException: {e.Message} - {e.Exception}");
+                e.Handled = true; // forzar manejo para que no aparezca el cuadro de JIT
+            };
+
+            // Captura excepciones no observadas de tareas para evitar cierre/JIT
+            System.Threading.Tasks.TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                e.SetObserved();
+            };
+            AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
+            {
+                // No interrumpir, solo dejar trazas si fuera necesario
             };
         }
 
