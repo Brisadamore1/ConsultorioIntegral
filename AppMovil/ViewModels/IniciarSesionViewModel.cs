@@ -39,7 +39,6 @@ namespace AppMovil.ViewModels
                 }
             });
             _userRepository = new FileUserRepository("ConsultorioIntegral");
-            ChequearSiHayUsuarioAlmacenado();
 
             IniciarSesionCommand = new RelayCommand(IniciarSesion, PermitirIniciarSesion);
             RegistrarseCommand = new RelayCommand(Registrarse);

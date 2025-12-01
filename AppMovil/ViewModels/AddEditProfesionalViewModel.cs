@@ -15,18 +15,19 @@ namespace AppMovil.ViewModels
     public class AddEditProfesionalViewModel : ObjectNotification
     {
 		ProfesionalService profesionalService = new ProfesionalService();
-		private Profesional editProfessional;
+        private Profesional editProfessional;
 
 		public Profesional EditProfessional
         {
 			get { return editProfessional; }
-			set { editProfessional = value;
-                OnPropertyChanged();
+			set {
+				editProfessional = value;
+				OnPropertyChanged();
 				SettingData();
-            }
+			}
 		}
 
-        private void SettingData()
+		private void SettingData()
         {
             if (editProfessional == null)
             {
@@ -104,14 +105,16 @@ namespace AppMovil.ViewModels
             }
         }
 
-        public Command SaveProfessionalCommand { get; }
+		public Command SaveProfessionalCommand { get; }
+		public Command CancelProfessionalCommand { get; }
 
-        public AddEditProfesionalViewModel()
+		public AddEditProfesionalViewModel()
         {
-            SaveProfessionalCommand = new Command(async () => await SaveProfessional());
+			SaveProfessionalCommand = new Command(async () => await SaveProfessional());
+			CancelProfessionalCommand = new Command(async () => await CancelProfessional());
         }
 
-        private async Task SaveProfessional()
+		private async Task SaveProfessional()
         {
             if (EditProfessional != null)
             {
@@ -134,10 +137,18 @@ namespace AppMovil.ViewModels
                     Telefono = Telefono
                 };
                 await profesionalService.AddAsync(profesional);
+				// Actualiza estado edición
+				EditProfessional = profesional;
             }
             await Shell.Current.GoToAsync("//ListaProfesionales");
 
         }
+
+		private async Task CancelProfessional()
+		{
+			// Simplemente navega de regreso a la lista sin guardar cambios
+			await Shell.Current.GoToAsync("//ListaProfesionales");
+		}
     }
 }
 

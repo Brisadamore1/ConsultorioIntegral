@@ -23,7 +23,9 @@ namespace AppMovil.ViewModels
             {
                 filterProfessionals = value;
                 OnPropertyChanged();
-                _ = FiltrarProfesionales();
+                // Evita filtrar si aún no se cargaron los datos
+                if (profesionalesListToFilter != null)
+                    _ = FiltrarProfesionales();
             }
         }
 
@@ -57,6 +59,7 @@ namespace AppMovil.ViewModels
             set{ selectedProfessional = value;
                 OnPropertyChanged();
                 EditarProfesionalCommand.ChangeCanExecute();
+                EliminarProfesionalCommand.ChangeCanExecute();
             }
         }
 
@@ -64,6 +67,7 @@ namespace AppMovil.ViewModels
         public Command FiltrarProfesionalesCommand { get; }
         public Command AgregarProfesionalCommand { get; }
         public Command EditarProfesionalCommand { get; }
+        public Command EliminarProfesionalCommand { get; }
 
         public ProfesionalesViewModel()
         {
@@ -71,6 +75,7 @@ namespace AppMovil.ViewModels
             FiltrarProfesionalesCommand = new Command(async () => await FiltrarProfesionales());
             AgregarProfesionalCommand = new Command(async () => await AgregarProfesional());
             EditarProfesionalCommand = new Command(async (obj) => await EditarProfesional(), PermitirEditar);
+            EliminarProfesionalCommand = new Command(async (obj) => await EliminarProfesional(), PermitirEditar);
             _ = ObtenerProfesionales();
         }
 
@@ -97,25 +102,65 @@ namespace AppMovil.ViewModels
             await Shell.Current.GoToAsync("//AgregarEditarProfesional", navigationParameter);
         }
 
+        private async Task EliminarProfesional()
+        {
+            if (SelectedProfessional == null) return;
+            try
+            {
+                // Confirmación
+                bool confirmar = await Application.Current.MainPage.DisplayAlert(
+                    "Eliminar profesional",
+                    $"¿Está seguro que desea eliminar a {SelectedProfessional.Nombre}?",
+                    "Sí", "No");
+                if (!confirmar) return;
+
+                await profesionalService.DeleteAsync(SelectedProfessional.Id);
+
+                // Recargar lista desde servicio para mantener coherencia
+                await ObtenerProfesionales();
+                SelectedProfessional = null; // Limpia selección para desactivar comandos
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
+            }
+        }
+
         public async Task FiltrarProfesionales()
         {
-            var profesionalesFiltrados = profesionalesListToFilter?
-                .Where(p => p.Nombre
-                .ToUpper()
-                .Contains(filterProfessionals.ToUpper()));
+            // Si no hay datos cargados, no hacer nada
+            if (profesionalesListToFilter == null)
+                return;
+
+            var filtro = filterProfessionals ?? string.Empty;
+            IEnumerable<Profesional> profesionalesFiltrados;
+
+            if (string.IsNullOrWhiteSpace(filtro))
+            {
+                profesionalesFiltrados = profesionalesListToFilter;
+            }
+            else
+            {
+                var upper = filtro.ToUpperInvariant();
+                profesionalesFiltrados = profesionalesListToFilter.Where(p =>
+                    (p?.Nombre ?? string.Empty).ToUpperInvariant().Contains(upper));
+            }
+
             Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
-            
         }
 
         public async Task ObtenerProfesionales()
         {
             try
             {
-                FilterProfessionals = string.Empty;
+                // No disparar filtrado hasta tener datos cargados
+                filterProfessionals = string.Empty;
                 IsRefreshing = true;
                 var result = await profesionalService.GetAllAsync();
                 profesionalesListToFilter = result ?? new List<Profesional>();
                 Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+                // Aplica filtro inicial (vacío) de forma segura
+                await FiltrarProfesionales();
                
             }
             catch (Exception ex)

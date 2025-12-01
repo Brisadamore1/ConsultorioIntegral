@@ -18,22 +18,28 @@ namespace AppMovil.ViewModels
         private const string RequestUri = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FirebaseApiKey;
 
         public IRelayCommand RegistrarseCommand { get; }
+        public IRelayCommand CancelarCommand { get; }
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
         private string nombre;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
         private string mail;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
         private string password;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
         private string verifyPassword;
 
         public RegistrarseViewModel()
         {
-            RegistrarseCommand = new RelayCommand(Registrarse);
+            RegistrarseCommand = new RelayCommand(Registrarse, PermitirRegistrarse);
+            CancelarCommand = new RelayCommand(Cancelar);
             _clientAuth = new FirebaseAuthClient(new FirebaseAuthConfig()
             {
                 ApiKey = "AIzaSyBej0cIsKLO_UgPNjp5UvJemxmuwNJhePY",
@@ -43,6 +49,15 @@ namespace AppMovil.ViewModels
                         new EmailProvider()
                 }
             });
+        }
+
+        public bool PermitirRegistrarse()
+        {
+            return !string.IsNullOrWhiteSpace(Nombre)
+                   && !string.IsNullOrWhiteSpace(Mail)
+                   && !string.IsNullOrWhiteSpace(Password)
+                   && !string.IsNullOrWhiteSpace(VerifyPassword)
+                   && Password == VerifyPassword;
         }
 
         private async void Registrarse()
@@ -80,6 +95,18 @@ namespace AppMovil.ViewModels
 
                 var response = await client.PostAsync(RequestUri, content);
                 response.EnsureSuccessStatusCode();
+            }
+        }
+
+        private async void Cancelar()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync("//Login");
+            }
+            catch
+            {
+                await Shell.Current.GoToAsync("..");
             }
         }
     }
