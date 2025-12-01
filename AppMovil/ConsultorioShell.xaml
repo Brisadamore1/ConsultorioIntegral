@@ -25,7 +25,12 @@
             Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
-
+        <ShellContent
+            Title="Profesionales Destacados"
+            ContentTemplate="{DataTemplate views:ProfesionalesDestacadosView}"
+            Icon="oferta.png"
+            Route="Destacados" />
+        
         <Tab Title="Profesionales"
              Route="profesionales">
 

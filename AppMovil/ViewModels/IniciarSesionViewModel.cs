@@ -42,11 +42,21 @@ namespace AppMovil.ViewModels
 
             IniciarSesionCommand = new RelayCommand(IniciarSesion, PermitirIniciarSesion);
             RegistrarseCommand = new RelayCommand(Registrarse);
+
+            // Try to auto-login if a user is stored
+            ChequearSiHayUsuarioAlmacenado();
         }
 
         private async void Registrarse()
         {
-            await Shell.Current.GoToAsync("Registrarse");
+            try
+            {
+                await Shell.Current.GoToAsync("Registrarse");
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Registro", "No se pudo abrir la pantalla de registro. Intente nuevamente.", "Ok");
+            }
         }
 
         private async void ChequearSiHayUsuarioAlmacenado()
@@ -61,18 +71,45 @@ namespace AppMovil.ViewModels
         }
         public bool PermitirIniciarSesion()
         {
-            return !string.IsNullOrEmpty(Mail) && !string.IsNullOrEmpty(Password);
+            return !string.IsNullOrWhiteSpace(Mail) && !string.IsNullOrWhiteSpace(Password);
         }
 
         private async void IniciarSesion()
         {
             try
             {
+                // Basic validations to avoid exceptions and provide clear feedback
+                var email = Mail?.Trim();
+                var pass = Password;
 
-                var userCredential = await _clientAuth.SignInWithEmailAndPasswordAsync(mail, password);
-                if (userCredential.User.Info.IsEmailVerified == false)
+                if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(pass))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Debe verificar su correo electrónico", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Debe ingresar correo y contraseña.", "Ok");
+                    return;
+                }
+
+                if (!IsValidEmail(email))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "El correo no tiene un formato válido.", "Ok");
+                    return;
+                }
+
+                // Validaciones de longitud de contraseña para evitar errores innecesarios
+                if (pass.Length < 6)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "La contraseña debe tener al menos 6 caracteres.", "Ok");
+                    return;
+                }
+                if (pass.Length > 128)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "La contraseña es demasiado larga.", "Ok");
+                    return;
+                }
+
+                var userCredential = await _clientAuth.SignInWithEmailAndPasswordAsync(email, pass);
+                if (userCredential?.User?.Info?.IsEmailVerified == false)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Debe verificar su correo electrónico.", "Ok");
                     return;
                 }
 
@@ -87,12 +124,32 @@ namespace AppMovil.ViewModels
 
                 var shellconsultorio = (ConsultorioShell)App.Current.MainPage;
                 shellconsultorio.EnableAppAfterLogin();
-
             }
-            catch (FirebaseAuthException error)
+            catch (FirebaseAuthException)
             {
-                await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Ocurrió un problema:" + error.Reason, "Ok");
+                // Simples: si credenciales son incorrectas u otro error de auth, mostrar una única advertencia
+                await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Correo o contraseña incorrectos.", "Ok");
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "No se pudo conectar. Verifique su conexión a Internet.", "Ok");
+            }
+            catch (Exception)
+            {
+                await Application.Current.MainPage.DisplayAlert("Inicio de sesión", "Ocurrió un error inesperado. Intente nuevamente.", "Ok");
+            }
+        }
 
+        private static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 
 namespace AppMovil.ViewModels
 {
@@ -62,26 +63,65 @@ namespace AppMovil.ViewModels
 
         private async void Registrarse()
         {
-
-            if (password != verifyPassword)
-            {
-                await Application.Current.MainPage.DisplayAlert("Registrarse", "Las contraseñas ingresadas no coinciden", "Ok");
-                return;
-            }
-
             try
             {
-                var user = await _clientAuth.CreateUserWithEmailAndPasswordAsync(mail, password, nombre);
-                await SendVerificationEmailAsync(user.User.GetIdTokenAsync().Result);
-                await Application.Current.MainPage.DisplayAlert("Registrarse", "Cuenta creada!", "Ok");
+                var email = Mail?.Trim();
+                var pass = Password;
+                var confirm = VerifyPassword;
+                var name = Nombre?.Trim();
+
+                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(pass) || string.IsNullOrWhiteSpace(confirm))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Registrarse", "Complete todos los campos.", "Ok");
+                    return;
+                }
+                if (!IsValidEmail(email))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Registrarse", "El correo no tiene un formato válido.", "Ok");
+                    return;
+                }
+                if (pass.Length < 6)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Registrarse", "La contraseña debe tener al menos 6 caracteres.", "Ok");
+                    return;
+                }
+                if (pass.Length > 128)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Registrarse", "La contraseña es demasiado larga.", "Ok");
+                    return;
+                }
+                if (pass != confirm)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Registrarse", "Las contraseñas ingresadas no coinciden.", "Ok");
+                    return;
+                }
+
+                var user = await _clientAuth.CreateUserWithEmailAndPasswordAsync(email, pass, name);
+                var idToken = await user.User.GetIdTokenAsync();
+                await SendVerificationEmailAsync(idToken);
+                await Application.Current.MainPage.DisplayAlert("Registrarse", "Cuenta creada. Debe verificar su correo electrónico.", "Ok");
                 await Shell.Current.GoToAsync("//Login");
             }
-            catch (FirebaseAuthException error) // Use alias here 
+            catch (FirebaseAuthException error)
             {
-                await Application.Current.MainPage.DisplayAlert("Registrarse", "Ocurrió un problema:" + error.Reason, "Ok");
-
+                var reason = error.Reason.ToString();
+                var message = reason switch
+                {
+                    var r when r.Contains("EmailExists", StringComparison.OrdinalIgnoreCase) => "El correo ya está registrado.",
+                    var r when r.Contains("InvalidEmail", StringComparison.OrdinalIgnoreCase) => "El correo no es válido.",
+                    var r when r.Contains("WeakPassword", StringComparison.OrdinalIgnoreCase) => "La contraseña es demasiado débil.",
+                    _ => "No se pudo crear la cuenta. Verifique los datos e intente nuevamente."
+                };
+                await Application.Current.MainPage.DisplayAlert("Registrarse", message, "Ok");
             }
-            
+            catch (HttpRequestException)
+            {
+                await Application.Current.MainPage.DisplayAlert("Registrarse", "No se pudo conectar. Intente nuevamente más tarde.", "Ok");
+            }
+            catch (Exception)
+            {
+                await Application.Current.MainPage.DisplayAlert("Registrarse", "Ocurrió un error inesperado. Intente nuevamente.", "Ok");
+            }
         }
 
         public static async Task SendVerificationEmailAsync(string idToken)
@@ -95,6 +135,19 @@ namespace AppMovil.ViewModels
 
                 var response = await client.PostAsync(RequestUri, content);
                 response.EnsureSuccessStatusCode();
+            }
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
 
