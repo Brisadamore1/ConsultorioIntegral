@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.ProfesionalesView"
-             Title="Lista de profesionales"
+             Title="Profesionales"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:ProfesionalesViewModel />
@@ -35,10 +35,10 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="10">
-                                <Image Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />
+                                <!--<Image Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />-->
                                 <StackLayout Orientation="Vertical" Padding="10,0,0,0">
                                     <Label Text="{Binding Nombre}" FontAttributes="Bold" />
-                                    <Label Text="{Binding Matricula}" />
+                                    <!--<Label Text="{Binding Matricula}" />
                                     <Label Text="{Binding Especialidad}">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="">
@@ -49,7 +49,7 @@
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
-                                    <Label Text="{Binding Email}" />
+                                    <Label Text="{Binding Email}" />-->
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>

@@ -30,7 +30,7 @@
              Route="profesionales">
 
             <ShellContent
-                Title="Lista"
+                Title="Lista de Profesionales"
                 ContentTemplate="{DataTemplate views:ProfesionalesView}"
                 Route="ListaProfesionales" />
 

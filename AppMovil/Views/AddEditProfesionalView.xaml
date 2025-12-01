@@ -3,88 +3,163 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.AddEditProfesionalView"
-             Title="Agregar/Editar profesional"
+             Title="Profesionales"
+             BackgroundColor="#121212"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:AddEditProfesionalViewModel />
     </ContentPage.BindingContext>
-    <VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="14" VerticalOptions="Center">
+       
+            <!-- Campo nombre del profesional -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Nombre del profesional:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Nombre del profesional"
+                           Text="{Binding Nombre}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
 
-        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-            <Label Text="Nombre del profesional:"
-                   Grid.Column="0"
-                   Grid.Row="0"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Nombre del profesional"
-                   Text="{Binding Nombre}"
-                   Grid.Column="1"
-                   Grid.Row="0"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-            <Label Text="Profesión:"
-                   Grid.Column="0"
-                   Grid.Row="1"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Profesión"
-                   Text="{Binding Profesion}"
-                   Grid.Column="1"
-                   Grid.Row="1"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-            <Label Text="Mátricula:"
-                   Grid.Column="0"
-                   Grid.Row="2"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Mátricula"
-                   Text="{Binding Matricula}"
-                   Grid.Column="1"
-                   Grid.Row="2"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-            <Label Text="Especialidad:"
-                   Grid.Column="0"
-                   Grid.Row="3"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Especialidad"
-                   Text="{Binding Especialidad}"
-                   Grid.Column="1"
-                   Grid.Row="3"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-            <Label Text="Email:"
-                   Grid.Column="0"
-                   Grid.Row="4"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Email"
-                   Text="{Binding Mail}"
-                   Grid.Column="1"
-                   Grid.Row="4"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-            <Label Text="Teléfono:"
-                   Grid.Column="0"
-                   Grid.Row="5"
-                   HorizontalOptions="End"
-                   VerticalOptions="Center"/>
-            <Entry Placeholder="Teléfono"
-                   Text="{Binding Telefono}"
-                   Grid.Column="1"
-                   Grid.Row="5"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"/>
-        </Grid>
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
+            <!-- Campo profesión -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Profesión:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Profesión"
+                           Text="{Binding Profesion}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Campo matrícula -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Matrícula:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Matrícula"
+                           Text="{Binding Matricula}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Campo especialidad -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Especialidad:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Especialidad"
+                           Text="{Binding Especialidad}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Campo email -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Correo electrónico:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="tu@email.com"
+                           Keyboard="Email"
+                           Text="{Binding Mail}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Campo teléfono -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Teléfono:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+                        Stroke="#ddd"
+                        StrokeThickness="1"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Teléfono"
+                           Text="{Binding Telefono}"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#999"
+                           FontSize="15"
+                           HeightRequest="50"
+                           Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Botón guardar -->
             <Button Text="Guardar"
                     Command="{Binding SaveProfessionalCommand}"
-                    VerticalOptions="Center" />
+                    BackgroundColor="#7A8BA3"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    HorizontalOptions="Fill"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Margin="0,10,0,0" />
+
+            <!-- Botón cancelar -->
             <Button Text="Cancelar"
                     Command="{Binding CancelProfessionalCommand}"
-                    VerticalOptions="Center" />
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+                    BackgroundColor="#999"
+                    TextColor="Black"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    HorizontalOptions="Fill"
+                    FontSize="16" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

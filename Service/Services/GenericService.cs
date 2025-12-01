@@ -29,9 +29,29 @@ namespace Service.Services
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
-            var urlApi = Properties.Resources.UrlApi;
-            if (Properties.Resources.Remoto == "false")
-                urlApi = Properties.Resources.UrlApiLocal;
+            string urlApi;
+            if (OperatingSystem.IsAndroid())
+            {
+                // En Android evitamos acceder al ResourceManager para prevenir FileNotFoundException
+                urlApi = "https://backendconsultorio.azurewebsites.net/api/";
+            }
+            else
+            {
+                try
+                {
+                    urlApi = Properties.Resources.UrlApi;
+                    var remotoStr = Properties.Resources.Remoto;
+                    if (string.Equals(remotoStr, "false", StringComparison.OrdinalIgnoreCase))
+                    {
+                        urlApi = Properties.Resources.UrlApiLocal;
+                    }
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    // Fallback seguro si el recurso no está embebido en alguna plataforma
+                    urlApi = "https://backendconsultorio.azurewebsites.net/api/";
+                }
+            }
 
 #if NET8_0_OR_GREATER && (NET8_0_OR_GREATER_WINDOWS || NET8_0_OR_GREATER_ANDROID || NET8_0_OR_GREATER_IOS || NET8_0_OR_GREATER_MACCATALYST)
             // MAUI, Desktop, etc: usar handler personalizado
