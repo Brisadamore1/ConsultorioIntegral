@@ -10,7 +10,7 @@
     FlyoutBehavior="Disabled"
     Title="AppMovil"
     FlyoutBackgroundImage="logo.png"
-     FlyoutBackgroundImageAspect="AspectFill"
+    FlyoutBackgroundImageAspect="AspectFill"
     FlyoutHeaderBehavior="CollapseOnScroll">
 
     <Shell.BindingContext>
@@ -64,8 +64,8 @@
               IconImageSource="cerrar.png"/>
 
     <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:IniciarSesionView}"
-        Route="Login" 
-        IsVisible="{Binding IsUserLogout}"/>
+            Title="Login"
+            ContentTemplate="{DataTemplate views:IniciarSesionView}"
+            Route="Login" 
+            IsVisible="{Binding IsUserLogout}"/>
 </Shell>

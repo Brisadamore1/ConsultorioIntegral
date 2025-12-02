@@ -15,7 +15,6 @@
 
             <Label
                 Text="Bienvenido a Consultorio Integral"
-                Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome" />
         </VerticalStackLayout>

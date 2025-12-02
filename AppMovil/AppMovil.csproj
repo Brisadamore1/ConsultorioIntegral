@@ -109,9 +109,6 @@
 	  <MauiXaml Update="Views\IniciarSesionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PerfilView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfesionalesDestacadosView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

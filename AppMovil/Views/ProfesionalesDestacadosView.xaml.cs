@@ -9,10 +9,19 @@ public partial class ProfesionalesDestacadosView : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        var viewmodel = this.BindingContext as ProfesionalesDestacadosViewModel;
-        viewmodel.ObtenerProfesionales();
+        try
+        {
+            if (BindingContext is ProfesionalesDestacadosViewModel vm)
+            {
+                await vm.ObtenerProfesionales();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudieron cargar los profesionales destacados: {ex.Message}", "OK");
+        }
     }
 }

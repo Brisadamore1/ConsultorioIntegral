@@ -1,6 +1,7 @@
 ﻿using AppMovil.ViewModels;
 using AppMovil.Views;
 using Microsoft.Maui.Controls;
+using System.Diagnostics;
 
 namespace AppMovil
 {
@@ -11,6 +12,20 @@ namespace AppMovil
             InitializeComponent();
             FlyoutItemsPrincipal.IsVisible = false; // Oculta el menú lateral
             RegisterRoutes();
+
+            Navigating += (s, e) =>
+            {
+                Debug.WriteLine($"[Shell] Navigating: From='{e.Current?.Location}' To='{e.Target.Location}' Source='{e.Source}'");
+                if (e.Target.Location.OriginalString.EndsWith("/Login") || e.Target.Location.OriginalString == "//Login")
+                {
+                    if (BindingContext is ConsultorioShellViewModel vm)
+                        vm.OnLoginScreenRequested();
+                }
+            };
+            Navigated += (s, e) =>
+            {
+                Debug.WriteLine($"[Shell] Navigated: Current='{e.Current?.Location}' Previous='{e.Previous?.Location}'");
+            };
         }
         private void RegisterRoutes()
         {
@@ -22,15 +37,33 @@ namespace AppMovil
         {
             FlyoutBehavior = FlyoutBehavior.Flyout; // Habilita el FlyOut
             FlyoutItemsPrincipal.IsVisible = true; // Muestra el menú lateral
-            Shell.Current.GoToAsync("//MainPage"); // Navega a la página principal
-            var viewmodel = this.BindingContext as ConsultorioShellViewModel;
-            viewmodel.IsUserLogout = false;
+
+            try
+            {
+                _ = Shell.Current.GoToAsync("//nuestra_app/MainPage");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[Shell] Navigation error (EnableAppAfterLogin): {ex}");
+            }
+
+            if (BindingContext is ConsultorioShellViewModel viewmodel)
+                viewmodel.OnLoggedIn();
         }
+
         public void DisableAppAfterLogin()
         {
             FlyoutItemsPrincipal.IsVisible = false; // Oculta el menú lateral
             FlyoutBehavior = FlyoutBehavior.Disabled; // Deshabilita el FlyOut
-            Shell.Current.GoToAsync("//Login"); // Navega a la página de login
+
+            try
+            {
+                _ = Shell.Current.GoToAsync("//Login");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[Shell] Navigation error (DisableAppAfterLogin): {ex}");
+            }
         }
     }
 }

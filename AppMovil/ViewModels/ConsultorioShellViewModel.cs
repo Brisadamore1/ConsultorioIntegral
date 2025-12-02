@@ -16,14 +16,26 @@ namespace AppMovil.ViewModels
         [ObservableProperty]
         private bool isUserLogout=true;
 
-        public ConsultorioShellViewModel() {
+        public ConsultorioShellViewModel() 
+        {
             LogoutCommand = new RelayCommand(Logout);
         }
 
         private void Logout()
         {
-            IsUserLogout = true;
+            IsUserLogout = true; // señalamos que el usuario pidió sesión
             (App.Current.MainPage as ConsultorioShell).DisableAppAfterLogin();
+        }
+
+        public void OnLoginScreenRequested()
+        {
+            // llamado desde navegación a Login para evitar autologin
+            IsUserLogout = true;
+        }
+
+        public void OnLoggedIn()
+        {
+            IsUserLogout = false;
         }
     }
 }
