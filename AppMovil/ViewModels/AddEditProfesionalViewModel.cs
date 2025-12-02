@@ -15,12 +15,12 @@ namespace AppMovil.ViewModels
     public class AddEditProfesionalViewModel : ObjectNotification
     {
 		ProfesionalService profesionalService = new ProfesionalService();
-        private Profesional editProfessional;
 
-		public Profesional EditProfessional
+        private Profesional? editProfessional;
+		public Profesional? EditProfessional
         {
-			get { return editProfessional; }
-			set {
+			get => editProfessional;
+			set{
 				editProfessional = value;
 				OnPropertyChanged();
 				SettingData();

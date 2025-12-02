@@ -29,8 +29,6 @@
                             SelectionMode="None">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="20" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="Sin profesionales destacados" FontAttributes="Bold"/>
-                        <Label Text="Deslice hacia abajo para refrescar" FontSize="12"/>
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
