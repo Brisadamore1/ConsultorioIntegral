@@ -15,17 +15,13 @@ namespace AppMovil.ViewModels
     {
         private readonly ProfesionalService profesionalService = new ProfesionalService();
 
-        private string filterProfessionals;
+        private string filterProfessionals = string.Empty;
         public string FilterProfessionals
         {
             get => filterProfessionals;
-            set
-            {
-                filterProfessionals = value;
+            set{ filterProfessionals = value;
                 OnPropertyChanged();
-                // Evita filtrar si aún no se cargaron los datos
-                if (profesionalesListToFilter != null)
-                    _ = FiltrarProfesionales();
+                _ = FiltrarProfesionales();
             }
         }
 
@@ -43,7 +39,7 @@ namespace AppMovil.ViewModels
         private ObservableCollection<Profesional> profesionales;
         public ObservableCollection<Profesional> Profesionales
         {
-            get{ return profesionales; } 
+            get => profesionales; 
             set{ profesionales = value;
                 OnPropertyChanged();
             }
@@ -80,29 +76,16 @@ namespace AppMovil.ViewModels
 
         public async Task ObtenerProfesionales()
         {
-            try
-            {
-                // No disparar filtrado hasta tener datos cargados
-                FilterProfessionals = string.Empty;
-                IsRefreshing = true;
-                profesionalesListToFilter = await profesionalService.GetAllAsync();
+            FilterProfessionals = string.Empty;
+            IsRefreshing = true;
+            profesionalesListToFilter = await profesionalService.GetAllAsync();
 
-                var profesionalesDestacados = (profesionalesListToFilter ?? new List<Profesional>())
-                    .Where(d => d.Destacado == true)
-                    .ToList();
+            var profesionalesDestacados = (profesionalesListToFilter ?? new List<Profesional>())
+                .Where(d => d.Destacado == true)
+                .ToList();
 
-                Profesionales = new ObservableCollection<Profesional>(profesionalesDestacados);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[ProfesionalesDestacados] Error cargando profesionales: {ex}");
-                await Application.Current.MainPage.DisplayAlert("Error", "No se pudieron cargar los profesionales.", "OK");
-                Profesionales = new ObservableCollection<Profesional>();
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
+            Profesionales = new ObservableCollection<Profesional>(profesionalesDestacados);
+            IsRefreshing = false;
         }
     }
 }

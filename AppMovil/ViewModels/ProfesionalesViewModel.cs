@@ -132,46 +132,29 @@ namespace AppMovil.ViewModels
             if (profesionalesListToFilter == null)
                 return;
 
-            var filtro = filterProfessionals ?? string.Empty;
-            IEnumerable<Profesional> profesionalesFiltrados;
+            var filtro = FilterProfessionals ?? string.Empty;
 
             if (string.IsNullOrWhiteSpace(filtro))
             {
-                profesionalesFiltrados = profesionalesListToFilter;
+                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+                return;
             }
-            else
-            {
-                var upper = filtro.ToUpperInvariant();
-                profesionalesFiltrados = profesionalesListToFilter.Where(p =>
-                    (p?.Nombre ?? string.Empty).ToUpperInvariant().Contains(upper));
-            }
-
-            Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
+           
+            var filtrados = profesionalesListToFilter
+                .Where(p =>(p.Nombre ?? string.Empty)
+                .Contains(filtro, System.StringComparison.OrdinalIgnoreCase));
+            
+            Profesionales = new ObservableCollection<Profesional>(filtrados);
         }
 
         public async Task ObtenerProfesionales()
         {
-            try
-            {
-                // No disparar filtrado hasta tener datos cargados
-                filterProfessionals = string.Empty;
-                IsRefreshing = true;
-                var result = await profesionalService.GetAllAsync();
-                profesionalesListToFilter = result ?? new List<Profesional>();
-                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
-                // Aplica filtro inicial (vacío) de forma segura
-                await FiltrarProfesionales();
-               
-            }
-            catch (Exception ex)
-            {
-                profesionalesListToFilter = new List<Profesional>();
-                Profesionales = new ObservableCollection<Profesional>();
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
+            // No disparar filtrado hasta tener datos cargados
+            FilterProfessionals = string.Empty;
+            IsRefreshing = true;
+            profesionalesListToFilter = await profesionalService.GetAllAsync();
+            Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter ?? new List<Profesional>());
+            IsRefreshing = false;
         }
     }
 }
