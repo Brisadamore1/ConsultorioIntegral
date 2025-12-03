@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              x:Class="AppMovil.ContentViews.FlyoutFooter">
     <VerticalStackLayout Padding="12" Spacing="4">
         <Label Text="Instituto Nº20"
                TextColor="White"
                FontAttributes="Bold"
                HorizontalOptions="Center" />
-        <Label Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{}{0:dd MMMM yyyy}'}"
+        <Label x:Name="lblFecha"
                TextColor="White"
                HorizontalOptions="Center" />
     </VerticalStackLayout>

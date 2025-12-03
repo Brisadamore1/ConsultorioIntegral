@@ -9,7 +9,6 @@
     xmlns:contentviews="clr-namespace:AppMovil.ContentViews"
     FlyoutBehavior="Disabled"
     Title="AppMovil"
-    FlyoutBackgroundImage="logo.png"
     FlyoutBackgroundImageAspect="AspectFill"
     FlyoutHeaderBehavior="CollapseOnScroll">
 
@@ -30,42 +29,54 @@
                 FlyoutDisplayOptions="AsMultipleItems"
                 x:Name="FlyoutItemsPrincipal">
 
+        <!-- Home -->
         <ShellContent
             Title="Home"
+            x:Name="scHome"
             ContentTemplate="{DataTemplate local:MainPage}"
             Icon="casa.png"
             Route="MainPage" />
+
+        <!-- Profesionales Destacados -->
         <ShellContent
             Title="Profesionales Destacados"
+            x:Name="scDestacados"
             ContentTemplate="{DataTemplate views:ProfesionalesDestacadosView}"
             Icon="destacado.png"
             Route="Destacados" />
-        
-        <Tab Title="Profesionales"
-             Route="profesionales">
+
+        <!-- Sección Profesionales con pestañas -->
+        <Tab Title="Profesionales" Route="profesionales" Icon="medico.png">
 
             <ShellContent
                 Title="Lista de Profesionales"
-                Icon="medico.png"
+                x:Name="scListaProfesionales"
                 ContentTemplate="{DataTemplate views:ProfesionalesView}"
+                Icon="historial.png"
                 Route="ListaProfesionales" />
 
             <ShellContent
                 Title="Agregar profesional"
-                Icon="historial.png"
+                x:Name="scAgregarProfesional"
                 ContentTemplate="{DataTemplate views:AddEditProfesionalView}"
+                Icon="logo.png"
                 Route="AgregarEditarProfesional" />
 
         </Tab>
+
     </FlyoutItem>
 
-    <MenuItem Text="Cerrar sesión"
-              Command="{Binding LogoutCommand}"  
-              IconImageSource="cerrar.png"/>
+    <!-- Menu item in flyout -->
+    <MenuItem x:Name="miCerrarSesion"
+              Text="Cerrar sesión"
+              Command="{Binding LogoutCommand}"
+              IconImageSource="cerrar.png" />
 
+    <!-- Login ShellContent (visible cuando IsUserLogout true) -->
     <ShellContent
-            Title="Login"
-            ContentTemplate="{DataTemplate views:IniciarSesionView}"
-            Route="Login" 
-            IsVisible="{Binding IsUserLogout}"/>
+        Title="Login"
+        ContentTemplate="{DataTemplate views:IniciarSesionView}"
+        Route="Login"
+        IsVisible="{Binding IsUserLogout}"
+        Icon="logo.png" />
 </Shell>

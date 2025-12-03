@@ -28,8 +28,16 @@ namespace AppMovil
 				})
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    try
+                    {
+                        // Agregar fuentes si están disponibles en paquete. Si faltan, no lanzar excepción de inicialización.
+                        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                        fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MauiProgram] Warning: no se pudieron registrar las fuentes: {ex.Message}");
+                    }
                 });
 
 #if DEBUG

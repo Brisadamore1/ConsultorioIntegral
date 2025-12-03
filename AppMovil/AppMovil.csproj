@@ -41,6 +41,14 @@
 
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'" />
+	<!-- Ensure debug Android builds include assemblies in the apk to avoid fast-deploy missing-file errors -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+	  <!-- Disable shared runtime / fast deployment for more reliable debugging on device/emulator -->
+	  <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+	  <AndroidEnableSharedRuntime>false</AndroidEnableSharedRuntime>
+	  <!-- Embed assemblies in the APK so they are available at runtime -->
+	  <EmbedAssembliesInApk>true</EmbedAssembliesInApk>
+	</PropertyGroup>
 
 	<!-- Evita que se detenga la ejecución por excepciones de XAML generadas (Android Debug) -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
@@ -60,20 +68,12 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<None Remove="Resources\Images\paw.png" />
-		<None Remove="Resources\Images\photo.jpg" />
-		<None Remove="Resources\Images\random.png" />
-		<None Remove="Resources\Images\xamarinstore.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
