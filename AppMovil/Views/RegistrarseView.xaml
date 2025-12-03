@@ -4,7 +4,7 @@
              xmlns:viewmodels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.RegistrarseView"
              BackgroundColor="White"
-             Title="CrearCuenta"
+             Title="Crear Cuenta"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewmodels:RegistrarseViewModel />

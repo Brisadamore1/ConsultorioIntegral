@@ -4,7 +4,7 @@
              x:Class="AppMovil.Views.IniciarSesionView"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              BackgroundColor="White"
-             Title="Iniciar Sesion View"
+             Title="Iniciar Sesión"
              NavigationPage.HasNavigationBar="False">
     <!-- Cada vez que se hace bindig reconoce los elementos que tiene el view model -->
     <ContentPage.BindingContext>
