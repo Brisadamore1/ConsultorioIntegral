@@ -17,6 +17,54 @@
         <viewsmodels:ConsultorioShellViewModel />
     </Shell.BindingContext>
     
+    <!-- Recursos: estilo reutilizable para items del Flyout (simplifica plantilla) -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FlyoutItemFrameStyle" TargetType="Frame">
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Padding" Value="8,10" />
+                <Setter Property="Margin" Value="4,2" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                    <Setter Property="CornerRadius" Value="8" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Selected">
+                                <VisualState.Setters>
+                                    <!-- Fondo gris claro y borde redondeado cuando el item del flyout está seleccionado -->
+                                    <Setter Property="BackgroundColor" Value="#E6E6E6" />
+                                    <Setter Property="BorderColor" Value="#D0D0D0" />
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- Plantilla más simple que reutiliza el estilo anterior -->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Padding="6,2">
+                <Frame Style="{StaticResource FlyoutItemFrameStyle}">
+                    <Grid ColumnDefinitions="Auto,*" VerticalOptions="Center">
+                        <Image Source="{Binding Icon}" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" Margin="12,0,0,0" TextColor="White" />
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    
     <Shell.FlyoutHeader>
         <contentviews:FlyoutHeader />
     </Shell.FlyoutHeader>
@@ -50,17 +98,17 @@
         <Tab Title="Profesionales" Route="profesionales" Icon="medico.png">
 
             <ShellContent
-                Title="Lista de Profesionales"
+                Title="Profesionales"
                 x:Name="scListaProfesionales"
                 ContentTemplate="{DataTemplate views:ProfesionalesView}"
-                Icon="historial.png"
+                Icon="medico.png"
                 Route="ListaProfesionales" />
 
             <ShellContent
-                Title="Agregar profesional"
+                Title="Agregar-Editar Profesional"
                 x:Name="scAgregarProfesional"
                 ContentTemplate="{DataTemplate views:AddEditProfesionalView}"
-                Icon="logo.png"
+                Icon="historial.png"
                 Route="AgregarEditarProfesional" />
 
         </Tab>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.ProfesionalesDestacadosView"
+             x:Name="ThisPage"
              Title="Destacados"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
@@ -12,7 +13,7 @@
     <Grid RowDefinitions="Auto, Auto, *">
         <!-- Título simple dentro de un Frame (usa estilos globales) -->
         <Frame Grid.Row="0" HasShadow="False" CornerRadius="8" Margin="10" Padding="10">
-            <Label Text="Lista de nuevos profesionales " HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="Lista de Nuevos Profesionales " HorizontalOptions="Center" FontAttributes="Bold" TextColor="#F0E1C9" />
         </Frame>
 
         <!-- Filtro que ocupa todo el ancho, minimal props -->
@@ -25,7 +26,9 @@
             <CollectionView ItemsSource="{Binding Profesionales}" SelectionMode="None">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="20" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="No hay profesionales para mostrar." />
+                        <Label Text="Cargando..." IsVisible="{Binding BindingContext.IsRefreshing, Source={x:Reference ThisPage}}" />
+
+                        <!--<Label Text="No hay profesionales para mostrar." IsVisible="{Binding BindingContext.IsRefreshing, Source={x:Reference ThisPage}, Converter={StaticResource InverseBoolConverter}}" />-->
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
 

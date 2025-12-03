@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.ProfesionalesView"
+             x:Name="ThisPage"
              Title="Profesionales"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
@@ -12,7 +13,7 @@
     <Grid RowDefinitions="Auto, Auto, *, Auto">
         <!-- Título simple -->
         <Frame Grid.Row="0" HasShadow="False" CornerRadius="8" Margin="10" Padding="10">
-            <Label Text="Lista de profesionales" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="Lista de Profesionales" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#F0E1C9" />
         </Frame>
 
         <!-- Filtro que ocupa todo el ancho -->
@@ -22,27 +23,65 @@
 
         <!-- Lista: cada item similar a destacados -->
         <RefreshView Grid.Row="2" Command="{Binding ObtenerProfesionalesCommand}" IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemsSource="{Binding Profesionales}" SelectionMode="Single" SelectedItem="{Binding SelectedProfessional, Mode=TwoWay}">
+            <CollectionView x:Name="ProfesionalesCollectionView"
+                            ItemsSource="{Binding Profesionales}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedProfessional, Mode=TwoWay}"
+                            SelectionChanged="CollectionView_SelectionChanged">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="20" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="No hay profesionales para mostrar." />
+                        <Label Text="Cargando profesionales..." IsVisible="{Binding BindingContext.IsRefreshing, Source={x:Reference ThisPage}}" />
+
+                        <!--<Label Text="No hay profesionales para mostrar." IsVisible="{Binding BindingContext.IsRefreshing, Source={x:Reference ThisPage}, Converter={StaticResource InverseBoolConverter}}" />-->
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame HasShadow="False" CornerRadius="8" Margin="5" Padding="10">
+                        <!-- Usar Frame para fondo negro y borde visible al seleccionar -->
+                        <Frame x:Name="itemFrame"
+                               HasShadow="False"
+                               CornerRadius="8"
+                               Padding="10"
+                               Margin="5"
+                               BackgroundColor="#000000"
+                               BorderColor="Transparent">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ThisPage}}"
+                                                      CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                            </Frame.GestureRecognizers>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="itemFrame" Property="BackgroundColor" Value="#000000" />
+                                            <Setter TargetName="itemFrame" Property="BorderColor" Value="Transparent" />
+                                            <Setter TargetName="itemFrame" Property="CornerRadius" Value="8" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <!-- Al seleccionar: mantener fondo negro y mostrar borde naranja -->
+                                            <Setter TargetName="itemFrame" Property="BackgroundColor" Value="#000000" />
+                                            <Setter TargetName="itemFrame" Property="BorderColor" Value="#C77F00" />
+                                            <Setter TargetName="itemFrame" Property="CornerRadius" Value="14" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
                             <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
                                 <!-- Izquierda: Nombre y Profesion debajo -->
                                 <StackLayout Grid.Column="0" Orientation="Vertical">
-                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" />
-                                    <Label Text="{Binding Profesion}" TextColor="#757575"/>
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" TextColor="White" />
+                                    <Label Text="{Binding Profesion}" TextColor="#C4C4C4"/>
                                 </StackLayout>
 
                                 <!-- Derecha: Telefono arriba, Especialidad abajo -->
                                 <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="End">
                                     <Label Text="{Binding Telefono}" HorizontalOptions="End" TextColor="#C4C4C4" />
-                                    <Label HorizontalOptions="End" TextColor="#757575">
+                                    <Label HorizontalOptions="End" TextColor="#C4C4C4">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="">
                                                 <Setter Property="Text" Value="Sin asignar" />
@@ -67,9 +106,9 @@
 
         <!-- Acciones -->
         <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="20" Margin="0,10,0,10">
-            <Button Text="Agregar" Command="{Binding AgregarProfesionalCommand}" />
-            <Button Text="Editar" Command="{Binding EditarProfesionalCommand}" />
-            <Button Text="Eliminar" Command="{Binding EliminarProfesionalCommand}" />
+            <Button Text="Agregar" BackgroundColor="Black" TextColor ="White" Command="{Binding AgregarProfesionalCommand}" />
+            <Button Text="Editar" BackgroundColor="#C7B294" TextColor ="White" Command="{Binding EditarProfesionalCommand}" />
+            <Button Text="Eliminar" BackgroundColor="Gray" TextColor ="White" Command="{Binding EliminarProfesionalCommand}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

@@ -68,6 +68,8 @@ namespace AppMovil.ViewModels
         public Command AgregarProfesionalCommand { get; }
         public Command EditarProfesionalCommand { get; }
         public Command EliminarProfesionalCommand { get; }
+        public Command<SelectionChangedEventArgs> SelectionChangedCommand { get; }
+        public Command<Profesional> ItemTappedCommand { get; }
 
         public ProfesionalesViewModel()
         {
@@ -76,12 +78,27 @@ namespace AppMovil.ViewModels
             AgregarProfesionalCommand = new Command(async () => await AgregarProfesional());
             EditarProfesionalCommand = new Command(async (obj) => await EditarProfesional(), PermitirEditar);
             EliminarProfesionalCommand = new Command(async (obj) => await EliminarProfesional(), PermitirEditar);
+            SelectionChangedCommand = new Command<SelectionChangedEventArgs>(OnSelectionChanged);
+            ItemTappedCommand = new Command<Profesional>(OnItemTapped);
             _ = ObtenerProfesionales();
         }
 
         private bool PermitirEditar(object arg)
         {
             return SelectedProfessional!=null;
+        }
+
+        private void OnSelectionChanged(SelectionChangedEventArgs args)
+        {
+            var item = args?.CurrentSelection?.FirstOrDefault() as Profesional;
+            // Asignar directamente para asegurar respuesta inmediata al tocar
+            SelectedProfessional = item;
+        }
+
+        private void OnItemTapped(Profesional profesional)
+        {
+            if (profesional == null) return;
+            SelectedProfessional = profesional;
         }
 
         private async Task EditarProfesional()

@@ -14,7 +14,7 @@
        
             <!-- Campo nombre del profesional -->
             <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
-                <Label Text="Nombre del profesional:" FontSize="14" TextColor="White" />
+                <Label Text="Nombre Completo:" FontSize="14" TextColor="White" />
                 <Border BackgroundColor="#121212"
                         Stroke="#ddd"
                         StrokeThickness="1"
@@ -54,6 +54,27 @@
                 </Border>
             </VerticalStackLayout>
 
+            <!-- Campo especialidad -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
+                <Label Text="Especialidad:" FontSize="14" TextColor="White" />
+                <Border BackgroundColor="#121212"
+             Stroke="#ddd"
+             StrokeThickness="1"
+             HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Especialidad (opcional)"
+                Text="{Binding Especialidad}"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                PlaceholderColor="#999"
+                FontSize="15"
+                HeightRequest="50"
+                Margin="12,0" />
+                </Border>
+            </VerticalStackLayout>
+
             <!-- Campo matrícula -->
             <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
                 <Label Text="Matrícula:" FontSize="14" TextColor="White" />
@@ -66,27 +87,6 @@
                     </Border.StrokeShape>
                     <Entry Placeholder="Matrícula"
                            Text="{Binding Matricula}"
-                           BackgroundColor="Transparent"
-                           TextColor="White"
-                           PlaceholderColor="#999"
-                           FontSize="15"
-                           HeightRequest="50"
-                           Margin="12,0" />
-                </Border>
-            </VerticalStackLayout>
-
-            <!-- Campo especialidad -->
-            <VerticalStackLayout Spacing="6" HorizontalOptions="Fill">
-                <Label Text="Especialidad:" FontSize="14" TextColor="White" />
-                <Border BackgroundColor="#121212"
-                        Stroke="#ddd"
-                        StrokeThickness="1"
-                        HorizontalOptions="Fill">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <Entry Placeholder="Especialidad"
-                           Text="{Binding Especialidad}"
                            BackgroundColor="Transparent"
                            TextColor="White"
                            PlaceholderColor="#999"
@@ -139,10 +139,16 @@
                 </Border>
             </VerticalStackLayout>
 
+            <!-- Campo destacado: checkbox a la izquierda del texto -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Start" VerticalOptions="Center">
+                <CheckBox IsChecked="{Binding Destacado}" Color="#7A8BA3" VerticalOptions="Center" />
+                <Label Text="Destacado" FontSize="14" TextColor="White" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
             <!-- Botón guardar -->
             <Button Text="Guardar"
                     Command="{Binding SaveProfessionalCommand}"
-                    BackgroundColor="#7A8BA3"
+                    BackgroundColor="Black"
                     TextColor="White"
                     CornerRadius="8"
                     HeightRequest="50"
@@ -154,7 +160,7 @@
             <!-- Botón cancelar -->
             <Button Text="Cancelar"
                     Command="{Binding CancelProfessionalCommand}"
-                    BackgroundColor="#999"
+                    BackgroundColor="#f2f2f2"
                     TextColor="Black"
                     CornerRadius="8"
                     HeightRequest="50"

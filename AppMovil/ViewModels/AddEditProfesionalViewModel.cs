@@ -37,6 +37,7 @@ namespace AppMovil.ViewModels
                 Especialidad = string.Empty;
                 Mail = string.Empty;
                 Telefono = string.Empty;
+                Destacado = false;
             }
             else
             {
@@ -46,6 +47,7 @@ namespace AppMovil.ViewModels
                 Especialidad = editProfessional.Especialidad;
                 Mail = editProfessional.Email;
                 Telefono = editProfessional.Telefono;
+                Destacado = editProfessional.Destacado ?? false;
             }
            
         }
@@ -105,6 +107,13 @@ namespace AppMovil.ViewModels
             }
         }
 
+        private bool destacado;
+        public bool Destacado
+        {
+            get => destacado;
+            set { destacado = value; OnPropertyChanged(); }
+        }
+
 		public Command SaveProfessionalCommand { get; }
 		public Command CancelProfessionalCommand { get; }
 
@@ -124,6 +133,7 @@ namespace AppMovil.ViewModels
                 editProfessional.Especialidad = Especialidad;
                 editProfessional.Email = Mail;
                 editProfessional.Telefono = Telefono;
+                editProfessional.Destacado = Destacado;
                 await profesionalService.UpdateAsync(editProfessional);
             }else
             {
@@ -134,7 +144,8 @@ namespace AppMovil.ViewModels
                     Matricula = Matricula,
                     Especialidad = Especialidad,
                     Email = Mail,
-                    Telefono = Telefono
+                    Telefono = Telefono,
+                    Destacado = Destacado
                 };
                 await profesionalService.AddAsync(profesional);
 				// Actualiza estado edición

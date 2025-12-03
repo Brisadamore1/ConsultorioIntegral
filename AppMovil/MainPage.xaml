@@ -16,7 +16,7 @@
             <Label
                 Text="Bienvenido a Consultorio Integral"
                 Style="{StaticResource Headline}"
-                TextColor="#B19DC2"
+                TextColor="#C7B294"
                 SemanticProperties.HeadingLevel="Level1"
                 SemanticProperties.Description="Welcome" />
             <Label
