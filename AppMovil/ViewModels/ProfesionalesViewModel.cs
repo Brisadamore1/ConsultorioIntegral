@@ -136,7 +136,7 @@ namespace AppMovil.ViewModels
 
             if (string.IsNullOrWhiteSpace(filtro))
             {
-                Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter);
+                Profesionales = new ObservableCollection<Profesional>(OrderByApellidoNombre(profesionalesListToFilter));
                 return;
             }
            
@@ -144,7 +144,7 @@ namespace AppMovil.ViewModels
                 .Where(p =>(p.Nombre ?? string.Empty)
                 .Contains(filtro, System.StringComparison.OrdinalIgnoreCase));
             
-            Profesionales = new ObservableCollection<Profesional>(filtrados);
+            Profesionales = new ObservableCollection<Profesional>(OrderByApellidoNombre(filtrados));
         }
 
         public async Task ObtenerProfesionales()
@@ -153,8 +153,24 @@ namespace AppMovil.ViewModels
             FilterProfessionals = string.Empty;
             IsRefreshing = true;
             profesionalesListToFilter = await profesionalService.GetAllAsync();
-            Profesionales = new ObservableCollection<Profesional>(profesionalesListToFilter ?? new List<Profesional>());
+            Profesionales = new ObservableCollection<Profesional>(OrderByApellidoNombre(profesionalesListToFilter ?? new List<Profesional>()));
             IsRefreshing = false;
+        }
+
+        // Ordena por apellido (última palabra en Nombre) y luego por Nombre completo
+        private static IEnumerable<Profesional> OrderByApellidoNombre(IEnumerable<Profesional> items)
+        {
+            return items.OrderBy(p => ExtractApellido(p?.Nombre)).ThenBy(p => p?.Nombre);
+        }
+
+        private static string ExtractApellido(string? nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return string.Empty;
+            var parts = nombre.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+            // Detect common format: if names are stored as "Apellido Nombre" take first token as apellido,
+            // otherwise fall back to last token. Heuristic: if first token looks like a common surname (capitalized)
+            // we assume it's the apellido. Simpler approach: prefer first token.
+            return parts.Length > 0 ? parts[0].ToLowerInvariant() : string.Empty;
         }
     }
 }

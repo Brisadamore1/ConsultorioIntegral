@@ -3,56 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppMovil.ViewModels"
              x:Class="AppMovil.Views.ProfesionalesDestacadosView"
-             Title="Profesionales destacados"
+             Title="Destacados"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:ProfesionalesDestacadosViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto, *, Auto, Auto">
-        <HorizontalStackLayout Grid.Row="0">
-            <Label Text="Buscar:"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,10,0,10"/>
-            <Entry Placeholder="Buscar profesionales..."
-                   Text="{Binding FilterProfessionals}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,10,0,10"/>
-        </HorizontalStackLayout>
+    <Grid RowDefinitions="Auto, Auto, *">
+        <!-- Título simple dentro de un Frame (usa estilos globales) -->
+        <Frame Grid.Row="0" HasShadow="False" CornerRadius="8" Margin="10" Padding="10">
+            <Label Text="Lista de nuevos profesionales " HorizontalOptions="Center" FontAttributes="Bold" />
+        </Frame>
 
-        <RefreshView Grid.Row="1"
-                     Command="{Binding ObtenerProfesionalesCommand}"
-                     IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemsSource="{Binding Profesionales}"
-                            SelectionMode="None">
+        <!-- Filtro que ocupa todo el ancho, minimal props -->
+        <Frame Grid.Row="1" HasShadow="False" CornerRadius="8" Margin="5" Padding="6">
+            <SearchBar Placeholder="Buscar nuevos profesionales..." Text="{Binding FilterProfessionals}" />
+        </Frame>
+
+        <!-- Lista: cada item en un Frame sencillo -->
+        <RefreshView Grid.Row="2" Command="{Binding ObtenerProfesionalesCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding Profesionales}" SelectionMode="None">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="20" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="No hay profesionales para mostrar." />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10" ColumnDefinitions="Auto,*">
-                            <!--<Image Grid.Column="0" Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />-->
-                            <StackLayout Grid.Column="1" Orientation="Vertical" Padding="10,0,0,0">
-                                <Label Text="{Binding Nombre}" FontAttributes="Bold" />
-                                <Label Text="{Binding Especialidad}">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="">
-                                            <Setter Property="Text" Value="Sin asignar" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="{x:Null}">
-                                            <Setter Property="Text" Value="Sin asignar" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </StackLayout>
-                        </Grid>
+                        <Frame HasShadow="False" CornerRadius="8" Margin="5" Padding="10">
+                            <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                                <StackLayout Grid.Column="0" Orientation="Vertical">
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Profesion}" TextColor="#757575" />
+                                </StackLayout>
+
+                                <!-- Telefono: aparece a la derecha en la parte superior -->
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Telefono}" HorizontalOptions="End" VerticalOptions="Start" TextColor="#C4C4C4" />
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <!-- Pantalla de destacados: solo visualización, sin acciones de edición -->
     </Grid>
 </ContentPage>

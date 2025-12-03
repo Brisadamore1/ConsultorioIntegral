@@ -40,7 +40,7 @@
 
         <!-- Profesionales Destacados -->
         <ShellContent
-            Title="Profesionales Destacados"
+            Title="Destacados"
             x:Name="scDestacados"
             ContentTemplate="{DataTemplate views:ProfesionalesDestacadosView}"
             Icon="destacado.png"

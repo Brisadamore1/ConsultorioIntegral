@@ -9,61 +9,64 @@
         <viewModels:ProfesionalesViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto, *, Auto, Auto">
-        <HorizontalStackLayout Grid.Row="0">
-            <Label Text="Buscar:"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,10,0,10"/>
-            <Entry Placeholder="Buscar profesionales..."
-                   Text="{Binding FilterProfessionals}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,10,0,10"/>
-        </HorizontalStackLayout>
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+        <!-- Título simple -->
+        <Frame Grid.Row="0" HasShadow="False" CornerRadius="8" Margin="10" Padding="10">
+            <Label Text="Lista de profesionales" HorizontalOptions="Center" FontAttributes="Bold" />
+        </Frame>
 
-        <ScrollView Grid.Row="1">
-            <ListView 
-             Grid.Row="1"
-             ItemsSource="{Binding Profesionales}"
-             SelectedItem="{Binding SelectedProfessional, Mode=TwoWay}"
-             SelectionMode="Single"
-             IsPullToRefreshEnabled="True"
-             RefreshCommand="{Binding ObtenerProfesionalesCommand}"
-             IsRefreshing="{Binding IsRefreshing}">
-                <ListView.ItemTemplate>
+        <!-- Filtro que ocupa todo el ancho -->
+        <Frame Grid.Row="1" HasShadow="False" CornerRadius="8" Margin="5" Padding="6">
+            <SearchBar Placeholder="Buscar profesionales..." Text="{Binding FilterProfessionals}" HorizontalOptions="FillAndExpand" />
+        </Frame>
+
+        <!-- Lista: cada item similar a destacados -->
+        <RefreshView Grid.Row="2" Command="{Binding ObtenerProfesionalesCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding Profesionales}" SelectionMode="Single" SelectedItem="{Binding SelectedProfessional, Mode=TwoWay}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="20" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="No hay profesionales para mostrar." />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Orientation="Horizontal" Padding="10">
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup Name="CommonStates">
-                                            <VisualState Name="Normal">
-                                                <VisualState.Setters>
-                                                    <Setter Property="BackgroundColor" Value="Transparent" />
-                                                </VisualState.Setters>
-                                            </VisualState>
-                                            <VisualState Name="Selected">
-                                                <VisualState.Setters>
-                                                    <Setter Property="BackgroundColor" Value="{StaticResource Gray200}" />
-                                                </VisualState.Setters>
-                                            </VisualState>
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-
-                                    <!--<Image Source="{Binding Imagen}" HeightRequest="80" WidthRequest="80" />-->
-                                    <StackLayout Orientation="Vertical" Padding="10,0,0,0">
-                                        <Label Text="{Binding Nombre}" FontAttributes="Bold" />
-                                        <!-- Campos adicionales -->
-                                    </StackLayout>
+                        <Frame HasShadow="False" CornerRadius="8" Margin="5" Padding="10">
+                            <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                                <!-- Izquierda: Nombre y Profesion debajo -->
+                                <StackLayout Grid.Column="0" Orientation="Vertical">
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Profesion}" TextColor="#757575"/>
                                 </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
+
+                                <!-- Derecha: Telefono arriba, Especialidad abajo -->
+                                <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="End">
+                                    <Label Text="{Binding Telefono}" HorizontalOptions="End" TextColor="#C4C4C4" />
+                                    <Label HorizontalOptions="End" TextColor="#757575">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="">
+                                                <Setter Property="Text" Value="Sin asignar" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Especialidad}" Value="{x:Null}">
+                                                <Setter Property="Text" Value="Sin asignar" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Especialidad}" TextColor="#757575"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
-        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="20" Margin="0,10,0,10">
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Acciones -->
+        <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="20" Margin="0,10,0,10">
             <Button Text="Agregar" Command="{Binding AgregarProfesionalCommand}" />
             <Button Text="Editar" Command="{Binding EditarProfesionalCommand}" />
             <Button Text="Eliminar" Command="{Binding EliminarProfesionalCommand}" />
