@@ -13,6 +13,24 @@ namespace AppMovil
             FlyoutItemsPrincipal.IsVisible = false; // Oculta el menú lateral
             RegisterRoutes();
 
+            // Si el shell fue inicializado y el viewmodel indica que el usuario está logout,
+            // forzamos la navegación inicial a la página de Login para que el usuario vea
+            // la pantalla de inicio de sesión en lugar de ir al primer FlyoutItem.
+            if (BindingContext is ConsultorioShellViewModel vm && vm.IsUserLogout)
+            {
+                Dispatcher.Dispatch(async () =>
+                {
+                    try
+                    {
+                        await Shell.Current.GoToAsync("//Login");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[Shell] Initial navigation to Login failed: {ex}");
+                    }
+                });
+            }
+
             Navigating += (s, e) =>
             {
                 Debug.WriteLine($"[Shell] Navigating: From='{e.Current?.Location}' To='{e.Target.Location}' Source='{e.Source}'");
