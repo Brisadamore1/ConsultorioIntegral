@@ -61,12 +61,40 @@ namespace AppMovil.ViewModels
 
         private async void ChequearSiHayUsuarioAlmacenado()
         {
+            // Si hay un usuario guardado, precargar los campos de login pero NO iniciar sesión automáticamente.
+            // De esta forma solo se guarda/recupera cuando el usuario marcó "Recordar contraseña".
             if (_userRepository.UserExists())
             {
                 (_userInfo, _firebaseCredential) = _userRepository.ReadUser();
 
-                var shellconsultorio = (ConsultorioShell)App.Current.MainPage;
-                shellconsultorio.EnableAppAfterLogin();
+                // Precargar email si está disponible
+                if (_userInfo != null && !string.IsNullOrWhiteSpace(_userInfo.Email))
+                {
+                    Mail = _userInfo.Email;
+                }
+
+                // No siempre es posible recuperar la contraseña en texto plano desde el repo.
+                // Si el repositorio guarda la credencial con la contraseña en claro, intentar asignarla.
+                try
+                {
+                    var cred = _firebaseCredential;
+                    if (cred != null)
+                    {
+                        // algunos repositorios pueden exponer un campo con la contraseña; comprobamos dinámicamente
+                        var pwdProp = cred.GetType().GetProperty("Password");
+                        if (pwdProp != null)
+                        {
+                            var pwdVal = pwdProp.GetValue(cred) as string;
+                            if (!string.IsNullOrWhiteSpace(pwdVal))
+                                Password = pwdVal;
+                        }
+                    }
+                }
+                catch { /* ignore if not available */ }
+
+                // Indicar que los campos están precargados por un guardado anterior
+                Rememberpassword = true;
+                // No hacer auto-login: el usuario debe presionar "Iniciar sesión".
             }
         }
         public bool PermitirIniciarSesion()
@@ -113,7 +141,8 @@ namespace AppMovil.ViewModels
                     return;
                 }
 
-                if (rememberpassword)
+                // Guardar o eliminar credenciales solo si el usuario activó la casilla
+                if (Rememberpassword)
                 {
                     _userRepository.SaveUser(userCredential.User);
                 }

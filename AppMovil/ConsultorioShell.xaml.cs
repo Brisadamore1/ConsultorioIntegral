@@ -69,14 +69,43 @@ namespace AppMovil
                 viewmodel.OnLoggedIn();
         }
 
-        public void DisableAppAfterLogin()
+        public async void DisableAppAfterLogin()
         {
             FlyoutItemsPrincipal.IsVisible = false; // Oculta el menú lateral
             FlyoutBehavior = FlyoutBehavior.Disabled; // Deshabilita el FlyOut
 
             try
             {
-                _ = Shell.Current.GoToAsync("//Login");
+                await Shell.Current.GoToAsync("//Login");
+
+                // Después de navegar a la pantalla de login, si existe el ViewModel de login
+                // y el usuario NO marcó "Recordar contraseña", borrar las credenciales almacenadas
+                try
+                {
+                    var current = Shell.Current.CurrentPage;
+                    if (current is AppMovil.Views.IniciarSesionView loginPage)
+                    {
+                        if (loginPage.BindingContext is AppMovil.ViewModels.IniciarSesionViewModel vm)
+                        {
+                            if (!vm.Rememberpassword)
+                            {
+                                // Borrar almacenamiento seguro de credenciales
+                                try
+                                {
+                                    var repo = new Firebase.Auth.Repository.FileUserRepository("ConsultorioIntegral");
+                                    repo.DeleteUser();
+                                }
+                                catch { }
+
+                                // Asegurar campos vacíos en la UI
+                                vm.Mail = string.Empty;
+                                vm.Password = string.Empty;
+                                vm.Rememberpassword = false;
+                            }
+                        }
+                    }
+                }
+                catch { /* no crítico */ }
             }
             catch (Exception ex)
             {

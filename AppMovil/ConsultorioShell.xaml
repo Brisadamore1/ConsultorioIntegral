@@ -51,19 +51,7 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Plantilla más simple que reutiliza el estilo anterior -->
-    <Shell.ItemTemplate>
-        <DataTemplate>
-            <Grid Padding="6,2">
-                <Frame Style="{StaticResource FlyoutItemFrameStyle}">
-                    <Grid ColumnDefinitions="Auto,*" VerticalOptions="Center">
-                        <Image Source="{Binding Icon}" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
-                        <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" Margin="12,0,0,0" TextColor="White" />
-                    </Grid>
-                </Frame>
-            </Grid>
-        </DataTemplate>
-    </Shell.ItemTemplate>
+    <!-- Default flyout template (use platform default for correct navigation on mobile) -->
     
     <Shell.FlyoutHeader>
         <contentviews:FlyoutHeader />
