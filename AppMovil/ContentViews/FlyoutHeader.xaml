@@ -2,13 +2,19 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppMovil.ContentViews.FlyoutHeader">
-    <Grid Padding="20">
-        <VerticalStackLayout Spacing="4">
-            <Label Text="Bienvenido a Consultorio Integral"
-           TextColor="White"
-           FontAttributes="Bold"
-           FontSize="22"
-           HorizontalTextAlignment="Center" />
+    <Grid Padding="20" HeightRequest="120">
+        <!-- Imagen de fondo: añadir Resources/Images/flyout_background.png con Build Action __MauiImage__ -->
+        <Image Source="servicios.jpg"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
+
+        <VerticalStackLayout Spacing="4" VerticalOptions="End" HorizontalOptions="Fill">
+            <Label Text="Consultorio Integral"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   FontSize="22"
+                   HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
     </Grid>
 </ContentView>

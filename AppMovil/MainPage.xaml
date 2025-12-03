@@ -5,18 +5,23 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+            Padding="0"
+            Spacing="15">
             <Image
-                Source="logo.png"
-                HeightRequest="185"
+                Source="iniciales.png"
+                HeightRequest="200"
                 Aspect="AspectFit"
                 SemanticProperties.Description="Bienvenido" />
 
             <Label
                 Text="Bienvenido a Consultorio Integral"
-                SemanticProperties.HeadingLevel="Level2"
+                Style="{StaticResource Headline}"
+                TextColor="#B19DC2"
+                SemanticProperties.HeadingLevel="Level1"
                 SemanticProperties.Description="Welcome" />
+            <Label
+                Text="Sistema para el control y organización del equipo médico del consultorio."
+                Style="{StaticResource SubHeadline}" />
         </VerticalStackLayout>
     </ScrollView>
 

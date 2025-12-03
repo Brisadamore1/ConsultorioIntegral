@@ -9,6 +9,7 @@
     xmlns:contentviews="clr-namespace:AppMovil.ContentViews"
     FlyoutBehavior="Disabled"
     Title="AppMovil"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
     FlyoutBackgroundImageAspect="AspectFill"
     FlyoutHeaderBehavior="CollapseOnScroll">
 
