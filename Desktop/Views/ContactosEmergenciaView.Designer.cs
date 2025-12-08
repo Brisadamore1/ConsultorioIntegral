@@ -97,6 +97,7 @@
             tabPageLista.Controls.Add(txtFiltro);
             tabPageLista.Controls.Add(dataGridContactosEmergenciaView);
             tabPageLista.Controls.Add(btnBuscar);
+            tabPageLista.Font = new Font("Segoe UI", 11F);
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
@@ -128,6 +129,7 @@
             // 
             // dataGridContactosEmergenciaView
             // 
+            dataGridContactosEmergenciaView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridContactosEmergenciaView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridContactosEmergenciaView.Location = new Point(25, 77);
             dataGridContactosEmergenciaView.Margin = new Padding(3, 4, 3, 4);
@@ -148,7 +150,7 @@
             btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscar.IconSize = 45;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(980, 18);
+            btnBuscar.Location = new Point(980, 20);
             btnBuscar.Margin = new Padding(3, 4, 3, 4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(156, 49);
@@ -183,7 +185,7 @@
             comboPacientes.DropDownStyle = ComboBoxStyle.DropDownList;
             comboPacientes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboPacientes.FormattingEnabled = true;
-            comboPacientes.Location = new Point(603, 219);
+            comboPacientes.Location = new Point(575, 218);
             comboPacientes.Margin = new Padding(3, 4, 3, 4);
             comboPacientes.Name = "comboPacientes";
             comboPacientes.Size = new Size(241, 36);
@@ -199,7 +201,7 @@
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.IconSize = 45;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(630, 410);
+            btnCancelar.Location = new Point(602, 409);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(187, 49);
@@ -219,7 +221,7 @@
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 45;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(413, 410);
+            btnGuardar.Location = new Point(385, 409);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(184, 49);
@@ -235,7 +237,7 @@
             label3.BackColor = Color.FromArgb(15, 22, 41);
             label3.Font = new Font("Berlin Sans FB", 19.8000011F);
             label3.ForeColor = Color.Silver;
-            label3.Location = new Point(390, 280);
+            label3.Location = new Point(362, 279);
             label3.Name = "label3";
             label3.Size = new Size(143, 37);
             label3.TabIndex = 31;
@@ -244,7 +246,7 @@
             // txtTelefono
             // 
             txtTelefono.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtTelefono.Location = new Point(603, 280);
+            txtTelefono.Location = new Point(575, 279);
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
             txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
@@ -257,7 +259,7 @@
             label6.BackColor = Color.FromArgb(15, 22, 41);
             label6.Font = new Font("Berlin Sans FB", 19.8000011F);
             label6.ForeColor = Color.Silver;
-            label6.Location = new Point(390, 215);
+            label6.Location = new Point(362, 214);
             label6.Name = "label6";
             label6.Size = new Size(148, 37);
             label6.TabIndex = 30;
@@ -266,7 +268,7 @@
             // txtRelacion
             // 
             txtRelacion.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtRelacion.Location = new Point(603, 145);
+            txtRelacion.Location = new Point(575, 144);
             txtRelacion.Margin = new Padding(3, 4, 3, 4);
             txtRelacion.Multiline = true;
             txtRelacion.Name = "txtRelacion";
@@ -279,7 +281,7 @@
             label4.BackColor = Color.FromArgb(15, 22, 41);
             label4.Font = new Font("Berlin Sans FB", 19.8000011F);
             label4.ForeColor = Color.Silver;
-            label4.Location = new Point(390, 145);
+            label4.Location = new Point(362, 144);
             label4.Name = "label4";
             label4.Size = new Size(144, 37);
             label4.TabIndex = 24;
@@ -288,7 +290,7 @@
             // txtNombre
             // 
             txtNombre.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNombre.Location = new Point(603, 77);
+            txtNombre.Location = new Point(575, 76);
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
@@ -301,7 +303,7 @@
             label2.BackColor = Color.FromArgb(15, 22, 41);
             label2.Font = new Font("Berlin Sans FB", 19.8000011F);
             label2.ForeColor = Color.Silver;
-            label2.Location = new Point(390, 77);
+            label2.Location = new Point(362, 76);
             label2.Name = "label2";
             label2.Size = new Size(141, 37);
             label2.TabIndex = 20;

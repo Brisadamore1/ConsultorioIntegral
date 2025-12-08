@@ -37,18 +37,18 @@
             txtFiltro = new TextBox();
             dataGridTurnosView = new DataGridView();
             tabPageAgregarEditar = new TabPage();
+            btnCancelar = new FontAwesome.Sharp.IconButton();
+            label13 = new Label();
+            btnGuardar = new FontAwesome.Sharp.IconButton();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             comboEstado = new ComboBox();
             comboPacientes = new ComboBox();
-            label2 = new Label();
             dateTimeFecha = new DateTimePicker();
             comboProfesionales = new ComboBox();
-            btnCancelar = new FontAwesome.Sharp.IconButton();
-            btnGuardar = new FontAwesome.Sharp.IconButton();
-            label3 = new Label();
-            label6 = new Label();
             txtDuracion = new TextBox();
-            label8 = new Label();
-            label5 = new Label();
             btnEliminar = new FontAwesome.Sharp.IconButton();
             btnEditar = new FontAwesome.Sharp.IconButton();
             btnAgregar = new FontAwesome.Sharp.IconButton();
@@ -99,6 +99,7 @@
             tabPageLista.Controls.Add(label7);
             tabPageLista.Controls.Add(txtFiltro);
             tabPageLista.Controls.Add(dataGridTurnosView);
+            tabPageLista.Font = new Font("Segoe UI", 11F);
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
@@ -150,6 +151,7 @@
             // 
             // dataGridTurnosView
             // 
+            dataGridTurnosView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridTurnosView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridTurnosView.Location = new Point(25, 79);
             dataGridTurnosView.Margin = new Padding(3, 4, 3, 4);
@@ -161,18 +163,18 @@
             // 
             // tabPageAgregarEditar
             // 
+            tabPageAgregarEditar.Controls.Add(btnCancelar);
+            tabPageAgregarEditar.Controls.Add(label13);
+            tabPageAgregarEditar.Controls.Add(btnGuardar);
+            tabPageAgregarEditar.Controls.Add(label9);
+            tabPageAgregarEditar.Controls.Add(label10);
+            tabPageAgregarEditar.Controls.Add(label11);
+            tabPageAgregarEditar.Controls.Add(label12);
             tabPageAgregarEditar.Controls.Add(comboEstado);
             tabPageAgregarEditar.Controls.Add(comboPacientes);
-            tabPageAgregarEditar.Controls.Add(label2);
             tabPageAgregarEditar.Controls.Add(dateTimeFecha);
             tabPageAgregarEditar.Controls.Add(comboProfesionales);
-            tabPageAgregarEditar.Controls.Add(btnCancelar);
-            tabPageAgregarEditar.Controls.Add(btnGuardar);
-            tabPageAgregarEditar.Controls.Add(label3);
-            tabPageAgregarEditar.Controls.Add(label6);
             tabPageAgregarEditar.Controls.Add(txtDuracion);
-            tabPageAgregarEditar.Controls.Add(label8);
-            tabPageAgregarEditar.Controls.Add(label5);
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
@@ -181,130 +183,160 @@
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
             // 
+            // btnCancelar
+            // 
+            btnCancelar.BackColor = Color.FromArgb(64, 64, 64);
+            btnCancelar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnCancelar.ForeColor = Color.Silver;
+            btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Cancel;
+            btnCancelar.IconColor = Color.Silver;
+            btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnCancelar.IconSize = 45;
+            btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCancelar.Location = new Point(582, 419);
+            btnCancelar.Margin = new Padding(3, 4, 3, 4);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(187, 49);
+            btnCancelar.TabIndex = 38;
+            btnCancelar.Text = "&Cancelar";
+            btnCancelar.TextAlign = ContentAlignment.MiddleRight;
+            btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click_1;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.FromArgb(15, 22, 41);
+            label13.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label13.ForeColor = Color.Silver;
+            label13.Location = new Point(306, 255);
+            label13.Name = "label13";
+            label13.Size = new Size(153, 37);
+            label13.TabIndex = 46;
+            label13.Text = "Duración:";
+            // 
+            // btnGuardar
+            // 
+            btnGuardar.BackColor = Color.FromArgb(41, 23, 61);
+            btnGuardar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnGuardar.ForeColor = Color.Silver;
+            btnGuardar.IconChar = FontAwesome.Sharp.IconChar.Save;
+            btnGuardar.IconColor = Color.Silver;
+            btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnGuardar.IconSize = 45;
+            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGuardar.Location = new Point(359, 419);
+            btnGuardar.Margin = new Padding(3, 4, 3, 4);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(184, 49);
+            btnGuardar.TabIndex = 39;
+            btnGuardar.Text = "&Guardar";
+            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
+            btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click_1;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.FromArgb(15, 22, 41);
+            label9.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label9.ForeColor = Color.Silver;
+            label9.Location = new Point(306, 313);
+            label9.Name = "label9";
+            label9.Size = new Size(119, 37);
+            label9.TabIndex = 45;
+            label9.Text = "Estado:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.BackColor = Color.FromArgb(15, 22, 41);
+            label10.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label10.ForeColor = Color.Silver;
+            label10.Location = new Point(306, 196);
+            label10.Name = "label10";
+            label10.Size = new Size(214, 37);
+            label10.TabIndex = 44;
+            label10.Text = "Fecha y Hora:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = Color.FromArgb(15, 22, 41);
+            label11.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label11.ForeColor = Color.Silver;
+            label11.Location = new Point(306, 136);
+            label11.Name = "label11";
+            label11.Size = new Size(148, 37);
+            label11.TabIndex = 43;
+            label11.Text = "Paciente:";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.BackColor = Color.FromArgb(15, 22, 41);
+            label12.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label12.ForeColor = Color.Silver;
+            label12.Location = new Point(306, 77);
+            label12.Name = "label12";
+            label12.Size = new Size(179, 37);
+            label12.TabIndex = 42;
+            label12.Text = "Profesional:";
+            // 
             // comboEstado
             // 
             comboEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboEstado.Font = new Font("Segoe UI", 12F);
             comboEstado.FormattingEnabled = true;
-            comboEstado.Location = new Point(514, 292);
+            comboEstado.Location = new Point(582, 322);
             comboEstado.Margin = new Padding(3, 4, 3, 4);
             comboEstado.Name = "comboEstado";
-            comboEstado.Size = new Size(228, 28);
+            comboEstado.Size = new Size(241, 36);
             comboEstado.TabIndex = 37;
             // 
             // comboPacientes
             // 
             comboPacientes.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboPacientes.Font = new Font("Segoe UI", 12F);
             comboPacientes.FormattingEnabled = true;
-            comboPacientes.Location = new Point(514, 65);
+            comboPacientes.Location = new Point(582, 145);
             comboPacientes.Margin = new Padding(3, 4, 3, 4);
             comboPacientes.Name = "comboPacientes";
-            comboPacientes.Size = new Size(228, 28);
+            comboPacientes.Size = new Size(241, 36);
             comboPacientes.TabIndex = 36;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(389, 71);
-            label2.Name = "label2";
-            label2.Size = new Size(67, 20);
-            label2.TabIndex = 35;
-            label2.Text = "Paciente:";
             // 
             // dateTimeFecha
             // 
+            dateTimeFecha.CalendarFont = new Font("Segoe UI", 12F);
             dateTimeFecha.CustomFormat = "dd/MM/yyyy HH:mm";
             dateTimeFecha.Format = DateTimePickerFormat.Custom;
-            dateTimeFecha.Location = new Point(514, 168);
+            dateTimeFecha.Location = new Point(582, 206);
             dateTimeFecha.Name = "dateTimeFecha";
-            dateTimeFecha.Size = new Size(214, 27);
+            dateTimeFecha.Size = new Size(241, 27);
             dateTimeFecha.TabIndex = 0;
             dateTimeFecha.Value = new DateTime(2025, 11, 23, 14, 57, 33, 0);
             // 
             // comboProfesionales
             // 
             comboProfesionales.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboProfesionales.Font = new Font("Segoe UI", 12F);
             comboProfesionales.FormattingEnabled = true;
-            comboProfesionales.Location = new Point(514, 111);
+            comboProfesionales.Location = new Point(582, 86);
             comboProfesionales.Margin = new Padding(3, 4, 3, 4);
             comboProfesionales.Name = "comboProfesionales";
-            comboProfesionales.Size = new Size(228, 28);
+            comboProfesionales.Size = new Size(241, 36);
             comboProfesionales.TabIndex = 34;
-            // 
-            // btnCancelar
-            // 
-            btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Cancel;
-            btnCancelar.IconColor = Color.Black;
-            btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(617, 385);
-            btnCancelar.Margin = new Padding(3, 4, 3, 4);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(109, 67);
-            btnCancelar.TabIndex = 33;
-            btnCancelar.Text = "&Cancelar";
-            btnCancelar.TextAlign = ContentAlignment.MiddleRight;
-            btnCancelar.UseVisualStyleBackColor = true;
-            btnCancelar.Click += btnCancelar_Click;
-            // 
-            // btnGuardar
-            // 
-            btnGuardar.IconChar = FontAwesome.Sharp.IconChar.Save;
-            btnGuardar.IconColor = Color.Black;
-            btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(426, 385);
-            btnGuardar.Margin = new Padding(3, 4, 3, 4);
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(108, 67);
-            btnGuardar.TabIndex = 32;
-            btnGuardar.Text = "&Guardar";
-            btnGuardar.TextAlign = ContentAlignment.MiddleRight;
-            btnGuardar.UseVisualStyleBackColor = true;
-            btnGuardar.Click += btnGuardar_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(399, 300);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 20);
-            label3.TabIndex = 31;
-            label3.Text = "Estado:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(407, 231);
-            label6.Name = "label6";
-            label6.Size = new Size(72, 20);
-            label6.TabIndex = 30;
-            label6.Text = "Duración:";
             // 
             // txtDuracion
             // 
-            txtDuracion.Location = new Point(514, 231);
+            txtDuracion.Font = new Font("Segoe UI", 12F);
+            txtDuracion.Location = new Point(582, 255);
             txtDuracion.Margin = new Padding(3, 4, 3, 4);
+            txtDuracion.Multiline = true;
             txtDuracion.Name = "txtDuracion";
-            txtDuracion.Size = new Size(228, 27);
+            txtDuracion.PlaceholderText = "Duración (minutos)";
+            txtDuracion.Size = new Size(241, 37);
             txtDuracion.TabIndex = 27;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(389, 117);
-            label8.Name = "label8";
-            label8.Size = new Size(86, 20);
-            label8.TabIndex = 26;
-            label8.Text = "Profesional:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(391, 171);
-            label5.Name = "label5";
-            label5.Size = new Size(98, 20);
-            label5.TabIndex = 25;
-            label5.Text = "Fecha y Hora:";
             // 
             // btnEliminar
             // 
@@ -428,21 +460,21 @@
         public TabPage tabPageAgregarEditar;
         public DateTimePicker dateTimeFecha;
         public ComboBox comboProfesionales;
-        private FontAwesome.Sharp.IconButton btnCancelar;
-        private FontAwesome.Sharp.IconButton btnGuardar;
-        private Label label3;
-        private Label label6;
         public TextBox txtDuracion;
-        private Label label8;
-        private Label label5;
         private FontAwesome.Sharp.IconButton btnBuscar;
         private FontAwesome.Sharp.IconButton btnEliminar;
         private FontAwesome.Sharp.IconButton btnEditar;
         private FontAwesome.Sharp.IconButton btnAgregar;
         private FontAwesome.Sharp.IconButton btnSalir;
         public ComboBox comboPacientes;
-        private Label label2;
         public ComboBox comboEstado;
         private Label label7;
+        private Label label13;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private FontAwesome.Sharp.IconButton btnCancelar;
+        private FontAwesome.Sharp.IconButton btnGuardar;
     }
 }

@@ -50,6 +50,14 @@ namespace Desktop.States.Sesiones
             _form.ListSesiones.DataSource = await _form.sesionService.GetAllAsync(_form.txtFiltro.Text);
             _form.dataGridSesionesView.DataSource = _form.ListSesiones;
 
+            // Encabezados en negrita
+            try
+            {
+                var f = _form.dataGridSesionesView.ColumnHeadersDefaultCellStyle.Font ?? _form.dataGridSesionesView.Font;
+                _form.dataGridSesionesView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(f, System.Drawing.FontStyle.Bold);
+            }
+            catch { }
+
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);
 

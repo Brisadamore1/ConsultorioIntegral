@@ -90,6 +90,15 @@ namespace Desktop.States.ContactosEmergencia
             // Desactivar la fila de nuevo registro
             _form.dataGridContactosEmergenciaView.AllowUserToAddRows = false;
 
+            // Encabezados en negrita
+            try
+            {
+                var f = _form.dataGridContactosEmergenciaView.ColumnHeadersDefaultCellStyle.Font ?? _form.dataGridContactosEmergenciaView.Font;
+                _form.dataGridContactosEmergenciaView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(f, System.Drawing.FontStyle.Bold);
+            }
+            catch { }
+
+
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);
 

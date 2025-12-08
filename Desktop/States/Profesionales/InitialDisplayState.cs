@@ -40,7 +40,7 @@ namespace Desktop.States.Profesionales
             // Inicialmente mostrar todos
             _form.ListProfesionales.DataSource = all;
 
-            // Wire a compact live filter: split terms and require all present in Nombre
+            // Esto es para el filtro en vivo
             try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
             EventHandler newHandler = (s, e) =>
             {
@@ -97,28 +97,6 @@ namespace Desktop.States.Profesionales
                         found.HeaderText = "Nuevo";
                     found.DisplayIndex = di++;
                 }
-            }
-
-            // Ajustes de ancho de columna: Id más pequeño, Email mostrar completo
-            if (_form.dataGridProfesionalesView.Columns.Contains("Id"))
-            {
-                var c = _form.dataGridProfesionalesView.Columns["Id"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                c.Width = 60;
-            }
-            if (_form.dataGridProfesionalesView.Columns.Contains("Email"))
-            {
-                var c = _form.dataGridProfesionalesView.Columns["Email"];
-                // Ajustar para mostrar el email completo: autosize to all cells
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                // Si se queda muy pequeño en algunos casos, permitir que ocupe espacio restante
-                // Se puede alternar a Fill si prefieres que ocupe todo el espacio disponible
-            }
-            if (_form.dataGridProfesionalesView.Columns.Contains("Destacado"))
-            {
-                var c = _form.dataGridProfesionalesView.Columns["Destacado"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                c.Width = 120;
             }
 
             // Formateo de celdas: mostrar "Sin asignar" cuando Especialidad esté vacía

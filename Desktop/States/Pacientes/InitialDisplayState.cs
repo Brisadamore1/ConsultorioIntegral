@@ -75,7 +75,7 @@ namespace Desktop.States.Pacientes
             // Desactivar la fila de nuevo registro
             _form.dataGridPacientesView.AllowUserToAddRows = false;
 
-            // Ocultar columnas solicitadas
+            #region Ocultar columnas innecesarias
             if (_form.dataGridPacientesView.Columns.Contains("ProfesionalId"))
                 _form.dataGridPacientesView.Columns["ProfesionalId"].Visible = false;
             if (_form.dataGridPacientesView.Columns.Contains("Direccion"))
@@ -88,6 +88,7 @@ namespace Desktop.States.Pacientes
                 _form.dataGridPacientesView.Columns["NumeroAfiliado"].Visible = false;
             if (_form.dataGridPacientesView.Columns.Contains("IsDeleted"))
                 _form.dataGridPacientesView.Columns["IsDeleted"].Visible = false;
+            #endregion
 
             // Orden deseado: Id, Paciente(Nombre), DNI, FechaNacimiento, Email, Telefono, Profesional
             var keys = new[] { "Id", "Nombre", "Dni", "FechaNacimiento", "Email", "Telefono", "Profesional" };
@@ -118,51 +119,6 @@ namespace Desktop.States.Pacientes
                         found.HeaderText = "Fecha Nacimiento";
                     found.DisplayIndex = di++;
                 }
-            }
-
-            // Ajustes de ancho de columna y formato para que coincida con Profesionales
-            if (_form.dataGridPacientesView.Columns.Contains("Id"))
-            {
-                var c = _form.dataGridPacientesView.Columns["Id"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                c.Width = 60;
-            }
-
-            if (_form.dataGridPacientesView.Columns.Contains("Email"))
-            {
-                var c = _form.dataGridPacientesView.Columns["Email"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            }
-
-            if (_form.dataGridPacientesView.Columns.Contains("FechaNacimiento"))
-            {
-                var c = _form.dataGridPacientesView.Columns["FechaNacimiento"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                c.DefaultCellStyle.Format = "dd/MM/yyyy";
-                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
-                // Asegurar ancho mínimo para evitar que el encabezado haga wrap
-                c.MinimumWidth = 110;
-            }
-
-            if (_form.dataGridPacientesView.Columns.Contains("Profesional"))
-            {
-                var c = _form.dataGridPacientesView.Columns["Profesional"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                //Esta linea es para que no haga wrap el texto que es cuando es muy largo
-                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-                //Esta linea es para que no haga wrap el texto del encabezado
-                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
-            }
-
-            // Asegurar que el nombre ocupe el espacio restante y no se trunque
-            if (_form.dataGridPacientesView.Columns.Contains("Nombre"))
-            {
-                var c = _form.dataGridPacientesView.Columns["Nombre"];
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
-                c.MinimumWidth = 110;
-                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
             }
 
             // Formateo de celdas: mostrar "Sin asignar" cuando Email esté vacío

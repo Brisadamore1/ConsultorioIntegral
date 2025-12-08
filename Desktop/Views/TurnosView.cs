@@ -74,17 +74,6 @@ namespace Desktop.Views
             currentState = state ?? throw new ArgumentNullException(nameof(state), "El estado no puede ser nulo.");
         }
 
-        private async void btnGuardar_Click(object sender, EventArgs e)
-        {
-            turnoCurrent.EstadoTurno = (EstadoTurnoEnum)comboEstado.SelectedItem;
-            currentState.OnGuardar();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            currentState.OnCancelar();
-        }
-
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             currentState.OnBuscar();
@@ -111,6 +100,17 @@ namespace Desktop.Views
         private void btnSalir_Click_1(object sender, EventArgs e)
         {
             currentState.OnSalir();
+        }
+
+        private async void btnGuardar_Click_1(object sender, EventArgs e)
+        {
+            turnoCurrent.EstadoTurno = (EstadoTurnoEnum)comboEstado.SelectedItem;
+            currentState.OnGuardar();
+        }
+
+        private void btnCancelar_Click_1(object sender, EventArgs e)
+        {
+            currentState.OnCancelar();
         }
     }
 }

@@ -34,6 +34,14 @@ namespace Desktop.States.Turnos
             _form.ListTurnos.DataSource = await _form.turnoService.GetAllAsync(_form.txtFiltro.Text);
             _form.dataGridTurnosView.DataSource = _form.ListTurnos;
 
+            // Encabezados en negrita
+            try
+            {
+                var f = _form.dataGridTurnosView.ColumnHeadersDefaultCellStyle.Font ?? _form.dataGridTurnosView.Font;
+                _form.dataGridTurnosView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(f, System.Drawing.FontStyle.Bold);
+            }
+            catch { }
+
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);
 
