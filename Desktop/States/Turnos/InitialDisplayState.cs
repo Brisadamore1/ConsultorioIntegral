@@ -54,7 +54,7 @@ namespace Desktop.States.Turnos
             _form.ListTurnos.DataSource = all;
             _form.dataGridTurnosView.DataSource = _form.ListTurnos;
 
-            // Ocultar columnas innecesarias
+            #region Ocultar columnas innecesarias
             if (_form.dataGridTurnosView.Columns.Contains("PacienteId"))
                 _form.dataGridTurnosView.Columns["PacienteId"].Visible = false;
             if (_form.dataGridTurnosView.Columns.Contains("ProfesionalId"))
@@ -67,6 +67,7 @@ namespace Desktop.States.Turnos
                 _form.dataGridTurnosView.Columns["IsDeleted"].Visible = false;
             if (_form.dataGridTurnosView.Columns.Contains("DisplayName"))
                 _form.dataGridTurnosView.Columns["DisplayName"].Visible = false;
+            #endregion
 
             // Desactivar la fila de nuevo registro
             _form.dataGridTurnosView.AllowUserToAddRows = false;

@@ -1,6 +1,7 @@
 using Desktop.ViewReports;
 using Desktop.Views;
 using Service.Models;
+using Desktop.Helpers;
 
 namespace Desktop
 {
@@ -9,6 +10,9 @@ namespace Desktop
         public MenuPrincipalView()
         {
             InitializeComponent();
+
+            // Aplica la tabla de colores personalizada para cambiar el color de hover del menú
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomMenuColorTable());
         }
 
         private void profesionalesToolStripMenuItem_Click(object sender, EventArgs e)

@@ -76,7 +76,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(603, 9);
+            label1.Location = new Point(630, 9);
             label1.Name = "label1";
             label1.Size = new Size(234, 67);
             label1.TabIndex = 0;
@@ -176,7 +176,7 @@
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(1168, 579);
+            tabPageAgregarEditar.Size = new Size(1305, 579);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
@@ -191,7 +191,7 @@
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.IconSize = 45;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(551, 431);
+            btnCancelar.Location = new Point(620, 458);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(187, 49);
@@ -199,6 +199,7 @@
             btnCancelar.Text = "&Cancelar";
             btnCancelar.TextAlign = ContentAlignment.MiddleRight;
             btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click_1;
             // 
             // btnGuardar
             // 
@@ -210,7 +211,7 @@
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 45;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(333, 431);
+            btnGuardar.Location = new Point(402, 458);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(184, 49);
@@ -218,6 +219,7 @@
             btnGuardar.Text = "&Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
             btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click_1;
             // 
             // label5
             // 
@@ -225,7 +227,7 @@
             label5.BackColor = Color.FromArgb(15, 22, 41);
             label5.Font = new Font("Berlin Sans FB", 19.8000011F);
             label5.ForeColor = Color.Silver;
-            label5.Location = new Point(289, 293);
+            label5.Location = new Point(323, 277);
             label5.Name = "label5";
             label5.Size = new Size(106, 37);
             label5.TabIndex = 49;
@@ -237,7 +239,7 @@
             label8.BackColor = Color.FromArgb(15, 22, 41);
             label8.Font = new Font("Berlin Sans FB", 19.8000011F);
             label8.ForeColor = Color.Silver;
-            label8.Location = new Point(289, 228);
+            label8.Location = new Point(323, 212);
             label8.Name = "label8";
             label8.Size = new Size(137, 37);
             label8.TabIndex = 48;
@@ -249,7 +251,7 @@
             label9.BackColor = Color.FromArgb(15, 22, 41);
             label9.Font = new Font("Berlin Sans FB", 19.8000011F);
             label9.ForeColor = Color.Silver;
-            label9.Location = new Point(289, 158);
+            label9.Location = new Point(323, 142);
             label9.Name = "label9";
             label9.Size = new Size(176, 37);
             label9.TabIndex = 47;
@@ -261,7 +263,7 @@
             label10.BackColor = Color.FromArgb(15, 22, 41);
             label10.Font = new Font("Berlin Sans FB", 19.8000011F);
             label10.ForeColor = Color.Silver;
-            label10.Location = new Point(289, 90);
+            label10.Location = new Point(323, 74);
             label10.Name = "label10";
             label10.Size = new Size(106, 37);
             label10.TabIndex = 46;
@@ -272,17 +274,17 @@
             comboTurnos.DropDownStyle = ComboBoxStyle.DropDownList;
             comboTurnos.Font = new Font("Segoe UI", 12F);
             comboTurnos.FormattingEnabled = true;
-            comboTurnos.Location = new Point(513, 91);
+            comboTurnos.Location = new Point(547, 75);
             comboTurnos.Margin = new Padding(3, 4, 3, 4);
             comboTurnos.Name = "comboTurnos";
-            comboTurnos.Size = new Size(382, 36);
+            comboTurnos.Size = new Size(475, 36);
             comboTurnos.TabIndex = 44;
             // 
             // checkBoxPagado
             // 
             checkBoxPagado.AutoSize = true;
             checkBoxPagado.Font = new Font("Segoe UI", 12F);
-            checkBoxPagado.Location = new Point(513, 248);
+            checkBoxPagado.Location = new Point(547, 232);
             checkBoxPagado.Name = "checkBoxPagado";
             checkBoxPagado.Size = new Size(18, 17);
             checkBoxPagado.TabIndex = 43;
@@ -291,18 +293,18 @@
             // txtNotas
             // 
             txtNotas.Font = new Font("Segoe UI", 12F);
-            txtNotas.Location = new Point(513, 293);
+            txtNotas.Location = new Point(547, 277);
             txtNotas.Margin = new Padding(3, 4, 3, 4);
             txtNotas.Multiline = true;
             txtNotas.Name = "txtNotas";
-            txtNotas.Size = new Size(382, 85);
+            txtNotas.Size = new Size(475, 110);
             txtNotas.TabIndex = 42;
             // 
             // numericHonorario
             // 
             numericHonorario.DecimalPlaces = 2;
             numericHonorario.Font = new Font("Segoe UI", 12F);
-            numericHonorario.Location = new Point(513, 161);
+            numericHonorario.Location = new Point(547, 145);
             numericHonorario.Margin = new Padding(3, 4, 3, 4);
             numericHonorario.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericHonorario.Name = "numericHonorario";
