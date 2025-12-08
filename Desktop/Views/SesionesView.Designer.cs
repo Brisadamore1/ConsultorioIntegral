@@ -67,7 +67,7 @@
             panel1.Location = new Point(1, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1850, 82);
+            panel1.Size = new Size(2003, 82);
             panel1.TabIndex = 30;
             // 
             // label1
@@ -76,7 +76,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(543, 9);
+            label1.Location = new Point(603, 9);
             label1.Name = "label1";
             label1.Size = new Size(234, 67);
             label1.TabIndex = 0;
@@ -89,7 +89,7 @@
             tabControl1.Location = new Point(12, 101);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1176, 612);
+            tabControl1.Size = new Size(1313, 612);
             tabControl1.TabIndex = 31;
             // 
             // tabPageLista
@@ -102,7 +102,7 @@
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
-            tabPageLista.Size = new Size(1168, 579);
+            tabPageLista.Size = new Size(1305, 579);
             tabPageLista.TabIndex = 0;
             tabPageLista.Text = "Lista";
             tabPageLista.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscar.IconSize = 45;
             btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(980, 20);
+            btnBuscar.Location = new Point(1117, 20);
             btnBuscar.Margin = new Padding(3, 4, 3, 4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(156, 49);
@@ -146,7 +146,7 @@
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Multiline = true;
             txtFiltro.Name = "txtFiltro";
-            txtFiltro.Size = new Size(711, 37);
+            txtFiltro.Size = new Size(848, 37);
             txtFiltro.TabIndex = 25;
             // 
             // dataGridSesionesView
@@ -158,7 +158,7 @@
             dataGridSesionesView.Name = "dataGridSesionesView";
             dataGridSesionesView.RowHeadersWidth = 62;
             dataGridSesionesView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridSesionesView.Size = new Size(1111, 473);
+            dataGridSesionesView.Size = new Size(1248, 473);
             dataGridSesionesView.TabIndex = 23;
             // 
             // tabPageAgregarEditar
@@ -321,7 +321,7 @@
             btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSalir.IconSize = 47;
             btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSalir.Location = new Point(1214, 514);
+            btnSalir.Location = new Point(1351, 514);
             btnSalir.Margin = new Padding(3, 4, 3, 4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(176, 49);
@@ -342,7 +342,7 @@
             btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEliminar.IconSize = 43;
             btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEliminar.Location = new Point(1214, 397);
+            btnEliminar.Location = new Point(1351, 397);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(176, 49);
@@ -363,7 +363,7 @@
             btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEditar.IconSize = 45;
             btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(1214, 328);
+            btnEditar.Location = new Point(1351, 328);
             btnEditar.Margin = new Padding(3, 4, 3, 4);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(176, 49);
@@ -384,7 +384,7 @@
             btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnAgregar.IconSize = 45;
             btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAgregar.Location = new Point(1214, 256);
+            btnAgregar.Location = new Point(1351, 256);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(176, 49);
@@ -398,7 +398,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1406, 743);
+            ClientSize = new Size(1559, 743);
             Controls.Add(btnSalir);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);

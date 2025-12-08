@@ -79,7 +79,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(561, 9);
+            label1.Location = new Point(622, 9);
             label1.Name = "label1";
             label1.Size = new Size(261, 67);
             label1.TabIndex = 0;

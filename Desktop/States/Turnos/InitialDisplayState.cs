@@ -1,6 +1,7 @@
 ﻿using Desktop.Interfaces;
 using Desktop.Views;
 using Service.Services;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,44 @@ namespace Desktop.States.Turnos
         public async Task UpdateUI()
         {
             await CargarCombo();
-            _form.ListTurnos.DataSource = await _form.turnoService.GetAllAsync(_form.txtFiltro.Text);
+
+            // Obtener todos y luego aplicar filtro local por paciente y profesional (nombre y apellido)
+            var all = (await _form.turnoService.GetAllAsync(string.Empty))?.ToList() ?? new List<Turno>();
+
+            try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
+            EventHandler h = (s, e) =>
+            {
+                var txt = _form.txtFiltro.Text?.Trim();
+                if (string.IsNullOrEmpty(txt)) { _form.ListTurnos.DataSource = all; return; }
+                var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var filtered = all.Where(item =>
+                    (item.Paciente != null && terms.All(t => (item.Paciente.Nombre ?? string.Empty).IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0 || (item.Paciente.ToString() ?? string.Empty).IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0))
+                    || (item.Profesional != null && terms.All(t => (item.Profesional.Nombre ?? string.Empty).IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0 || (item.Profesional.ToString() ?? string.Empty).IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0))
+                ).ToList();
+                _form.ListTurnos.DataSource = filtered;
+            };
+            _form.txtFiltro.Tag = h;
+            _form.txtFiltro.TextChanged += h;
+
+            _form.ListTurnos.DataSource = all;
             _form.dataGridTurnosView.DataSource = _form.ListTurnos;
+
+            // Ocultar columnas innecesarias
+            if (_form.dataGridTurnosView.Columns.Contains("PacienteId"))
+                _form.dataGridTurnosView.Columns["PacienteId"].Visible = false;
+            if (_form.dataGridTurnosView.Columns.Contains("ProfesionalId"))
+                _form.dataGridTurnosView.Columns["ProfesionalId"].Visible = false;
+            if (_form.dataGridTurnosView.Columns.Contains("CanceladoPorProfesional"))
+                _form.dataGridTurnosView.Columns["CanceladoPorProfesional"].Visible = false;
+            if (_form.dataGridTurnosView.Columns.Contains("MotivoCancelacion"))
+                _form.dataGridTurnosView.Columns["MotivoCancelacion"].Visible = false;
+            if (_form.dataGridTurnosView.Columns.Contains("IsDeleted"))
+                _form.dataGridTurnosView.Columns["IsDeleted"].Visible = false;
+            if (_form.dataGridTurnosView.Columns.Contains("DisplayName"))
+                _form.dataGridTurnosView.Columns["DisplayName"].Visible = false;
+
+            // Desactivar la fila de nuevo registro
+            _form.dataGridTurnosView.AllowUserToAddRows = false;
 
             // Encabezados en negrita
             try

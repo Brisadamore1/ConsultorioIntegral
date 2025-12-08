@@ -64,13 +64,14 @@ namespace Desktop.States.Profesionales
             // Evitar la fila "nueva" editable al final
             _form.dataGridProfesionalesView.AllowUserToAddRows = false;
 
-            // Ocultar columnas que no deseamos mostrar
+            #region Ocultar columnas innecesarias
             if (_form.dataGridProfesionalesView.Columns.Contains("Pacientes"))
                 _form.dataGridProfesionalesView.Columns["Pacientes"].Visible = false;
             if (_form.dataGridProfesionalesView.Columns.Contains("IsDeleted"))
                 _form.dataGridProfesionalesView.Columns["IsDeleted"].Visible = false;
             if (_form.dataGridProfesionalesView.Columns.Contains("Imagen"))
                 _form.dataGridProfesionalesView.Columns["Imagen"].Visible = false;
+            #endregion
 
             // Orden simple y directo: Id, Nombre, Profesion, Especialidad, Matricula, Email, Telefono, Destacado
             var keys = new[] { "Id", "Nombre", "Profesion", "Especialidad", "Matricula", "Email", "Telefono", "Destacado" };
@@ -81,6 +82,8 @@ namespace Desktop.States.Profesionales
                 {
                     var c = _form.dataGridProfesionalesView.Columns[key];
                     c.Visible = true;
+                    if (string.Equals(key, "Nombre", StringComparison.OrdinalIgnoreCase))
+                        c.HeaderText = "Profesional";
                     if (string.Equals(key, "Destacado", StringComparison.OrdinalIgnoreCase))
                         c.HeaderText = "Nuevo";
                     c.DisplayIndex = di++;

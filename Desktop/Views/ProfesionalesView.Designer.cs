@@ -172,7 +172,7 @@
             // checkBox
             // 
             checkBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox.Location = new Point(596, 414);
+            checkBox.Location = new Point(634, 411);
             checkBox.Name = "checkBox";
             checkBox.Size = new Size(41, 37);
             checkBox.TabIndex = 49;
@@ -184,7 +184,7 @@
             label2.BackColor = Color.FromArgb(15, 22, 41);
             label2.Font = new Font("Berlin Sans FB", 19.8000011F);
             label2.ForeColor = Color.Silver;
-            label2.Location = new Point(353, 414);
+            label2.Location = new Point(391, 411);
             label2.Name = "label2";
             label2.Size = new Size(118, 37);
             label2.TabIndex = 48;
@@ -200,7 +200,7 @@
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.IconSize = 45;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(623, 503);
+            btnCancelar.Location = new Point(661, 500);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(187, 49);
@@ -216,7 +216,7 @@
             label14.BackColor = Color.FromArgb(15, 22, 41);
             label14.Font = new Font("Berlin Sans FB", 19.8000011F);
             label14.ForeColor = Color.Silver;
-            label14.Location = new Point(353, 355);
+            label14.Location = new Point(391, 352);
             label14.Name = "label14";
             label14.Size = new Size(143, 37);
             label14.TabIndex = 47;
@@ -232,7 +232,7 @@
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 45;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(407, 503);
+            btnGuardar.Location = new Point(445, 500);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(184, 49);
@@ -248,7 +248,7 @@
             label13.BackColor = Color.FromArgb(15, 22, 41);
             label13.Font = new Font("Berlin Sans FB", 19.8000011F);
             label13.ForeColor = Color.Silver;
-            label13.Location = new Point(353, 237);
+            label13.Location = new Point(391, 234);
             label13.Name = "label13";
             label13.Size = new Size(201, 37);
             label13.TabIndex = 46;
@@ -260,7 +260,7 @@
             label9.BackColor = Color.FromArgb(15, 22, 41);
             label9.Font = new Font("Berlin Sans FB", 19.8000011F);
             label9.ForeColor = Color.Silver;
-            label9.Location = new Point(353, 297);
+            label9.Location = new Point(391, 294);
             label9.Name = "label9";
             label9.Size = new Size(107, 37);
             label9.TabIndex = 45;
@@ -272,7 +272,7 @@
             label10.BackColor = Color.FromArgb(15, 22, 41);
             label10.Font = new Font("Berlin Sans FB", 19.8000011F);
             label10.ForeColor = Color.Silver;
-            label10.Location = new Point(353, 177);
+            label10.Location = new Point(391, 174);
             label10.Name = "label10";
             label10.Size = new Size(160, 37);
             label10.TabIndex = 44;
@@ -284,7 +284,7 @@
             label11.BackColor = Color.FromArgb(15, 22, 41);
             label11.Font = new Font("Berlin Sans FB", 19.8000011F);
             label11.ForeColor = Color.Silver;
-            label11.Location = new Point(353, 120);
+            label11.Location = new Point(391, 117);
             label11.Name = "label11";
             label11.Size = new Size(152, 37);
             label11.TabIndex = 43;
@@ -296,7 +296,7 @@
             label12.BackColor = Color.FromArgb(15, 22, 41);
             label12.Font = new Font("Berlin Sans FB", 19.8000011F);
             label12.ForeColor = Color.Silver;
-            label12.Location = new Point(353, 60);
+            label12.Location = new Point(391, 57);
             label12.Name = "label12";
             label12.Size = new Size(141, 37);
             label12.TabIndex = 42;
@@ -305,7 +305,7 @@
             // txtTelefono
             // 
             txtTelefono.Font = new Font("Segoe UI", 12F);
-            txtTelefono.Location = new Point(596, 355);
+            txtTelefono.Location = new Point(634, 352);
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
             txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
@@ -316,7 +316,7 @@
             // txtEmail
             // 
             txtEmail.Font = new Font("Segoe UI", 12F);
-            txtEmail.Location = new Point(596, 297);
+            txtEmail.Location = new Point(634, 294);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
@@ -327,7 +327,7 @@
             // txtEspecialidad
             // 
             txtEspecialidad.Font = new Font("Segoe UI", 12F);
-            txtEspecialidad.Location = new Point(596, 237);
+            txtEspecialidad.Location = new Point(634, 234);
             txtEspecialidad.Margin = new Padding(3, 4, 3, 4);
             txtEspecialidad.Multiline = true;
             txtEspecialidad.Name = "txtEspecialidad";
@@ -338,7 +338,7 @@
             // txtMatricula
             // 
             txtMatricula.Font = new Font("Segoe UI", 12F);
-            txtMatricula.Location = new Point(596, 177);
+            txtMatricula.Location = new Point(634, 174);
             txtMatricula.Margin = new Padding(3, 4, 3, 4);
             txtMatricula.Multiline = true;
             txtMatricula.Name = "txtMatricula";
@@ -349,7 +349,7 @@
             // txtProfesion
             // 
             txtProfesion.Font = new Font("Segoe UI", 12F);
-            txtProfesion.Location = new Point(596, 120);
+            txtProfesion.Location = new Point(634, 117);
             txtProfesion.Margin = new Padding(3, 4, 3, 4);
             txtProfesion.Multiline = true;
             txtProfesion.Name = "txtProfesion";
@@ -360,7 +360,7 @@
             // txtNombre
             // 
             txtNombre.Font = new Font("Segoe UI", 12F);
-            txtNombre.Location = new Point(596, 60);
+            txtNombre.Location = new Point(634, 57);
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
@@ -385,7 +385,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(541, 9);
+            label1.Location = new Point(605, 9);
             label1.Name = "label1";
             label1.Size = new Size(356, 67);
             label1.TabIndex = 0;

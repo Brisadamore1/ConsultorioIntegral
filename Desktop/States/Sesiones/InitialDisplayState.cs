@@ -50,6 +50,9 @@ namespace Desktop.States.Sesiones
             _form.ListSesiones.DataSource = await _form.sesionService.GetAllAsync(_form.txtFiltro.Text);
             _form.dataGridSesionesView.DataSource = _form.ListSesiones;
 
+            // Desactivar la fila de nuevo registro
+            _form.dataGridSesionesView.AllowUserToAddRows = false;
+
             // Encabezados en negrita
             try
             {

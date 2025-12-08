@@ -40,9 +40,7 @@ namespace Desktop.States.ContactosEmergencia
                 var f = filter;
                 var filtered = all.Where(item =>
                     (!string.IsNullOrEmpty(item.Nombre) && item.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Relacion) && item.Relacion.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
                     || (item.Paciente != null && item.Paciente.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Telefono) && item.Telefono.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
                     || item.Id.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0
                 ).ToList();
 

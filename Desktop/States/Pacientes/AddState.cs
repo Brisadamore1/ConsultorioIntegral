@@ -42,20 +42,42 @@ namespace Desktop.States.Pacientes
                 MessageBox.Show("El nombre del paciente es obligatorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(_form.txtDni.Text))
+            {
+                MessageBox.Show("El DNI del paciente es obligatorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_form.dateTimeFecha.Value == DateTime.MinValue)
+            {
+                MessageBox.Show("La fecha de nacimiento es obligatoria", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(_form.txtTelefono.Text))
+            {
+                MessageBox.Show("El teléfono del paciente es obligatorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var paciente = new Paciente
             {
                 Nombre = _form.txtNombre.Text,
                 Dni = _form.txtDni.Text,
-                FechaNacimiento = _form.dateTimeFecha.Value,
-                Email = _form.txtEmail.Text,
+                FechaNacimiento = _form.dateTimeFecha.Value.Date,
+                Email = string.IsNullOrWhiteSpace(_form.txtEmail.Text) ? null : _form.txtEmail.Text,
                 Telefono = _form.txtTelefono.Text,
                
-                //CondicionIva = _form.txtCondicionIVA.Text
-                ProfesionalId = (int)_form.comboProfesionales.SelectedValue,
+                ProfesionalId = _form.comboProfesionales.SelectedValue != null ? (int?)Convert.ToInt32(_form.comboProfesionales.SelectedValue) : null,
             };
-            await _form.pacienteService.AddAsync(paciente);
-            _form.SetState(_form.initialDisplayState);
-            await _form.currentState.UpdateUI();
+            try
+            {
+                await _form.pacienteService.AddAsync(paciente);
+                _form.SetState(_form.initialDisplayState);
+                await _form.currentState.UpdateUI();
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error al guardar paciente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+                // Mantener en estado de agregar para permitir reintento
+            }
 
         }
 

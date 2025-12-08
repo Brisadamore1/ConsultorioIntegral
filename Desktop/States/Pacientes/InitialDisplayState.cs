@@ -33,6 +33,20 @@ namespace Desktop.States.Pacientes
                         e.FormattingApplied = true;
                     }
                 }
+                else if (grid.Columns[e.ColumnIndex].Name.Equals("FechaNacimiento", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (e.Value is DateTime dt)
+                    {
+                        // Mostrar solo la fecha (sin hora)
+                        e.Value = dt.ToString("dd/MM/yyyy");
+                        e.FormattingApplied = true;
+                    }
+                    else if (e.Value == null || string.IsNullOrWhiteSpace(e.Value.ToString()))
+                    {
+                        e.Value = "Sin asignar";
+                        e.FormattingApplied = true;
+                    }
+                }
             }
             catch
             {
@@ -51,29 +65,43 @@ namespace Desktop.States.Pacientes
 
         public async Task UpdateUI()
         {
-            await CargarCombo();
-
-            // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
-            var all = (await _form.pacienteService.GetAllAsync(string.Empty))?.ToList() ?? new List<Paciente>();
-
-
-            // Bind all and wire compact live filter (search by terms within Nombre)
-            _form.ListPacientes.DataSource = all;
-            try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
-            EventHandler h = (s, e) =>
+            try
             {
-                var txt = _form.txtFiltro.Text?.Trim();
-                if (string.IsNullOrEmpty(txt)) { _form.ListPacientes.DataSource = all; return; }
-                var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                _form.ListPacientes.DataSource = all.Where(item => !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
-            };
-            _form.txtFiltro.Tag = h;
-            _form.txtFiltro.TextChanged += h;
+                await CargarCombo();
 
-            _form.dataGridPacientesView.DataSource = _form.ListPacientes;
+                // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
+                var all = (await _form.pacienteService.GetAllAsync(string.Empty))?.ToList() ?? new List<Paciente>();
 
-            // Desactivar la fila de nuevo registro
-            _form.dataGridPacientesView.AllowUserToAddRows = false;
+                // Bind all and wire compact live filter (search by terms within Nombre)
+                _form.ListPacientes.DataSource = all;
+                try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
+                EventHandler h = (s, e) =>
+                {
+                    var txt = _form.txtFiltro.Text?.Trim();
+                    if (string.IsNullOrEmpty(txt)) { _form.ListPacientes.DataSource = all; return; }
+                    var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    _form.ListPacientes.DataSource = all.Where(item => !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+                };
+                _form.txtFiltro.Tag = h;
+                _form.txtFiltro.TextChanged += h;
+
+                _form.dataGridPacientesView.DataSource = _form.ListPacientes;
+
+                // Desactivar la fila de nuevo registro
+                _form.dataGridPacientesView.AllowUserToAddRows = false;
+            }
+            catch (Exception ex)
+            {
+                // Mostrar error y continuar con UI vacía para evitar que la app se cierre
+                try { MessageBox.Show($"Error cargando pacientes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+                _form.ListPacientes.DataSource = new List<Paciente>();
+                _form.dataGridPacientesView.DataSource = _form.ListPacientes;
+                _form.dataGridPacientesView.AllowUserToAddRows = false;
+                return;
+            }
+
+
+            
 
             #region Ocultar columnas innecesarias
             if (_form.dataGridPacientesView.Columns.Contains("ProfesionalId"))
@@ -102,7 +130,14 @@ namespace Desktop.States.Pacientes
                     if (string.Equals(key, "Nombre", StringComparison.OrdinalIgnoreCase))
                         c.HeaderText = "Paciente";
                     if (string.Equals(key, "FechaNacimiento", StringComparison.OrdinalIgnoreCase))
+                    {
                         c.HeaderText = "Fecha Nacimiento";
+                        try { c.HeaderCell.Style.WrapMode = DataGridViewTriState.False; } catch { }
+                        try { c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter; } catch { }
+                        try { c.DefaultCellStyle.Format = "dd/MM/yyyy"; } catch { }
+                        // Fijar ancho y desactivar AutoSize para que el encabezado no se divida en dos líneas
+                        try { c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader; c.MinimumWidth = 140; } catch { }
+                    }
                     c.DisplayIndex = di++;
                     continue;
                 }
@@ -116,7 +151,13 @@ namespace Desktop.States.Pacientes
                     if (string.Equals(key, "Nombre", StringComparison.OrdinalIgnoreCase))
                         found.HeaderText = "Paciente";
                     if (string.Equals(key, "FechaNacimiento", StringComparison.OrdinalIgnoreCase))
+                    {
                         found.HeaderText = "Fecha Nacimiento";
+                        try { found.HeaderCell.Style.WrapMode = DataGridViewTriState.False; } catch { }
+                        try { found.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter; } catch { }
+                        try { found.DefaultCellStyle.Format = "dd/MM/yyyy"; } catch { }
+                        try { found.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader; found.MinimumWidth = 140; } catch { }
+                    }
                     found.DisplayIndex = di++;
                 }
             }
@@ -152,10 +193,20 @@ namespace Desktop.States.Pacientes
         }
         private async Task CargarCombo()
         {
-            _form.comboProfesionales.DataSource = await _form.profesionalService.GetAllAsync(string.Empty);
-            _form.comboProfesionales.DisplayMember = "Nombre";
-            _form.comboProfesionales.ValueMember = "Id";
-            _form.comboProfesionales.SelectedIndex = -1;
+            try
+            {
+                var list = await _form.profesionalService.GetAllAsync(string.Empty) ?? new List<Service.Models.Profesional>();
+                _form.comboProfesionales.DataSource = list;
+                _form.comboProfesionales.DisplayMember = "Nombre";
+                _form.comboProfesionales.ValueMember = "Id";
+                _form.comboProfesionales.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error cargando profesionales: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning); } catch { }
+                _form.comboProfesionales.DataSource = new List<Service.Models.Profesional>();
+                _form.comboProfesionales.SelectedIndex = -1;
+            }
         }
 
         public void OnAgregar() { }
