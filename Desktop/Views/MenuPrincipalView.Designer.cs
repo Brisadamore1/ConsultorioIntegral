@@ -80,7 +80,7 @@
             menuStrip1.Location = new Point(9, 97);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
-            menuStrip1.Size = new Size(1661, 53);
+            menuStrip1.Size = new Size(1811, 53);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -94,14 +94,14 @@
             Principal.IconSize = 40;
             Principal.ImageScaling = ToolStripItemImageScaling.None;
             Principal.Name = "Principal";
-            Principal.Size = new Size(197, 44);
+            Principal.Size = new Size(197, 45);
             Principal.Text = "Principal";
             // 
             // itemMenuProfesionales
             // 
             itemMenuProfesionales.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             itemMenuProfesionales.ForeColor = Color.Silver;
-            itemMenuProfesionales.IconChar = FontAwesome.Sharp.IconChar.HandHoldingHeart;
+            itemMenuProfesionales.IconChar = FontAwesome.Sharp.IconChar.HandHoldingMedical;
             itemMenuProfesionales.IconColor = Color.Silver;
             itemMenuProfesionales.IconFont = FontAwesome.Sharp.IconFont.Auto;
             itemMenuProfesionales.IconSize = 40;
@@ -115,7 +115,7 @@
             // 
             itemMenuPacientes.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             itemMenuPacientes.ForeColor = Color.Silver;
-            itemMenuPacientes.IconChar = FontAwesome.Sharp.IconChar.PeopleGroup;
+            itemMenuPacientes.IconChar = FontAwesome.Sharp.IconChar.Users;
             itemMenuPacientes.IconColor = Color.Silver;
             itemMenuPacientes.IconFont = FontAwesome.Sharp.IconFont.Auto;
             itemMenuPacientes.IconSize = 41;
@@ -184,9 +184,10 @@
             // 
             // pacientesToolStripMenuItem
             // 
-            pacientesToolStripMenuItem.ForeColor = Color.White;
-            pacientesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.PeopleGroup;
-            pacientesToolStripMenuItem.IconColor = Color.White;
+            pacientesToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
+            pacientesToolStripMenuItem.ForeColor = Color.Silver;
+            pacientesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.Users;
+            pacientesToolStripMenuItem.IconColor = Color.Silver;
             pacientesToolStripMenuItem.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pacientesToolStripMenuItem.IconSize = 38;
             pacientesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
@@ -253,7 +254,7 @@
             MainMenuStrip = menuStrip1;
             Margin = new Padding(7, 4, 7, 4);
             Name = "MenuPrincipalView";
-            Text = "Consultorio Integral";
+            Text = "Home";
             WindowState = FormWindowState.Maximized;
             panelTitulo.ResumeLayout(false);
             panelTitulo.PerformLayout();

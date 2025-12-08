@@ -19,6 +19,26 @@ namespace Desktop.States.Pacientes
             _form = form ?? throw new ArgumentNullException(nameof(form), "El formulario no puede ser nulo.");
 
         }
+
+        private void DataGridPacientesView_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                var grid = _form.dataGridPacientesView;
+                if (grid.Columns[e.ColumnIndex].Name.Equals("Email", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (e.Value == null || string.IsNullOrWhiteSpace(e.Value.ToString()))
+                    {
+                        e.Value = "Sin asignar";
+                        e.FormattingApplied = true;
+                    }
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+        }
         public async void OnBuscar()
         {
             await UpdateUI();
@@ -36,25 +56,19 @@ namespace Desktop.States.Pacientes
             // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
             var all = (await _form.pacienteService.GetAllAsync(string.Empty))?.ToList() ?? new List<Paciente>();
 
-            var filter = _form.txtFiltro.Text?.Trim();
-            if (!string.IsNullOrEmpty(filter))
-            {
-                var f = filter;
-                var filtered = all.Where(item =>
-                    (!string.IsNullOrEmpty(item.Nombre) && item.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Dni) && item.Dni.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Telefono) && item.Telefono.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Email) && item.Email.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (item.Profesional != null && item.Profesional.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || item.Id.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0
-                ).ToList();
 
-                _form.ListPacientes.DataSource = filtered;
-            }
-            else
+            // Bind all and wire compact live filter (search by terms within Nombre)
+            _form.ListPacientes.DataSource = all;
+            try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
+            EventHandler h = (s, e) =>
             {
-                _form.ListPacientes.DataSource = all;
-            }
+                var txt = _form.txtFiltro.Text?.Trim();
+                if (string.IsNullOrEmpty(txt)) { _form.ListPacientes.DataSource = all; return; }
+                var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                _form.ListPacientes.DataSource = all.Where(item => !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+            };
+            _form.txtFiltro.Tag = h;
+            _form.txtFiltro.TextChanged += h;
 
             _form.dataGridPacientesView.DataSource = _form.ListPacientes;
 
@@ -105,6 +119,63 @@ namespace Desktop.States.Pacientes
                     found.DisplayIndex = di++;
                 }
             }
+
+            // Ajustes de ancho de columna y formato para que coincida con Profesionales
+            if (_form.dataGridPacientesView.Columns.Contains("Id"))
+            {
+                var c = _form.dataGridPacientesView.Columns["Id"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                c.Width = 60;
+            }
+
+            if (_form.dataGridPacientesView.Columns.Contains("Email"))
+            {
+                var c = _form.dataGridPacientesView.Columns["Email"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            if (_form.dataGridPacientesView.Columns.Contains("FechaNacimiento"))
+            {
+                var c = _form.dataGridPacientesView.Columns["FechaNacimiento"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                c.DefaultCellStyle.Format = "dd/MM/yyyy";
+                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
+                // Asegurar ancho mínimo para evitar que el encabezado haga wrap
+                c.MinimumWidth = 110;
+            }
+
+            if (_form.dataGridPacientesView.Columns.Contains("Profesional"))
+            {
+                var c = _form.dataGridPacientesView.Columns["Profesional"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                //Esta linea es para que no haga wrap el texto que es cuando es muy largo
+                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+                //Esta linea es para que no haga wrap el texto del encabezado
+                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
+            }
+
+            // Asegurar que el nombre ocupe el espacio restante y no se trunque
+            if (_form.dataGridPacientesView.Columns.Contains("Nombre"))
+            {
+                var c = _form.dataGridPacientesView.Columns["Nombre"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                c.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+                c.MinimumWidth = 110;
+                c.HeaderCell.Style.WrapMode = DataGridViewTriState.False;
+            }
+
+            // Formateo de celdas: mostrar "Sin asignar" cuando Email esté vacío
+            try { _form.dataGridPacientesView.CellFormatting -= DataGridPacientesView_CellFormatting; } catch { }
+            _form.dataGridPacientesView.CellFormatting += DataGridPacientesView_CellFormatting;
+
+            // Encabezados en negrita
+            try
+            {
+                var f = _form.dataGridPacientesView.ColumnHeadersDefaultCellStyle.Font ?? _form.dataGridPacientesView.Font;
+                _form.dataGridPacientesView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(f, System.Drawing.FontStyle.Bold);
+            }
+            catch { }
 
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);

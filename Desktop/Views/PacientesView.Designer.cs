@@ -239,7 +239,7 @@
             comboProfesionales.Location = new Point(633, 351);
             comboProfesionales.Margin = new Padding(3, 4, 3, 4);
             comboProfesionales.Name = "comboProfesionales";
-            comboProfesionales.Size = new Size(241, 36);
+            comboProfesionales.Size = new Size(260, 36);
             comboProfesionales.TabIndex = 34;
             // 
             // txtTelefono
@@ -249,7 +249,8 @@
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
             txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(241, 37);
+            txtTelefono.PlaceholderText = "Teléfono";
+            txtTelefono.Size = new Size(260, 37);
             txtTelefono.TabIndex = 28;
             // 
             // txtEmail
@@ -259,7 +260,8 @@
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(241, 37);
+            txtEmail.PlaceholderText = "tu@email.com (Opcional)";
+            txtEmail.Size = new Size(260, 37);
             txtEmail.TabIndex = 27;
             // 
             // txtDni
@@ -269,7 +271,8 @@
             txtDni.Margin = new Padding(3, 4, 3, 4);
             txtDni.Multiline = true;
             txtDni.Name = "txtDni";
-            txtDni.Size = new Size(241, 34);
+            txtDni.PlaceholderText = "Dni";
+            txtDni.Size = new Size(260, 37);
             txtDni.TabIndex = 22;
             // 
             // txtNombre
@@ -279,7 +282,8 @@
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(241, 37);
+            txtNombre.PlaceholderText = "Nombre completo";
+            txtNombre.Size = new Size(260, 37);
             txtNombre.TabIndex = 21;
             // 
             // tabPageLista
@@ -365,7 +369,7 @@
             btnSalir.BackColor = Color.FromArgb(64, 64, 64);
             btnSalir.Font = new Font("Berlin Sans FB", 19.8000011F);
             btnSalir.ForeColor = Color.White;
-            btnSalir.IconChar = FontAwesome.Sharp.IconChar.TimesRectangle;
+            btnSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
             btnSalir.IconColor = Color.White;
             btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSalir.IconSize = 47;
@@ -454,10 +458,11 @@
             Controls.Add(btnSalir);
             Controls.Add(tabControl1);
             Controls.Add(panel1);
+            MaximizeBox = false;
             MinimizeBox = false;
             Name = "PacientesView";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "PacientesViews";
+            Text = "PacientesView";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tabPageAgregarEditar.ResumeLayout(false);

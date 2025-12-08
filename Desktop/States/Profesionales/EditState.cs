@@ -25,6 +25,7 @@ namespace Desktop.States.Profesionales
             _form.txtEspecialidad.Clear();
             _form.txtEmail.Clear();
             _form.txtTelefono.Clear();
+            _form.checkBox.Checked = false;
 
             _form.SetState(_form.initialDisplayState);
             _form.currentState.UpdateUI();
@@ -45,6 +46,7 @@ namespace Desktop.States.Profesionales
                 _form.profesionalCurrent.Especialidad = _form.txtEspecialidad.Text;
                 _form.profesionalCurrent.Email = _form.txtEmail.Text;
                 _form.profesionalCurrent.Telefono = _form.txtTelefono.Text;
+                _form.profesionalCurrent.Destacado = _form.checkBox.Checked;
 
                 await _form.profesionalService.UpdateAsync(_form.profesionalCurrent);
                 _form.profesionalCurrent = null;
@@ -63,6 +65,7 @@ namespace Desktop.States.Profesionales
             _form.txtEspecialidad.Text = _form.profesionalCurrent.Especialidad;
             _form.txtEmail.Text = _form.profesionalCurrent.Email;
             _form.txtTelefono.Text = _form.profesionalCurrent.Telefono;
+            _form.checkBox.Checked = _form.profesionalCurrent.Destacado ?? false;
 
             _form.tabControl1.SelectTab(_form.tabPageAgregarEditar);
             return Task.CompletedTask;

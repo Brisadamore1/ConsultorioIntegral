@@ -313,7 +313,7 @@
             iconButtonSalir.BackColor = Color.FromArgb(64, 64, 64);
             iconButtonSalir.Font = new Font("Berlin Sans FB", 19.8000011F);
             iconButtonSalir.ForeColor = Color.White;
-            iconButtonSalir.IconChar = FontAwesome.Sharp.IconChar.TimesRectangle;
+            iconButtonSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
             iconButtonSalir.IconColor = Color.White;
             iconButtonSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButtonSalir.IconSize = 47;
@@ -406,7 +406,7 @@
             MaximizeBox = false;
             Name = "ContactosEmergenciaView";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "ContactosEmergenciaViews";
+            Text = "ContactosEmergenciaView";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tabControl1.ResumeLayout(false);

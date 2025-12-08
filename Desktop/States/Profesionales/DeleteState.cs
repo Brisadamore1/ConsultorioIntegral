@@ -19,25 +19,25 @@ namespace Desktop.States.Profesionales
 
         public async void OnEliminar()
         {
-            var profesional = (Profesional)_form.ListProfesionales.Current;
+            var profesional = _form.ListProfesionales.Current as Profesional;
+            if (profesional == null)
+            {
+                MessageBox.Show("No hay un profesional seleccionado.", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             var result = MessageBox.Show($"¿Está seguro que desea eliminar el profesional {profesional.Nombre}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                _form.profesionalCurrent = _form.ListProfesionales.Current as Profesional;
-                if (_form.profesionalCurrent != null)
-                {
-                    // Cambiar la llamada a DeleteAsync por el servicio correspondiente
-                    await _form.profesionalService.DeleteAsync(_form.profesionalCurrent.Id);
-                    _form.SetState(_form.initialDisplayState);
-                    await _form.currentState.UpdateUI();
-                }
+                await _form.profesionalService.DeleteAsync(profesional.Id);
+                _form.SetState(_form.initialDisplayState);
+                await _form.currentState.UpdateUI();
             }
             else
             {
                 _form.SetState(_form.initialDisplayState);
             }
-            _form.profesionalCurrent = null;
         }
 
         public Task UpdateUI()

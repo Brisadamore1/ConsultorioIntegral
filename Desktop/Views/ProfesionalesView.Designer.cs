@@ -35,6 +35,8 @@
             txtFiltro = new TextBox();
             dataGridProfesionalesView = new DataGridView();
             tabPageAgregarEditar = new TabPage();
+            checkBox = new CheckBox();
+            label2 = new Label();
             btnCancelar = new FontAwesome.Sharp.IconButton();
             label14 = new Label();
             btnGuardar = new FontAwesome.Sharp.IconButton();
@@ -55,8 +57,6 @@
             btnEditar = new FontAwesome.Sharp.IconButton();
             btnAgregar = new FontAwesome.Sharp.IconButton();
             btnSalir = new FontAwesome.Sharp.IconButton();
-            label2 = new Label();
-            checkBox = new CheckBox();
             tabControl1.SuspendLayout();
             tabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridProfesionalesView).BeginInit();
@@ -166,6 +166,27 @@
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
+            // 
+            // checkBox
+            // 
+            checkBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkBox.Location = new Point(596, 405);
+            checkBox.Name = "checkBox";
+            checkBox.Size = new Size(41, 37);
+            checkBox.TabIndex = 49;
+            checkBox.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(15, 22, 41);
+            label2.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label2.ForeColor = Color.Silver;
+            label2.Location = new Point(353, 405);
+            label2.Name = "label2";
+            label2.Size = new Size(118, 37);
+            label2.TabIndex = 48;
+            label2.Text = "Nuevo:";
             // 
             // btnCancelar
             // 
@@ -286,7 +307,8 @@
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
             txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(241, 37);
+            txtTelefono.PlaceholderText = "Teléfono";
+            txtTelefono.Size = new Size(260, 37);
             txtTelefono.TabIndex = 29;
             // 
             // txtEmail
@@ -296,7 +318,8 @@
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(241, 37);
+            txtEmail.PlaceholderText = "tu@email.com";
+            txtEmail.Size = new Size(260, 37);
             txtEmail.TabIndex = 28;
             // 
             // txtEspecialidad
@@ -306,8 +329,8 @@
             txtEspecialidad.Margin = new Padding(3, 4, 3, 4);
             txtEspecialidad.Multiline = true;
             txtEspecialidad.Name = "txtEspecialidad";
-            txtEspecialidad.PlaceholderText = "(Opcional)";
-            txtEspecialidad.Size = new Size(241, 37);
+            txtEspecialidad.PlaceholderText = "Especialidad (Opcional)";
+            txtEspecialidad.Size = new Size(260, 37);
             txtEspecialidad.TabIndex = 27;
             // 
             // txtMatricula
@@ -317,7 +340,8 @@
             txtMatricula.Margin = new Padding(3, 4, 3, 4);
             txtMatricula.Multiline = true;
             txtMatricula.Name = "txtMatricula";
-            txtMatricula.Size = new Size(241, 37);
+            txtMatricula.PlaceholderText = "Matrícula";
+            txtMatricula.Size = new Size(260, 37);
             txtMatricula.TabIndex = 23;
             // 
             // txtProfesion
@@ -327,7 +351,8 @@
             txtProfesion.Margin = new Padding(3, 4, 3, 4);
             txtProfesion.Multiline = true;
             txtProfesion.Name = "txtProfesion";
-            txtProfesion.Size = new Size(241, 37);
+            txtProfesion.PlaceholderText = "Profesión";
+            txtProfesion.Size = new Size(260, 37);
             txtProfesion.TabIndex = 22;
             // 
             // txtNombre
@@ -337,7 +362,8 @@
             txtNombre.Margin = new Padding(3, 4, 3, 4);
             txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(241, 37);
+            txtNombre.PlaceholderText = "Nombre completo";
+            txtNombre.Size = new Size(260, 37);
             txtNombre.TabIndex = 21;
             // 
             // panel1
@@ -432,7 +458,7 @@
             btnSalir.BackColor = Color.FromArgb(64, 64, 64);
             btnSalir.Font = new Font("Berlin Sans FB", 19.8000011F);
             btnSalir.ForeColor = Color.White;
-            btnSalir.IconChar = FontAwesome.Sharp.IconChar.TimesRectangle;
+            btnSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
             btnSalir.IconColor = Color.White;
             btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnSalir.IconSize = 47;
@@ -447,27 +473,6 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.FromArgb(15, 22, 41);
-            label2.Font = new Font("Berlin Sans FB", 19.8000011F);
-            label2.ForeColor = Color.Silver;
-            label2.Location = new Point(353, 405);
-            label2.Name = "label2";
-            label2.Size = new Size(118, 37);
-            label2.TabIndex = 48;
-            label2.Text = "Nuevo:";
-            // 
-            // checkBox
-            // 
-            checkBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox.Location = new Point(596, 405);
-            checkBox.Name = "checkBox";
-            checkBox.Size = new Size(41, 37);
-            checkBox.TabIndex = 49;
-            checkBox.UseVisualStyleBackColor = true;
-            // 
             // ProfesionalesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -479,6 +484,7 @@
             Controls.Add(btnSalir);
             Controls.Add(panel1);
             Controls.Add(tabControl1);
+            MaximizeBox = false;
             MinimizeBox = false;
             Name = "ProfesionalesView";
             StartPosition = FormStartPosition.CenterParent;

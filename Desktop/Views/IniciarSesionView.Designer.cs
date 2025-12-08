@@ -48,7 +48,7 @@
             btnCancelar.IconColor = Color.Black;
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(576, 293);
+            btnCancelar.Location = new Point(576, 274);
             btnCancelar.Margin = new Padding(2);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(146, 53);
@@ -66,7 +66,7 @@
             btnIniciarSesion.IconColor = Color.Black;
             btnIniciarSesion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnIniciarSesion.ImageAlign = ContentAlignment.MiddleLeft;
-            btnIniciarSesion.Location = new Point(401, 293);
+            btnIniciarSesion.Location = new Point(401, 274);
             btnIniciarSesion.Margin = new Padding(2);
             btnIniciarSesion.Name = "btnIniciarSesion";
             btnIniciarSesion.Size = new Size(147, 53);
@@ -150,7 +150,7 @@
             Controls.Add(label1);
             Name = "IniciarSesionView";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "IniciarSesionView";
+            Text = "IniciarSesiónView";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

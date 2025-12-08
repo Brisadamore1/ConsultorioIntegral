@@ -29,33 +29,35 @@ namespace Desktop.States.Profesionales
            _form.Close();
         }
 
+        // live filter will be wired in UpdateUI using a small lambda stored in txtFiltro.Tag
+
         public async Task UpdateUI()
         {
             // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
             var all = (await _form.profesionalService.GetAllAsync(string.Empty))?.ToList() ?? new List<Profesional>();
             // Guardar copia para posibles usos posteriores
             _form.ListaAFiltrar = all;
+            // Inicialmente mostrar todos
+            _form.ListProfesionales.DataSource = all;
 
-            var filter = _form.txtFiltro.Text?.Trim();
-            if (!string.IsNullOrEmpty(filter))
+            // Wire a compact live filter: split terms and require all present in Nombre
+            try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
+            EventHandler newHandler = (s, e) =>
             {
-                var f = filter;
-                var filtered = all.Where(item =>
-                    (!string.IsNullOrEmpty(item.Nombre) && item.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Profesion) && item.Profesion.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Especialidad) && item.Especialidad.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Matricula) && item.Matricula.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Email) && item.Email.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || (!string.IsNullOrEmpty(item.Telefono) && item.Telefono.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
-                    || item.Id.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0
+                var txt = _form.txtFiltro.Text?.Trim();
+                var allLocal = _form.ListaAFiltrar ?? new List<Profesional>();
+                if (string.IsNullOrEmpty(txt))
+                {
+                    _form.ListProfesionales.DataSource = allLocal;
+                    return;
+                }
+                var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                _form.ListProfesionales.DataSource = allLocal.Where(item =>
+                    !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)
                 ).ToList();
-
-                _form.ListProfesionales.DataSource = filtered;
-            }
-            else
-            {
-                _form.ListProfesionales.DataSource = all;
-            }
+            };
+            _form.txtFiltro.Tag = newHandler;
+            _form.txtFiltro.TextChanged += newHandler;
 
             _form.dataGridProfesionalesView.DataSource = _form.ListProfesionales;
 
@@ -79,6 +81,8 @@ namespace Desktop.States.Profesionales
                 {
                     var c = _form.dataGridProfesionalesView.Columns[key];
                     c.Visible = true;
+                    if (string.Equals(key, "Destacado", StringComparison.OrdinalIgnoreCase))
+                        c.HeaderText = "Nuevo";
                     c.DisplayIndex = di++;
                     continue;
                 }
@@ -89,9 +93,45 @@ namespace Desktop.States.Profesionales
                 if (found != null)
                 {
                     found.Visible = true;
+                    if (string.Equals(key, "Destacado", StringComparison.OrdinalIgnoreCase))
+                        found.HeaderText = "Nuevo";
                     found.DisplayIndex = di++;
                 }
             }
+
+            // Ajustes de ancho de columna: Id más pequeño, Email mostrar completo
+            if (_form.dataGridProfesionalesView.Columns.Contains("Id"))
+            {
+                var c = _form.dataGridProfesionalesView.Columns["Id"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                c.Width = 60;
+            }
+            if (_form.dataGridProfesionalesView.Columns.Contains("Email"))
+            {
+                var c = _form.dataGridProfesionalesView.Columns["Email"];
+                // Ajustar para mostrar el email completo: autosize to all cells
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                // Si se queda muy pequeño en algunos casos, permitir que ocupe espacio restante
+                // Se puede alternar a Fill si prefieres que ocupe todo el espacio disponible
+            }
+            if (_form.dataGridProfesionalesView.Columns.Contains("Destacado"))
+            {
+                var c = _form.dataGridProfesionalesView.Columns["Destacado"];
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                c.Width = 120;
+            }
+
+            // Formateo de celdas: mostrar "Sin asignar" cuando Especialidad esté vacía
+            try { _form.dataGridProfesionalesView.CellFormatting -= DataGridProfesionalesView_CellFormatting; } catch { }
+            _form.dataGridProfesionalesView.CellFormatting += DataGridProfesionalesView_CellFormatting;
+
+            // Encabezados en negrita
+            try
+            {
+                var f = _form.dataGridProfesionalesView.ColumnHeadersDefaultCellStyle.Font ?? _form.dataGridProfesionalesView.Font;
+                _form.dataGridProfesionalesView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font(f, System.Drawing.FontStyle.Bold);
+            }
+            catch { }
 
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);
@@ -116,5 +156,25 @@ namespace Desktop.States.Profesionales
         public void OnGuardar() { }
         public void OnModificar() { }
         public void OnEliminar() { }
+
+        private void DataGridProfesionalesView_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                var grid = _form.dataGridProfesionalesView;
+                if (grid.Columns[e.ColumnIndex].Name.Equals("Especialidad", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (e.Value == null || string.IsNullOrWhiteSpace(e.Value.ToString()))
+                    {
+                        e.Value = "Sin asignar";
+                        e.FormattingApplied = true;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignorar cualquier error de formateo para no romper la UI
+            }
+        }
     }
 }

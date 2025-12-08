@@ -32,8 +32,9 @@
             label1 = new Label();
             tabControl1 = new TabControl();
             tabPageLista = new TabPage();
-            txtFiltro = new TextBox();
+            btnBuscar = new FontAwesome.Sharp.IconButton();
             label7 = new Label();
+            txtFiltro = new TextBox();
             dataGridTurnosView = new DataGridView();
             tabPageAgregarEditar = new TabPage();
             comboEstado = new ComboBox();
@@ -48,11 +49,10 @@
             txtDuracion = new TextBox();
             label8 = new Label();
             label5 = new Label();
-            btnSalir = new FontAwesome.Sharp.IconButton();
             btnEliminar = new FontAwesome.Sharp.IconButton();
             btnEditar = new FontAwesome.Sharp.IconButton();
             btnAgregar = new FontAwesome.Sharp.IconButton();
-            btnBuscar = new FontAwesome.Sharp.IconButton();
+            btnSalir = new FontAwesome.Sharp.IconButton();
             panel1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPageLista.SuspendLayout();
@@ -63,23 +63,23 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.Tan;
+            panel1.BackColor = Color.FromArgb(15, 22, 41);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(1, 0);
+            panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1345, 70);
+            panel1.Size = new Size(1912, 82);
             panel1.TabIndex = 29;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.Tan;
-            label1.Font = new Font("Copperplate Gothic Bold", 28.2F);
-            label1.ForeColor = Color.Sienna;
+            label1.BackColor = Color.FromArgb(15, 22, 41);
+            label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
+            label1.ForeColor = Color.Silver;
             label1.Location = new Point(540, 9);
             label1.Name = "label1";
-            label1.Size = new Size(217, 53);
+            label1.Size = new Size(202, 67);
             label1.TabIndex = 0;
             label1.Text = "Turnos";
             // 
@@ -87,51 +87,76 @@
             // 
             tabControl1.Controls.Add(tabPageLista);
             tabControl1.Controls.Add(tabPageAgregarEditar);
-            tabControl1.Location = new Point(12, 77);
+            tabControl1.Location = new Point(12, 101);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1159, 612);
+            tabControl1.Size = new Size(1176, 612);
             tabControl1.TabIndex = 30;
             // 
             // tabPageLista
             // 
-            tabPageLista.Controls.Add(txtFiltro);
+            tabPageLista.Controls.Add(btnBuscar);
             tabPageLista.Controls.Add(label7);
+            tabPageLista.Controls.Add(txtFiltro);
             tabPageLista.Controls.Add(dataGridTurnosView);
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
-            tabPageLista.Size = new Size(1151, 579);
+            tabPageLista.Size = new Size(1168, 579);
             tabPageLista.TabIndex = 0;
             tabPageLista.Text = "Lista";
             tabPageLista.UseVisualStyleBackColor = true;
             // 
-            // txtFiltro
+            // btnBuscar
             // 
-            txtFiltro.Location = new Point(141, 20);
-            txtFiltro.Margin = new Padding(3, 4, 3, 4);
-            txtFiltro.Name = "txtFiltro";
-            txtFiltro.Size = new Size(980, 27);
-            txtFiltro.TabIndex = 25;
+            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscar.BackColor = Color.FromArgb(15, 22, 41);
+            btnBuscar.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBuscar.ForeColor = Color.Silver;
+            btnBuscar.IconChar = FontAwesome.Sharp.IconChar.Search;
+            btnBuscar.IconColor = Color.Silver;
+            btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnBuscar.IconSize = 45;
+            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscar.Location = new Point(980, 14);
+            btnBuscar.Margin = new Padding(3, 4, 3, 4);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(156, 52);
+            btnBuscar.TabIndex = 29;
+            btnBuscar.Text = "&Buscar";
+            btnBuscar.TextAlign = ContentAlignment.MiddleRight;
+            btnBuscar.UseVisualStyleBackColor = false;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(21, 33);
+            label7.BackColor = Color.FromArgb(15, 22, 41);
+            label7.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label7.ForeColor = Color.Silver;
+            label7.Location = new Point(25, 29);
             label7.Name = "label7";
-            label7.Size = new Size(107, 20);
-            label7.TabIndex = 24;
-            label7.Text = "Busar Paciente:";
+            label7.Size = new Size(214, 37);
+            label7.TabIndex = 28;
+            label7.Text = "Buscar turnos:";
+            // 
+            // txtFiltro
+            // 
+            txtFiltro.Location = new Point(245, 29);
+            txtFiltro.Margin = new Padding(3, 4, 3, 4);
+            txtFiltro.Multiline = true;
+            txtFiltro.Name = "txtFiltro";
+            txtFiltro.Size = new Size(729, 37);
+            txtFiltro.TabIndex = 25;
             // 
             // dataGridTurnosView
             // 
             dataGridTurnosView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridTurnosView.Location = new Point(25, 64);
+            dataGridTurnosView.Location = new Point(25, 79);
             dataGridTurnosView.Margin = new Padding(3, 4, 3, 4);
             dataGridTurnosView.Name = "dataGridTurnosView";
             dataGridTurnosView.RowHeadersWidth = 62;
             dataGridTurnosView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridTurnosView.Size = new Size(1096, 493);
+            dataGridTurnosView.Size = new Size(1111, 473);
             dataGridTurnosView.TabIndex = 23;
             // 
             // tabPageAgregarEditar
@@ -151,7 +176,7 @@
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(1151, 579);
+            tabPageAgregarEditar.Size = new Size(1168, 579);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
@@ -281,117 +306,105 @@
             label5.TabIndex = 25;
             label5.Text = "Fecha y Hora:";
             // 
-            // btnSalir
-            // 
-            btnSalir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSalir.BackColor = Color.Sienna;
-            btnSalir.ForeColor = Color.White;
-            btnSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
-            btnSalir.IconColor = Color.White;
-            btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnSalir.IconSize = 44;
-            btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSalir.Location = new Point(1200, 514);
-            btnSalir.Margin = new Padding(3, 4, 3, 4);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(123, 75);
-            btnSalir.TabIndex = 35;
-            btnSalir.Text = "&Salir";
-            btnSalir.TextAlign = ContentAlignment.MiddleRight;
-            btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click;
-            // 
             // btnEliminar
             // 
             btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEliminar.BackColor = Color.Sienna;
-            btnEliminar.ForeColor = Color.White;
+            btnEliminar.BackColor = Color.FromArgb(15, 22, 41);
+            btnEliminar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnEliminar.ForeColor = Color.Silver;
             btnEliminar.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
-            btnEliminar.IconColor = Color.White;
+            btnEliminar.IconColor = Color.Silver;
             btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEliminar.IconSize = 44;
+            btnEliminar.IconSize = 43;
             btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEliminar.Location = new Point(1200, 434);
+            btnEliminar.Location = new Point(1214, 397);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(123, 72);
-            btnEliminar.TabIndex = 34;
+            btnEliminar.Size = new Size(176, 49);
+            btnEliminar.TabIndex = 37;
             btnEliminar.Text = "Eli&minar";
             btnEliminar.TextAlign = ContentAlignment.MiddleRight;
             btnEliminar.UseVisualStyleBackColor = false;
-            btnEliminar.Click += btnEliminar_Click;
+            btnEliminar.Click += btnEliminar_Click_1;
             // 
             // btnEditar
             // 
             btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEditar.BackColor = Color.Sienna;
-            btnEditar.ForeColor = Color.White;
-            btnEditar.IconChar = FontAwesome.Sharp.IconChar.Pencil;
-            btnEditar.IconColor = Color.White;
+            btnEditar.BackColor = Color.FromArgb(15, 22, 41);
+            btnEditar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnEditar.ForeColor = Color.Silver;
+            btnEditar.IconChar = FontAwesome.Sharp.IconChar.Edit;
+            btnEditar.IconColor = Color.Silver;
             btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnEditar.IconSize = 45;
             btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(1200, 354);
+            btnEditar.Location = new Point(1214, 328);
             btnEditar.Margin = new Padding(3, 4, 3, 4);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(123, 72);
-            btnEditar.TabIndex = 33;
+            btnEditar.Size = new Size(176, 49);
+            btnEditar.TabIndex = 35;
             btnEditar.Text = "&Editar";
             btnEditar.TextAlign = ContentAlignment.MiddleRight;
             btnEditar.UseVisualStyleBackColor = false;
-            btnEditar.Click += btnEditar_Click;
+            btnEditar.Click += btnEditar_Click_1;
             // 
             // btnAgregar
             // 
             btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAgregar.BackColor = Color.Sienna;
-            btnAgregar.ForeColor = Color.White;
-            btnAgregar.IconChar = FontAwesome.Sharp.IconChar.FileCirclePlus;
-            btnAgregar.IconColor = Color.White;
+            btnAgregar.BackColor = Color.FromArgb(15, 22, 41);
+            btnAgregar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnAgregar.ForeColor = Color.Silver;
+            btnAgregar.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
+            btnAgregar.IconColor = Color.Silver;
             btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnAgregar.IconSize = 45;
             btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAgregar.Location = new Point(1200, 274);
+            btnAgregar.Location = new Point(1214, 256);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(123, 72);
-            btnAgregar.TabIndex = 32;
+            btnAgregar.Size = new Size(176, 49);
+            btnAgregar.TabIndex = 36;
             btnAgregar.Text = "&Agregar";
             btnAgregar.TextAlign = ContentAlignment.MiddleRight;
             btnAgregar.UseVisualStyleBackColor = false;
-            btnAgregar.Click += btnAgregar_Click;
+            btnAgregar.Click += btnAgregar_Click_1;
             // 
-            // btnBuscar
+            // btnSalir
             // 
-            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscar.BackColor = Color.Sienna;
-            btnBuscar.ForeColor = Color.White;
-            btnBuscar.IconChar = FontAwesome.Sharp.IconChar.Search;
-            btnBuscar.IconColor = Color.White;
-            btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(1200, 194);
-            btnBuscar.Margin = new Padding(3, 4, 3, 4);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(123, 72);
-            btnBuscar.TabIndex = 31;
-            btnBuscar.Text = "&Buscar";
-            btnBuscar.TextAlign = ContentAlignment.MiddleRight;
-            btnBuscar.UseVisualStyleBackColor = false;
-            btnBuscar.Click += btnBuscar_Click;
+            btnSalir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSalir.BackColor = Color.FromArgb(64, 64, 64);
+            btnSalir.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
+            btnSalir.IconColor = Color.White;
+            btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnSalir.IconSize = 47;
+            btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSalir.Location = new Point(1214, 514);
+            btnSalir.Margin = new Padding(3, 4, 3, 4);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(176, 49);
+            btnSalir.TabIndex = 34;
+            btnSalir.Text = "&Salir";
+            btnSalir.TextAlign = ContentAlignment.MiddleRight;
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click_1;
             // 
             // TurnosView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1345, 712);
-            Controls.Add(btnSalir);
+            ClientSize = new Size(1406, 743);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);
             Controls.Add(btnAgregar);
-            Controls.Add(btnBuscar);
+            Controls.Add(btnSalir);
             Controls.Add(tabControl1);
             Controls.Add(panel1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "TurnosView";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "TurnosView";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -411,7 +424,6 @@
         public TabControl tabControl1;
         public TabPage tabPageLista;
         public TextBox txtFiltro;
-        private Label label7;
         public DataGridView dataGridTurnosView;
         public TabPage tabPageAgregarEditar;
         public DateTimePicker dateTimeFecha;
@@ -423,13 +435,14 @@
         public TextBox txtDuracion;
         private Label label8;
         private Label label5;
-        private FontAwesome.Sharp.IconButton btnSalir;
+        private FontAwesome.Sharp.IconButton btnBuscar;
         private FontAwesome.Sharp.IconButton btnEliminar;
         private FontAwesome.Sharp.IconButton btnEditar;
         private FontAwesome.Sharp.IconButton btnAgregar;
-        private FontAwesome.Sharp.IconButton btnBuscar;
+        private FontAwesome.Sharp.IconButton btnSalir;
         public ComboBox comboPacientes;
         private Label label2;
         public ComboBox comboEstado;
+        private Label label7;
     }
 }

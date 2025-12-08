@@ -61,7 +61,8 @@ namespace Desktop.States.Profesionales
                 Matricula = _form.txtMatricula.Text,
                 Especialidad = _form.txtEspecialidad.Text,
                 Email = _form.txtEmail.Text,
-                Telefono = _form.txtTelefono.Text
+                Telefono = _form.txtTelefono.Text,
+                Destacado = _form.checkBox.Checked
             };
             await _form.profesionalService.AddAsync(profesional);
             _form.SetState(_form.initialDisplayState);
@@ -85,6 +86,10 @@ namespace Desktop.States.Profesionales
             _form.txtEspecialidad.Clear();
             _form.txtEmail.Clear();
             _form.txtTelefono.Clear();
+            _form.checkBox.Checked = false;
+            // Seleccionar la pestaña de agregar/editar para mostrar el formulario
+            _form.tabControl1.SelectTab(_form.tabPageAgregarEditar);
+            _form.txtNombre.Focus();
             return Task.CompletedTask;
 
         }

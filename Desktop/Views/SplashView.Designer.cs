@@ -36,7 +36,7 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(42, 368);
+            progressBar.Location = new Point(32, 495);
             progressBar.Margin = new Padding(2);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(575, 50);
@@ -54,7 +54,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(653, 445);
+            ClientSize = new Size(651, 573);
             Controls.Add(progressBar);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;

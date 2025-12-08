@@ -59,6 +59,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+    <Folder Include="States\Shared\" />
   </ItemGroup>
 
   <!-- Ensure RDLC reports are embedded so ReportEmbeddedResource works -->
