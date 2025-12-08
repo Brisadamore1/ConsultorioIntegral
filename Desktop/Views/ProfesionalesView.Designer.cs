@@ -30,31 +30,33 @@
         {
             tabControl1 = new TabControl();
             tabPageLista = new TabPage();
-            txtFiltro = new TextBox();
+            btnBuscar = new FontAwesome.Sharp.IconButton();
             label7 = new Label();
+            txtFiltro = new TextBox();
             dataGridProfesionalesView = new DataGridView();
             tabPageAgregarEditar = new TabPage();
             btnCancelar = new FontAwesome.Sharp.IconButton();
+            label14 = new Label();
             btnGuardar = new FontAwesome.Sharp.IconButton();
+            label13 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             txtTelefono = new TextBox();
-            label3 = new Label();
             txtEmail = new TextBox();
-            label6 = new Label();
             txtEspecialidad = new TextBox();
-            label8 = new Label();
             txtMatricula = new TextBox();
-            label5 = new Label();
             txtProfesion = new TextBox();
-            label4 = new Label();
             txtNombre = new TextBox();
-            label2 = new Label();
-            btnSalir = new FontAwesome.Sharp.IconButton();
+            panel1 = new Panel();
+            label1 = new Label();
             btnEliminar = new FontAwesome.Sharp.IconButton();
             btnEditar = new FontAwesome.Sharp.IconButton();
             btnAgregar = new FontAwesome.Sharp.IconButton();
-            btnBuscar = new FontAwesome.Sharp.IconButton();
-            panel1 = new Panel();
-            label1 = new Label();
+            btnSalir = new FontAwesome.Sharp.IconButton();
+            label2 = new Label();
+            checkBox = new CheckBox();
             tabControl1.SuspendLayout();
             tabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridProfesionalesView).BeginInit();
@@ -66,344 +68,418 @@
             // 
             tabControl1.Controls.Add(tabPageLista);
             tabControl1.Controls.Add(tabPageAgregarEditar);
-            tabControl1.Location = new Point(12, 77);
+            tabControl1.Location = new Point(12, 101);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1159, 612);
+            tabControl1.Size = new Size(1176, 612);
             tabControl1.TabIndex = 0;
             // 
             // tabPageLista
             // 
-            tabPageLista.Controls.Add(txtFiltro);
+            tabPageLista.Controls.Add(btnBuscar);
             tabPageLista.Controls.Add(label7);
+            tabPageLista.Controls.Add(txtFiltro);
             tabPageLista.Controls.Add(dataGridProfesionalesView);
             tabPageLista.Location = new Point(4, 29);
             tabPageLista.Name = "tabPageLista";
             tabPageLista.Padding = new Padding(3);
-            tabPageLista.Size = new Size(1151, 579);
+            tabPageLista.Size = new Size(1168, 579);
             tabPageLista.TabIndex = 0;
             tabPageLista.Text = "Lista";
             tabPageLista.UseVisualStyleBackColor = true;
             // 
-            // txtFiltro
+            // btnBuscar
             // 
-            txtFiltro.Location = new Point(141, 20);
-            txtFiltro.Margin = new Padding(3, 4, 3, 4);
-            txtFiltro.Name = "txtFiltro";
-            txtFiltro.Size = new Size(980, 27);
-            txtFiltro.TabIndex = 25;
+            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscar.BackColor = Color.FromArgb(15, 22, 41);
+            btnBuscar.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBuscar.ForeColor = Color.Silver;
+            btnBuscar.IconChar = FontAwesome.Sharp.IconChar.Search;
+            btnBuscar.IconColor = Color.Silver;
+            btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnBuscar.IconSize = 45;
+            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBuscar.Location = new Point(980, 14);
+            btnBuscar.Margin = new Padding(3, 4, 3, 4);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(156, 52);
+            btnBuscar.TabIndex = 29;
+            btnBuscar.Text = "&Buscar";
+            btnBuscar.TextAlign = ContentAlignment.MiddleRight;
+            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click_1;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(15, 27);
+            label7.BackColor = Color.FromArgb(15, 22, 41);
+            label7.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label7.ForeColor = Color.Silver;
+            label7.Location = new Point(25, 29);
             label7.Name = "label7";
-            label7.Size = new Size(126, 20);
-            label7.TabIndex = 24;
-            label7.Text = "Busar Profesional:";
+            label7.Size = new Size(306, 37);
+            label7.TabIndex = 28;
+            label7.Text = "Buscar profesionales:";
+            // 
+            // txtFiltro
+            // 
+            txtFiltro.Location = new Point(337, 29);
+            txtFiltro.Margin = new Padding(3, 4, 3, 4);
+            txtFiltro.Multiline = true;
+            txtFiltro.Name = "txtFiltro";
+            txtFiltro.Size = new Size(637, 37);
+            txtFiltro.TabIndex = 25;
             // 
             // dataGridProfesionalesView
             // 
             dataGridProfesionalesView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridProfesionalesView.Location = new Point(25, 64);
+            dataGridProfesionalesView.Location = new Point(25, 79);
             dataGridProfesionalesView.Margin = new Padding(3, 4, 3, 4);
             dataGridProfesionalesView.Name = "dataGridProfesionalesView";
             dataGridProfesionalesView.RowHeadersWidth = 62;
             dataGridProfesionalesView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridProfesionalesView.Size = new Size(1096, 493);
+            dataGridProfesionalesView.Size = new Size(1111, 473);
             dataGridProfesionalesView.TabIndex = 23;
             // 
             // tabPageAgregarEditar
             // 
-            tabPageAgregarEditar.Controls.Add(btnCancelar);
-            tabPageAgregarEditar.Controls.Add(btnGuardar);
-            tabPageAgregarEditar.Controls.Add(txtTelefono);
-            tabPageAgregarEditar.Controls.Add(label3);
-            tabPageAgregarEditar.Controls.Add(txtEmail);
-            tabPageAgregarEditar.Controls.Add(label6);
-            tabPageAgregarEditar.Controls.Add(txtEspecialidad);
-            tabPageAgregarEditar.Controls.Add(label8);
-            tabPageAgregarEditar.Controls.Add(txtMatricula);
-            tabPageAgregarEditar.Controls.Add(label5);
-            tabPageAgregarEditar.Controls.Add(txtProfesion);
-            tabPageAgregarEditar.Controls.Add(label4);
-            tabPageAgregarEditar.Controls.Add(txtNombre);
+            tabPageAgregarEditar.Controls.Add(checkBox);
             tabPageAgregarEditar.Controls.Add(label2);
+            tabPageAgregarEditar.Controls.Add(btnCancelar);
+            tabPageAgregarEditar.Controls.Add(label14);
+            tabPageAgregarEditar.Controls.Add(btnGuardar);
+            tabPageAgregarEditar.Controls.Add(label13);
+            tabPageAgregarEditar.Controls.Add(label9);
+            tabPageAgregarEditar.Controls.Add(label10);
+            tabPageAgregarEditar.Controls.Add(label11);
+            tabPageAgregarEditar.Controls.Add(label12);
+            tabPageAgregarEditar.Controls.Add(txtTelefono);
+            tabPageAgregarEditar.Controls.Add(txtEmail);
+            tabPageAgregarEditar.Controls.Add(txtEspecialidad);
+            tabPageAgregarEditar.Controls.Add(txtMatricula);
+            tabPageAgregarEditar.Controls.Add(txtProfesion);
+            tabPageAgregarEditar.Controls.Add(txtNombre);
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(1151, 579);
+            tabPageAgregarEditar.Size = new Size(1168, 579);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;
             // 
             // btnCancelar
             // 
+            btnCancelar.BackColor = Color.FromArgb(64, 64, 64);
+            btnCancelar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnCancelar.ForeColor = Color.Silver;
             btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Cancel;
-            btnCancelar.IconColor = Color.Black;
+            btnCancelar.IconColor = Color.Silver;
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnCancelar.IconSize = 45;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(631, 388);
+            btnCancelar.Location = new Point(618, 475);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(109, 67);
-            btnCancelar.TabIndex = 33;
+            btnCancelar.Size = new Size(187, 49);
+            btnCancelar.TabIndex = 38;
             btnCancelar.Text = "&Cancelar";
             btnCancelar.TextAlign = ContentAlignment.MiddleRight;
-            btnCancelar.UseVisualStyleBackColor = true;
-            btnCancelar.Click += btnCancelar_Click;
+            btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click_1;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.BackColor = Color.FromArgb(15, 22, 41);
+            label14.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label14.ForeColor = Color.Silver;
+            label14.Location = new Point(353, 346);
+            label14.Name = "label14";
+            label14.Size = new Size(143, 37);
+            label14.TabIndex = 47;
+            label14.Text = "Teléfono:";
             // 
             // btnGuardar
             // 
+            btnGuardar.BackColor = Color.FromArgb(41, 23, 61);
+            btnGuardar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnGuardar.ForeColor = Color.Silver;
             btnGuardar.IconChar = FontAwesome.Sharp.IconChar.Save;
-            btnGuardar.IconColor = Color.Black;
+            btnGuardar.IconColor = Color.Silver;
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnGuardar.IconSize = 45;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(440, 388);
+            btnGuardar.Location = new Point(402, 475);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(108, 67);
-            btnGuardar.TabIndex = 32;
+            btnGuardar.Size = new Size(184, 49);
+            btnGuardar.TabIndex = 39;
             btnGuardar.Text = "&Guardar";
             btnGuardar.TextAlign = ContentAlignment.MiddleRight;
-            btnGuardar.UseVisualStyleBackColor = true;
-            btnGuardar.Click += btnGuardar_Click;
+            btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click_1;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.FromArgb(15, 22, 41);
+            label13.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label13.ForeColor = Color.Silver;
+            label13.Location = new Point(353, 228);
+            label13.Name = "label13";
+            label13.Size = new Size(201, 37);
+            label13.TabIndex = 46;
+            label13.Text = "Especialidad:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.FromArgb(15, 22, 41);
+            label9.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label9.ForeColor = Color.Silver;
+            label9.Location = new Point(353, 288);
+            label9.Name = "label9";
+            label9.Size = new Size(107, 37);
+            label9.TabIndex = 45;
+            label9.Text = "Email:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.BackColor = Color.FromArgb(15, 22, 41);
+            label10.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label10.ForeColor = Color.Silver;
+            label10.Location = new Point(353, 168);
+            label10.Name = "label10";
+            label10.Size = new Size(160, 37);
+            label10.TabIndex = 44;
+            label10.Text = "Matrícula:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = Color.FromArgb(15, 22, 41);
+            label11.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label11.ForeColor = Color.Silver;
+            label11.Location = new Point(353, 111);
+            label11.Name = "label11";
+            label11.Size = new Size(152, 37);
+            label11.TabIndex = 43;
+            label11.Text = "Profesión:";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.BackColor = Color.FromArgb(15, 22, 41);
+            label12.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label12.ForeColor = Color.Silver;
+            label12.Location = new Point(353, 51);
+            label12.Name = "label12";
+            label12.Size = new Size(141, 37);
+            label12.TabIndex = 42;
+            label12.Text = "Nombre:";
             // 
             // txtTelefono
             // 
-            txtTelefono.Location = new Point(503, 315);
+            txtTelefono.Font = new Font("Segoe UI", 12F);
+            txtTelefono.Location = new Point(596, 346);
             txtTelefono.Margin = new Padding(3, 4, 3, 4);
+            txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(228, 27);
+            txtTelefono.Size = new Size(241, 37);
             txtTelefono.TabIndex = 29;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(392, 308);
-            label3.Name = "label3";
-            label3.Size = new Size(70, 20);
-            label3.TabIndex = 31;
-            label3.Text = "Teléfono:";
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(503, 261);
+            txtEmail.Font = new Font("Segoe UI", 12F);
+            txtEmail.Location = new Point(596, 288);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
+            txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(228, 27);
+            txtEmail.Size = new Size(241, 37);
             txtEmail.TabIndex = 28;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(393, 261);
-            label6.Name = "label6";
-            label6.Size = new Size(49, 20);
-            label6.TabIndex = 30;
-            label6.Text = "Email:";
             // 
             // txtEspecialidad
             // 
-            txtEspecialidad.Location = new Point(503, 216);
+            txtEspecialidad.Font = new Font("Segoe UI", 12F);
+            txtEspecialidad.Location = new Point(596, 228);
             txtEspecialidad.Margin = new Padding(3, 4, 3, 4);
+            txtEspecialidad.Multiline = true;
             txtEspecialidad.Name = "txtEspecialidad";
-            txtEspecialidad.Size = new Size(228, 27);
+            txtEspecialidad.PlaceholderText = "(Opcional)";
+            txtEspecialidad.Size = new Size(241, 37);
             txtEspecialidad.TabIndex = 27;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(393, 216);
-            label8.Name = "label8";
-            label8.Size = new Size(96, 20);
-            label8.TabIndex = 26;
-            label8.Text = "Especialidad:";
             // 
             // txtMatricula
             // 
-            txtMatricula.Location = new Point(503, 162);
+            txtMatricula.Font = new Font("Segoe UI", 12F);
+            txtMatricula.Location = new Point(596, 168);
             txtMatricula.Margin = new Padding(3, 4, 3, 4);
+            txtMatricula.Multiline = true;
             txtMatricula.Name = "txtMatricula";
-            txtMatricula.Size = new Size(228, 27);
+            txtMatricula.Size = new Size(241, 37);
             txtMatricula.TabIndex = 23;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(391, 162);
-            label5.Name = "label5";
-            label5.Size = new Size(74, 20);
-            label5.TabIndex = 25;
-            label5.Text = "Matrícula:";
             // 
             // txtProfesion
             // 
-            txtProfesion.Location = new Point(503, 110);
+            txtProfesion.Font = new Font("Segoe UI", 12F);
+            txtProfesion.Location = new Point(596, 111);
             txtProfesion.Margin = new Padding(3, 4, 3, 4);
+            txtProfesion.Multiline = true;
             txtProfesion.Name = "txtProfesion";
-            txtProfesion.Size = new Size(228, 27);
+            txtProfesion.Size = new Size(241, 37);
             txtProfesion.TabIndex = 22;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(391, 110);
-            label4.Name = "label4";
-            label4.Size = new Size(74, 20);
-            label4.TabIndex = 24;
-            label4.Text = "Profesión:";
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(503, 53);
+            txtNombre.Font = new Font("Segoe UI", 12F);
+            txtNombre.Location = new Point(596, 51);
             txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(228, 27);
+            txtNombre.Size = new Size(241, 37);
             txtNombre.TabIndex = 21;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(391, 57);
-            label2.Name = "label2";
-            label2.Size = new Size(67, 20);
-            label2.TabIndex = 20;
-            label2.Text = "Nombre:";
-            // 
-            // btnSalir
-            // 
-            btnSalir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSalir.BackColor = Color.Sienna;
-            btnSalir.ForeColor = Color.White;
-            btnSalir.IconChar = FontAwesome.Sharp.IconChar.Close;
-            btnSalir.IconColor = Color.White;
-            btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnSalir.IconSize = 44;
-            btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSalir.Location = new Point(1195, 504);
-            btnSalir.Margin = new Padding(3, 4, 3, 4);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(123, 75);
-            btnSalir.TabIndex = 22;
-            btnSalir.Text = "&Salir";
-            btnSalir.TextAlign = ContentAlignment.MiddleRight;
-            btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += iconButtonSalir_Click;
-            // 
-            // btnEliminar
-            // 
-            btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEliminar.BackColor = Color.Sienna;
-            btnEliminar.ForeColor = Color.White;
-            btnEliminar.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
-            btnEliminar.IconColor = Color.White;
-            btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEliminar.IconSize = 44;
-            btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEliminar.Location = new Point(1195, 424);
-            btnEliminar.Margin = new Padding(3, 4, 3, 4);
-            btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(123, 72);
-            btnEliminar.TabIndex = 21;
-            btnEliminar.Text = "Eli&minar";
-            btnEliminar.TextAlign = ContentAlignment.MiddleRight;
-            btnEliminar.UseVisualStyleBackColor = false;
-            btnEliminar.Click += btnEliminar_Click;
-            // 
-            // btnEditar
-            // 
-            btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEditar.BackColor = Color.Sienna;
-            btnEditar.ForeColor = Color.White;
-            btnEditar.IconChar = FontAwesome.Sharp.IconChar.Pencil;
-            btnEditar.IconColor = Color.White;
-            btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnEditar.IconSize = 45;
-            btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(1195, 344);
-            btnEditar.Margin = new Padding(3, 4, 3, 4);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(123, 72);
-            btnEditar.TabIndex = 20;
-            btnEditar.Text = "&Editar";
-            btnEditar.TextAlign = ContentAlignment.MiddleRight;
-            btnEditar.UseVisualStyleBackColor = false;
-            btnEditar.Click += btnEditar_Click;
-            // 
-            // btnAgregar
-            // 
-            btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAgregar.BackColor = Color.Sienna;
-            btnAgregar.ForeColor = Color.White;
-            btnAgregar.IconChar = FontAwesome.Sharp.IconChar.FileCirclePlus;
-            btnAgregar.IconColor = Color.White;
-            btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAgregar.Location = new Point(1195, 264);
-            btnAgregar.Margin = new Padding(3, 4, 3, 4);
-            btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(123, 72);
-            btnAgregar.TabIndex = 19;
-            btnAgregar.Text = "&Agregar";
-            btnAgregar.TextAlign = ContentAlignment.MiddleRight;
-            btnAgregar.UseVisualStyleBackColor = false;
-            btnAgregar.Click += btnAgregar_Click;
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscar.BackColor = Color.Sienna;
-            btnBuscar.ForeColor = Color.White;
-            btnBuscar.IconChar = FontAwesome.Sharp.IconChar.Search;
-            btnBuscar.IconColor = Color.White;
-            btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnBuscar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBuscar.Location = new Point(1195, 184);
-            btnBuscar.Margin = new Padding(3, 4, 3, 4);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(123, 72);
-            btnBuscar.TabIndex = 18;
-            btnBuscar.Text = "&Buscar";
-            btnBuscar.TextAlign = ContentAlignment.MiddleRight;
-            btnBuscar.UseVisualStyleBackColor = false;
-            btnBuscar.Click += btnBuscar_Click;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.Tan;
+            panel1.BackColor = Color.FromArgb(15, 22, 41);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(1, 0);
+            panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1345, 70);
+            panel1.Size = new Size(1848, 82);
             panel1.TabIndex = 2;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.Tan;
-            label1.Font = new Font("Copperplate Gothic Bold", 28.2F);
-            label1.ForeColor = Color.Sienna;
-            label1.Location = new Point(491, 9);
+            label1.BackColor = Color.FromArgb(15, 22, 41);
+            label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
+            label1.ForeColor = Color.Silver;
+            label1.Location = new Point(541, 9);
             label1.Name = "label1";
-            label1.Size = new Size(415, 53);
+            label1.Size = new Size(356, 67);
             label1.TabIndex = 0;
             label1.Text = "Profesionales";
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEliminar.BackColor = Color.FromArgb(15, 22, 41);
+            btnEliminar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnEliminar.ForeColor = Color.Silver;
+            btnEliminar.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+            btnEliminar.IconColor = Color.Silver;
+            btnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnEliminar.IconSize = 43;
+            btnEliminar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEliminar.Location = new Point(1214, 397);
+            btnEliminar.Margin = new Padding(3, 4, 3, 4);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(176, 49);
+            btnEliminar.TabIndex = 37;
+            btnEliminar.Text = "Eli&minar";
+            btnEliminar.TextAlign = ContentAlignment.MiddleRight;
+            btnEliminar.UseVisualStyleBackColor = false;
+            btnEliminar.Click += btnEliminar_Click_1;
+            // 
+            // btnEditar
+            // 
+            btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditar.BackColor = Color.FromArgb(15, 22, 41);
+            btnEditar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnEditar.ForeColor = Color.Silver;
+            btnEditar.IconChar = FontAwesome.Sharp.IconChar.Edit;
+            btnEditar.IconColor = Color.Silver;
+            btnEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnEditar.IconSize = 45;
+            btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEditar.Location = new Point(1214, 328);
+            btnEditar.Margin = new Padding(3, 4, 3, 4);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(176, 49);
+            btnEditar.TabIndex = 35;
+            btnEditar.Text = "&Editar";
+            btnEditar.TextAlign = ContentAlignment.MiddleRight;
+            btnEditar.UseVisualStyleBackColor = false;
+            btnEditar.Click += btnEditar_Click_1;
+            // 
+            // btnAgregar
+            // 
+            btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAgregar.BackColor = Color.FromArgb(15, 22, 41);
+            btnAgregar.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnAgregar.ForeColor = Color.Silver;
+            btnAgregar.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
+            btnAgregar.IconColor = Color.Silver;
+            btnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnAgregar.IconSize = 45;
+            btnAgregar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAgregar.Location = new Point(1214, 256);
+            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(176, 49);
+            btnAgregar.TabIndex = 36;
+            btnAgregar.Text = "&Agregar";
+            btnAgregar.TextAlign = ContentAlignment.MiddleRight;
+            btnAgregar.UseVisualStyleBackColor = false;
+            btnAgregar.Click += btnAgregar_Click_1;
+            // 
+            // btnSalir
+            // 
+            btnSalir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSalir.BackColor = Color.FromArgb(64, 64, 64);
+            btnSalir.Font = new Font("Berlin Sans FB", 19.8000011F);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.IconChar = FontAwesome.Sharp.IconChar.TimesRectangle;
+            btnSalir.IconColor = Color.White;
+            btnSalir.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnSalir.IconSize = 47;
+            btnSalir.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSalir.Location = new Point(1214, 514);
+            btnSalir.Margin = new Padding(3, 4, 3, 4);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(176, 49);
+            btnSalir.TabIndex = 34;
+            btnSalir.Text = "&Salir";
+            btnSalir.TextAlign = ContentAlignment.MiddleRight;
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(15, 22, 41);
+            label2.Font = new Font("Berlin Sans FB", 19.8000011F);
+            label2.ForeColor = Color.Silver;
+            label2.Location = new Point(353, 405);
+            label2.Name = "label2";
+            label2.Size = new Size(118, 37);
+            label2.TabIndex = 48;
+            label2.Text = "Nuevo:";
+            // 
+            // checkBox
+            // 
+            checkBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkBox.Location = new Point(596, 405);
+            checkBox.Name = "checkBox";
+            checkBox.Size = new Size(41, 37);
+            checkBox.TabIndex = 49;
+            checkBox.UseVisualStyleBackColor = true;
             // 
             // ProfesionalesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1345, 721);
-            Controls.Add(panel1);
-            Controls.Add(btnSalir);
+            ClientSize = new Size(1406, 743);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);
             Controls.Add(btnAgregar);
-            Controls.Add(btnBuscar);
+            Controls.Add(btnSalir);
+            Controls.Add(panel1);
             Controls.Add(tabControl1);
+            MinimizeBox = false;
             Name = "ProfesionalesView";
             StartPosition = FormStartPosition.CenterParent;
             Text = "ProfesionalesView";
@@ -427,24 +503,26 @@
         private Panel panel1;
         private Label label1;
         public TextBox txtFiltro;
-        private Label label7;
         public DataGridView dataGridProfesionalesView;
-        private FontAwesome.Sharp.IconButton btnCancelar;
-        private FontAwesome.Sharp.IconButton btnGuardar;
         public TextBox txtTelefono;
-        private Label label3;
         public TextBox txtEmail;
-        private Label label6;
         public TextBox txtEspecialidad;
-        private Label label8;
         public TextBox txtMatricula;
-        private Label label5;
         public TextBox txtProfesion;
-        private Label label4;
         public TextBox txtNombre;
-        private Label label2;
         public TabControl tabControl1;
         public TabPage tabPageLista;
         public TabPage tabPageAgregarEditar;
+        private Label label7;
+        private Label label14;
+        private Label label13;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private FontAwesome.Sharp.IconButton btnCancelar;
+        private FontAwesome.Sharp.IconButton btnGuardar;
+        public CheckBox checkBox;
+        private Label label2;
     }
 }

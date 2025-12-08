@@ -1,6 +1,7 @@
 ﻿using Desktop.Interfaces;
 using Desktop.Views;
 using Service.Services;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,67 @@ namespace Desktop.States.Profesionales
 
         public async Task UpdateUI()
         {
-            _form.ListProfesionales.DataSource = await _form.profesionalService.GetAllAsync(_form.txtFiltro.Text);
+            // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
+            var all = (await _form.profesionalService.GetAllAsync(string.Empty))?.ToList() ?? new List<Profesional>();
+            // Guardar copia para posibles usos posteriores
+            _form.ListaAFiltrar = all;
+
+            var filter = _form.txtFiltro.Text?.Trim();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var f = filter;
+                var filtered = all.Where(item =>
+                    (!string.IsNullOrEmpty(item.Nombre) && item.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Profesion) && item.Profesion.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Especialidad) && item.Especialidad.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Matricula) && item.Matricula.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Email) && item.Email.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Telefono) && item.Telefono.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || item.Id.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
+
+                _form.ListProfesionales.DataSource = filtered;
+            }
+            else
+            {
+                _form.ListProfesionales.DataSource = all;
+            }
+
             _form.dataGridProfesionalesView.DataSource = _form.ListProfesionales;
+
+            // Evitar la fila "nueva" editable al final
+            _form.dataGridProfesionalesView.AllowUserToAddRows = false;
+
+            // Ocultar columnas que no deseamos mostrar
+            if (_form.dataGridProfesionalesView.Columns.Contains("Pacientes"))
+                _form.dataGridProfesionalesView.Columns["Pacientes"].Visible = false;
+            if (_form.dataGridProfesionalesView.Columns.Contains("IsDeleted"))
+                _form.dataGridProfesionalesView.Columns["IsDeleted"].Visible = false;
+            if (_form.dataGridProfesionalesView.Columns.Contains("Imagen"))
+                _form.dataGridProfesionalesView.Columns["Imagen"].Visible = false;
+
+            // Orden simple y directo: Id, Nombre, Profesion, Especialidad, Matricula, Email, Telefono, Destacado
+            var keys = new[] { "Id", "Nombre", "Profesion", "Especialidad", "Matricula", "Email", "Telefono", "Destacado" };
+            int di = 0;
+            foreach (var key in keys)
+            {
+                if (_form.dataGridProfesionalesView.Columns.Contains(key))
+                {
+                    var c = _form.dataGridProfesionalesView.Columns[key];
+                    c.Visible = true;
+                    c.DisplayIndex = di++;
+                    continue;
+                }
+
+                var found = _form.dataGridProfesionalesView.Columns.Cast<DataGridViewColumn>()
+                    .FirstOrDefault(c => string.Equals(c.DataPropertyName, key, StringComparison.OrdinalIgnoreCase)
+                                         || string.Equals(c.HeaderText, key, StringComparison.OrdinalIgnoreCase));
+                if (found != null)
+                {
+                    found.Visible = true;
+                    found.DisplayIndex = di++;
+                }
+            }
 
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);

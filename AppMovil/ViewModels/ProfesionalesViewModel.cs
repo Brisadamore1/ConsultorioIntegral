@@ -180,6 +180,7 @@ namespace AppMovil.ViewModels
             return items.OrderBy(p => ExtractApellido(p?.Nombre)).ThenBy(p => p?.Nombre);
         }
 
+        //Este metodo es para extraer el apellido de un nombre completo en caso de que haya mas de un nombre o apellido en 
         private static string ExtractApellido(string? nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre)) return string.Empty;

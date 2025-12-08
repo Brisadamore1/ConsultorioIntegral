@@ -1,6 +1,7 @@
 ﻿using Desktop.Interfaces;
 using Desktop.Views;
 using Service.Services;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,63 @@ namespace Desktop.States.ContactosEmergencia
         public async Task UpdateUI()
         {
             await CargarCombo();
-            _form.ListContactosEmergencia.DataSource = await _form.contactosEmergenciaService.GetAllAsync(_form.txtFiltro.Text);
+            // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
+            var all = (await _form.contactosEmergenciaService.GetAllAsync(string.Empty))?.ToList() ?? new List<ContactoEmergencia>();
+            var filter = _form.txtFiltro.Text?.Trim();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var f = filter;
+                var filtered = all.Where(item =>
+                    (!string.IsNullOrEmpty(item.Nombre) && item.Nombre.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Relacion) && item.Relacion.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (item.Paciente != null && item.Paciente.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || (!string.IsNullOrEmpty(item.Telefono) && item.Telefono.IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0)
+                    || item.Id.ToString().IndexOf(f, StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
+
+                _form.ListContactosEmergencia.DataSource = filtered;
+            }
+            else
+            {
+                _form.ListContactosEmergencia.DataSource = all;
+            }
             _form.dataGridContactosEmergenciaView.DataSource = _form.ListContactosEmergencia;
+
+            // Ocultar columnas innecesarias
+            if (_form.dataGridContactosEmergenciaView.Columns.Contains("PacienteId"))
+                _form.dataGridContactosEmergenciaView.Columns["PacienteId"].Visible = false;
+            if (_form.dataGridContactosEmergenciaView.Columns.Contains("IsDeleted"))
+                _form.dataGridContactosEmergenciaView.Columns["IsDeleted"].Visible = false;
+
+            // Orden simple y directo: Id, Nombre(Contacto), Relacion, Paciente, Telefono
+            var keys = new[] { "Id", "Nombre", "Relacion", "Paciente", "Telefono" };
+            int di = 0;
+            foreach (var key in keys)
+            {
+                if (_form.dataGridContactosEmergenciaView.Columns.Contains(key))
+                {
+                    var c = _form.dataGridContactosEmergenciaView.Columns[key];
+                    c.Visible = true;
+                    if (string.Equals(key, "Nombre", StringComparison.OrdinalIgnoreCase))
+                        c.HeaderText = "Contacto";
+                    c.DisplayIndex = di++;
+                    continue;
+                }
+
+                var found = _form.dataGridContactosEmergenciaView.Columns.Cast<DataGridViewColumn>()
+                    .FirstOrDefault(c => string.Equals(c.DataPropertyName, key, StringComparison.OrdinalIgnoreCase)
+                                         || string.Equals(c.HeaderText, key, StringComparison.OrdinalIgnoreCase));
+                if (found != null)
+                {
+                    found.Visible = true;
+                    if (string.Equals(key, "Nombre", StringComparison.OrdinalIgnoreCase))
+                        found.HeaderText = "Contacto";
+                    found.DisplayIndex = di++;
+                }
+            }
+
+            // Desactivar la fila de nuevo registro
+            _form.dataGridContactosEmergenciaView.AllowUserToAddRows = false;
 
             //Esto es para cargar el dataGrid de proveedores
             _form.tabControl1.SelectTab(_form.tabPageLista);

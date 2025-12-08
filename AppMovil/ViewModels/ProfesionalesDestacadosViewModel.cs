@@ -70,8 +70,8 @@ namespace AppMovil.ViewModels
             var profesionalesFiltrados = profesionalesListToFilter
                     .Where(p => p.Destacado == true &&
                             (p.Nombre ?? string.Empty).Contains(filtro, System.StringComparison.OrdinalIgnoreCase));
-           
-            Profesionales = new ObservableCollection<Profesional>(profesionalesFiltrados);
+
+            Profesionales = new ObservableCollection<Profesional>(OrderByApellidoNombre(profesionalesFiltrados));
         }
 
         public async Task ObtenerProfesionales()
@@ -84,8 +84,25 @@ namespace AppMovil.ViewModels
                 .Where(d => d.Destacado == true)
                 .ToList();
 
-            Profesionales = new ObservableCollection<Profesional>(profesionalesDestacados);
+            Profesionales = new ObservableCollection<Profesional>(OrderByApellidoNombre(profesionalesDestacados));
             IsRefreshing = false;
+        }
+
+        // Ordena por apellido (última palabra en Nombre) y luego por Nombre completo
+        private static IEnumerable<Profesional> OrderByApellidoNombre(IEnumerable<Profesional> items)
+        {
+            return items.OrderBy(p => ExtractApellido(p?.Nombre)).ThenBy(p => p?.Nombre);
+        }
+
+        //Este metodo es para extraer el apellido de un nombre completo en caso de que haya mas de un nombre o apellido en 
+        private static string ExtractApellido(string? nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return string.Empty;
+            var parts = nombre.Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+            // Detect common format: if names are stored as "Apellido Nombre" take first token as apellido,
+            // otherwise fall back to last token. Heuristic: if first token looks like a common surname (capitalized)
+            // we assume it's the apellido. Simpler approach: prefer first token.
+            return parts.Length > 0 ? parts[0].ToLowerInvariant() : string.Empty;
         }
     }
 }

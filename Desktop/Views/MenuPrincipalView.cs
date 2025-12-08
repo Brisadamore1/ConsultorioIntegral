@@ -11,11 +11,6 @@ namespace Desktop
             InitializeComponent();
         }
 
-        private void menuSalirDelSistema_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void profesionalesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProfesionalesView profesionalesView = new ProfesionalesView();
@@ -50,6 +45,11 @@ namespace Desktop
         {
             SesionesView sesionesView = new SesionesView();
             sesionesView.ShowDialog();
+        }
+
+        private void itemMenuSalirDelSistema_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

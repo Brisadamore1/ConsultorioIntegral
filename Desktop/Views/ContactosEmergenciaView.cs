@@ -44,7 +44,11 @@ namespace Desktop.Views
 
             //inicializamos el estado actual con el estado inicial
             currentState = initialDisplayState;
-            currentState.UpdateUI();
+            // Llamar a UpdateUI en el evento Load para evitar ejecutar async desde el constructor
+            this.Load += async (s, e) => await currentState.UpdateUI();
+
+            // Filtrar mientras se escribe (live search)
+            txtFiltro.TextChanged += (s, e) => currentState.OnBuscar();
 
             //dataGridProveedoresView.DataSource = ListProveedores;
             //CargarGrilla();

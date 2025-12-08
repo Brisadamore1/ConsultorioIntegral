@@ -66,7 +66,7 @@
             btnIniciarSesion.IconColor = Color.Black;
             btnIniciarSesion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnIniciarSesion.ImageAlign = ContentAlignment.MiddleLeft;
-            btnIniciarSesion.Location = new Point(386, 293);
+            btnIniciarSesion.Location = new Point(401, 293);
             btnIniciarSesion.Margin = new Padding(2);
             btnIniciarSesion.Name = "btnIniciarSesion";
             btnIniciarSesion.Size = new Size(147, 53);
@@ -79,7 +79,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(78, 104);
+            pictureBox1.Location = new Point(78, 85);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(278, 242);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -113,9 +113,9 @@
             label2.Location = new Point(386, 158);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(73, 20);
+            label2.Size = new Size(86, 20);
             label2.TabIndex = 21;
-            label2.Text = "Password:";
+            label2.Text = "Contraseña:";
             // 
             // txtEmail
             // 
@@ -139,7 +139,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 430);
             Controls.Add(btnCancelar);
             Controls.Add(btnIniciarSesion);
             Controls.Add(pictureBox1);
@@ -149,6 +149,7 @@
             Controls.Add(txtEmail);
             Controls.Add(label1);
             Name = "IniciarSesionView";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "IniciarSesionView";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

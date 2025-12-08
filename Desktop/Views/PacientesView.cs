@@ -64,42 +64,42 @@ namespace Desktop.Views
             currentState = state ?? throw new ArgumentNullException(nameof(state), "El estado no puede ser nulo.");
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+            currentState.OnBuscar();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            currentState.OnSalir();
+        }
+
+        private void btnAgregar_Click_1(object sender, EventArgs e)
         {
             SetState(addState);
             currentState.OnAgregar();
         }
 
-        private async void btnGuardar_Click(object sender, EventArgs e)
-        {
-            currentState.OnGuardar();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            currentState.OnCancelar();
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
+        private void btnEditar_Click_1(object sender, EventArgs e)
         {
             SetState(editState);
             currentState.OnModificar();
         }
 
-        private async void btnEliminar_Click(object sender, EventArgs e)
+        private async void btnEliminar_Click_1(object sender, EventArgs e)
         {
             SetState(deleteState);
             currentState.OnEliminar();
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private async void btnGuardar_Click_1(object sender, EventArgs e)
         {
-            currentState.OnBuscar();
+            currentState.OnGuardar();
         }
 
-        private void iconButtonSalir_Click(object sender, EventArgs e)
+        private void btnCancelar_Click_1(object sender, EventArgs e)
         {
-            currentState.OnSalir();
+            currentState.OnCancelar();
         }
     }
 }
