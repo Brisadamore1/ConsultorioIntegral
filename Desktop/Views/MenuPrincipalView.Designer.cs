@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panelTitulo = new Panel();
             label1 = new Label();
             menuStrip1 = new MenuStrip();
-            Principal = new FontAwesome.Sharp.IconMenuItem();
             itemMenuProfesionales = new FontAwesome.Sharp.IconMenuItem();
             itemMenuPacientes = new FontAwesome.Sharp.IconMenuItem();
             contactosDeEmergenciaToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
@@ -43,21 +41,12 @@
             itemMenuSalirDelSistema = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem3 = new FontAwesome.Sharp.IconMenuItem();
-            panelTitulo.SuspendLayout();
+            pictureBox1 = new PictureBox();
+            panelTitulo = new Panel();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelTitulo.SuspendLayout();
             SuspendLayout();
-            // 
-            // panelTitulo
-            // 
-            panelTitulo.BackColor = Color.FromArgb(15, 22, 41);
-            panelTitulo.Controls.Add(label1);
-            panelTitulo.Dock = DockStyle.Top;
-            panelTitulo.ForeColor = Color.OldLace;
-            panelTitulo.Location = new Point(0, 0);
-            panelTitulo.Margin = new Padding(3, 4, 3, 4);
-            panelTitulo.Name = "panelTitulo";
-            panelTitulo.Size = new Size(1729, 82);
-            panelTitulo.TabIndex = 29;
             // 
             // label1
             // 
@@ -65,7 +54,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(692, 9);
+            label1.Location = new Point(727, 9);
             label1.Name = "label1";
             label1.Size = new Size(531, 67);
             label1.TabIndex = 0;
@@ -76,26 +65,13 @@
             menuStrip1.BackColor = Color.FromArgb(15, 22, 41);
             menuStrip1.Dock = DockStyle.None;
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { Principal, itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, sesionesToolStripMenuItem, reportesToolStripMenuItem, iconMenuItem2 });
-            menuStrip1.Location = new Point(9, 97);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { itemMenuProfesionales, itemMenuPacientes, contactosDeEmergenciaToolStripMenuItem, itemMenuTurnos, sesionesToolStripMenuItem, reportesToolStripMenuItem, iconMenuItem2 });
+            menuStrip1.Location = new Point(0, 91);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
-            menuStrip1.Size = new Size(1811, 53);
+            menuStrip1.Size = new Size(1464, 53);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // Principal
-            // 
-            Principal.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Principal.ForeColor = Color.Silver;
-            Principal.IconChar = FontAwesome.Sharp.IconChar.HouseMedical;
-            Principal.IconColor = Color.Silver;
-            Principal.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            Principal.IconSize = 40;
-            Principal.ImageScaling = ToolStripItemImageScaling.None;
-            Principal.Name = "Principal";
-            Principal.Size = new Size(197, 45);
-            Principal.Text = "Principal";
             // 
             // itemMenuProfesionales
             // 
@@ -192,7 +168,7 @@
             pacientesToolStripMenuItem.IconSize = 38;
             pacientesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            pacientesToolStripMenuItem.Size = new Size(242, 44);
+            pacientesToolStripMenuItem.Size = new Size(239, 44);
             pacientesToolStripMenuItem.Text = "Pacientes";
             pacientesToolStripMenuItem.Click += pacientesToolStripMenuItem_Click;
             // 
@@ -242,13 +218,37 @@
             iconMenuItem3.Size = new Size(32, 19);
             iconMenuItem3.Text = "iconMenuItem3";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.servicios;
+            pictureBox1.Location = new Point(0, 140);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1950, 964);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 30;
+            pictureBox1.TabStop = false;
+            // 
+            // panelTitulo
+            // 
+            panelTitulo.BackColor = Color.FromArgb(15, 22, 41);
+            panelTitulo.Controls.Add(label1);
+            panelTitulo.Dock = DockStyle.Top;
+            panelTitulo.ForeColor = Color.OldLace;
+            panelTitulo.Location = new Point(0, 0);
+            panelTitulo.Margin = new Padding(3, 4, 3, 4);
+            panelTitulo.Name = "panelTitulo";
+            panelTitulo.Size = new Size(1729, 82);
+            panelTitulo.TabIndex = 29;
+            // 
             // MenuPrincipalView
             // 
             AutoScaleDimensions = new SizeF(17F, 29F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1729, 652);
-            Controls.Add(panelTitulo);
+            BackColor = Color.FromArgb(236, 225, 220);
+            ClientSize = new Size(1729, 756);
+            Controls.Add(pictureBox1);
             Controls.Add(menuStrip1);
+            Controls.Add(panelTitulo);
             Font = new Font("Mongolian Baiti", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ForeColor = Color.Sienna;
             MainMenuStrip = menuStrip1;
@@ -256,19 +256,17 @@
             Name = "MenuPrincipalView";
             Text = "Home";
             WindowState = FormWindowState.Maximized;
-            panelTitulo.ResumeLayout(false);
-            panelTitulo.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelTitulo.ResumeLayout(false);
+            panelTitulo.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Panel panelTitulo;
         private MenuStrip menuStrip1;
-        private FontAwesome.Sharp.IconMenuItem Principal;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem2;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem1;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem3;
@@ -281,5 +279,7 @@
         private FontAwesome.Sharp.IconMenuItem sesionesToolStripMenuItem;
         private FontAwesome.Sharp.IconMenuItem reportesToolStripMenuItem;
         private FontAwesome.Sharp.IconMenuItem pacientesToolStripMenuItem;
+        private PictureBox pictureBox1;
+        private Panel panelTitulo;
     }
 }
