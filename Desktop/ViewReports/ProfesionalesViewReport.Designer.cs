@@ -34,7 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 636);
+            ClientSize = new Size(882, 933);
             Margin = new Padding(2);
             Name = "ProfesionalesViewReport";
             StartPosition = FormStartPosition.CenterParent;

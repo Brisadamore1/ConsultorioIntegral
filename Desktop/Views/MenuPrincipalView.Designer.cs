@@ -39,13 +39,14 @@
             profesionalesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             pacientesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             contactosDeEmergenciaToolStripMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
+            turnosToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
+            sesionesToolStripMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem2 = new FontAwesome.Sharp.IconMenuItem();
             itemMenuSalirDelSistema = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem3 = new FontAwesome.Sharp.IconMenuItem();
             pictureBox1 = new PictureBox();
             panelTitulo = new Panel();
-            turnosToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelTitulo.SuspendLayout();
@@ -57,7 +58,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(727, 9);
+            label1.Location = new Point(711, 9);
             label1.Name = "label1";
             label1.Size = new Size(531, 67);
             label1.TabIndex = 0;
@@ -72,7 +73,7 @@
             menuStrip1.Location = new Point(0, 91);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
-            menuStrip1.Size = new Size(1819, 53);
+            menuStrip1.Size = new Size(1669, 53);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -149,7 +150,7 @@
             // 
             // reportesToolStripMenuItem
             // 
-            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { profesionalesToolStripMenuItem, pacientesToolStripMenuItem, contactosDeEmergenciaToolStripMenuItem1, turnosToolStripMenuItem });
+            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { profesionalesToolStripMenuItem, pacientesToolStripMenuItem, contactosDeEmergenciaToolStripMenuItem1, turnosToolStripMenuItem, sesionesToolStripMenuItem1 });
             reportesToolStripMenuItem.Font = new Font("Berlin Sans FB", 22.2F);
             reportesToolStripMenuItem.ForeColor = Color.Silver;
             reportesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.FileArrowDown;
@@ -202,6 +203,34 @@
             contactosDeEmergenciaToolStripMenuItem1.Size = new Size(521, 46);
             contactosDeEmergenciaToolStripMenuItem1.Text = "Contactos de Emergencia";
             contactosDeEmergenciaToolStripMenuItem1.Click += contactosDeEmergenciaToolStripMenuItem1_Click;
+            // 
+            // turnosToolStripMenuItem
+            // 
+            turnosToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
+            turnosToolStripMenuItem.ForeColor = Color.Silver;
+            turnosToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.ClipboardCheck;
+            turnosToolStripMenuItem.IconColor = Color.Silver;
+            turnosToolStripMenuItem.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            turnosToolStripMenuItem.IconSize = 40;
+            turnosToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
+            turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
+            turnosToolStripMenuItem.Size = new Size(521, 46);
+            turnosToolStripMenuItem.Text = "Turnos";
+            turnosToolStripMenuItem.Click += turnosToolStripMenuItem_Click;
+            // 
+            // sesionesToolStripMenuItem1
+            // 
+            sesionesToolStripMenuItem1.BackColor = Color.FromArgb(15, 22, 41);
+            sesionesToolStripMenuItem1.ForeColor = Color.Silver;
+            sesionesToolStripMenuItem1.IconChar = FontAwesome.Sharp.IconChar.CalendarCheck;
+            sesionesToolStripMenuItem1.IconColor = Color.Silver;
+            sesionesToolStripMenuItem1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            sesionesToolStripMenuItem1.IconSize = 40;
+            sesionesToolStripMenuItem1.ImageScaling = ToolStripItemImageScaling.None;
+            sesionesToolStripMenuItem1.Name = "sesionesToolStripMenuItem1";
+            sesionesToolStripMenuItem1.Size = new Size(521, 46);
+            sesionesToolStripMenuItem1.Text = "Sesiones";
+            sesionesToolStripMenuItem1.Click += sesionesToolStripMenuItem1_Click;
             // 
             // iconMenuItem2
             // 
@@ -271,20 +300,6 @@
             panelTitulo.Size = new Size(1729, 82);
             panelTitulo.TabIndex = 29;
             // 
-            // turnosToolStripMenuItem
-            // 
-            turnosToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
-            turnosToolStripMenuItem.ForeColor = Color.Silver;
-            turnosToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.ClipboardCheck;
-            turnosToolStripMenuItem.IconColor = Color.Silver;
-            turnosToolStripMenuItem.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            turnosToolStripMenuItem.IconSize = 40;
-            turnosToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
-            turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
-            turnosToolStripMenuItem.Size = new Size(521, 46);
-            turnosToolStripMenuItem.Text = "Turnos";
-            turnosToolStripMenuItem.Click += turnosToolStripMenuItem_Click;
-            // 
             // MenuPrincipalView
             // 
             AutoScaleDimensions = new SizeF(17F, 29F);
@@ -329,5 +344,6 @@
         private FontAwesome.Sharp.IconMenuItem profesionalesToolStripMenuItem;
         private FontAwesome.Sharp.IconMenuItem contactosDeEmergenciaToolStripMenuItem1;
         private FontAwesome.Sharp.IconMenuItem turnosToolStripMenuItem;
+        private FontAwesome.Sharp.IconMenuItem sesionesToolStripMenuItem1;
     }
 }

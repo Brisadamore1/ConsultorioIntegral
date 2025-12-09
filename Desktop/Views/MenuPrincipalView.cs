@@ -73,5 +73,11 @@ namespace Desktop
             TurnosViewReport turnosViewReport = new TurnosViewReport();
             turnosViewReport.ShowDialog();
         }
+
+        private void sesionesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SesionesViewReport sesionesViewReport = new SesionesViewReport();
+            sesionesViewReport.ShowDialog();
+        }
     }
 }

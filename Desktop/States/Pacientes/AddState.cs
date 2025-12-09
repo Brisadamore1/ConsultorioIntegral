@@ -18,6 +18,18 @@ namespace Desktop.States.Pacientes
         {
             _form = form ?? throw new ArgumentNullException(nameof(form), "El formulario no puede ser nulo.");
 
+            // Asegurar que el control muestre fecha y hora actuales al entrar en el estado de agregar
+            try
+            {
+                // Mostrar solo la fecha (sin hora) y usar la fecha actual
+                _form.dateTimeFecha.Format = DateTimePickerFormat.Custom;
+                _form.dateTimeFecha.CustomFormat = "dd/MM/yyyy";
+                _form.dateTimeFecha.Value = DateTime.Today;
+            }
+            catch
+            {
+                // Si por alguna razón el control no está inicializado aún, evitamos lanzar excepción aquí.
+            }
         }
        
         public void OnCancelar()
@@ -28,6 +40,16 @@ namespace Desktop.States.Pacientes
             _form.txtEmail.Clear();
             _form.txtTelefono.Clear();
             _form.comboProfesionales.SelectedIndex = -1; // Limpia la selección del combo de profesionales
+
+            // Restablecer fecha/hora actual al cancelar
+            try
+            {
+                // Restablecer solo la fecha actual
+                _form.dateTimeFecha.Format = DateTimePickerFormat.Custom;
+                _form.dateTimeFecha.CustomFormat = "dd/MM/yyyy";
+                _form.dateTimeFecha.Value = DateTime.Today;
+            }
+            catch { }
 
             _form.SetState(_form.initialDisplayState);
             _form.currentState.UpdateUI();
@@ -61,6 +83,7 @@ namespace Desktop.States.Pacientes
             {
                 Nombre = _form.txtNombre.Text,
                 Dni = _form.txtDni.Text,
+                // Guardar solo la fecha de nacimiento (sin hora)
                 FechaNacimiento = _form.dateTimeFecha.Value.Date,
                 Email = string.IsNullOrWhiteSpace(_form.txtEmail.Text) ? null : _form.txtEmail.Text,
                 Telefono = _form.txtTelefono.Text,
@@ -90,6 +113,16 @@ namespace Desktop.States.Pacientes
             
             _form.comboProfesionales.SelectedIndex = -1;
             _form.tabControl1.SelectTab(_form.tabPageAgregarEditar);
+
+            // Asegurar que al mostrar el formulario de agregar se establezca la fecha actual (sin hora)
+            try
+            {
+                _form.dateTimeFecha.Format = DateTimePickerFormat.Custom;
+                _form.dateTimeFecha.CustomFormat = "dd/MM/yyyy";
+                _form.dateTimeFecha.Value = DateTime.Today;
+            }
+            catch { }
+
             return Task.CompletedTask;
 
         }
