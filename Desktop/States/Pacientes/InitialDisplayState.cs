@@ -72,7 +72,7 @@ namespace Desktop.States.Pacientes
                 // Obtener todos y luego filtrar localmente de forma case-insensitive para búsqueda en vivo
                 var all = (await _form.pacienteService.GetAllAsync(string.Empty))?.ToList() ?? new List<Paciente>();
 
-                // Bind all and wire compact live filter (search by terms within Nombre)
+                // Bind all and wire compact live filter (search by terms within Nombre or Dni)
                 _form.ListPacientes.DataSource = all;
                 try { if (_form.txtFiltro.Tag is EventHandler old) _form.txtFiltro.TextChanged -= old; } catch { }
                 EventHandler h = (s, e) =>
@@ -80,7 +80,19 @@ namespace Desktop.States.Pacientes
                     var txt = _form.txtFiltro.Text?.Trim();
                     if (string.IsNullOrEmpty(txt)) { _form.ListPacientes.DataSource = all; return; }
                     var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    _form.ListPacientes.DataSource = all.Where(item => !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+                    _form.ListPacientes.DataSource = all.Where(item =>
+                    {
+                        // Para cada término, aceptamos coincidencia en Nombre o en Dni (Dni convertido a string)
+                        foreach (var t in terms)
+                        {
+                            var nombre = item.Nombre ?? string.Empty;
+                            var dni = Convert.ToString(item.Dni) ?? string.Empty;
+                            if (!(nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0
+                                  || dni.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0))
+                                return false;
+                        }
+                        return true;
+                    }).ToList();
                 };
                 _form.txtFiltro.Tag = h;
                 _form.txtFiltro.TextChanged += h;
@@ -99,9 +111,6 @@ namespace Desktop.States.Pacientes
                 _form.dataGridPacientesView.AllowUserToAddRows = false;
                 return;
             }
-
-
-            
 
             #region Ocultar columnas innecesarias
             if (_form.dataGridPacientesView.Columns.Contains("ProfesionalId"))

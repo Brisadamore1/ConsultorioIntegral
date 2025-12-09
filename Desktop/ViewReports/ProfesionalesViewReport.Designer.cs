@@ -1,6 +1,6 @@
 ﻿namespace Desktop.ViewReports
 {
-    partial class PacientesViewReport
+    partial class ProfesionalesViewReport
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,16 @@
         {
             SuspendLayout();
             // 
-            // PacientesViewReport
+            // ProfesionalesViewReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(882, 636);
             Margin = new Padding(2);
-            Name = "PacientesViewReport";
+            Name = "ProfesionalesViewReport";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Listado de pacientes";
-            Load += PacientesViewReport_Load;
+            Text = "Listado de profesionales";
+            Load += ProfesionalesViewReport_Load;
             ResumeLayout(false);
         }
 

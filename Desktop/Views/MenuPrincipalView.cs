@@ -55,5 +55,23 @@ namespace Desktop
         {
             this.Close();
         }
+
+        private void profesionalesToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ProfesionalesViewReport profesionalesViewReport = new ProfesionalesViewReport();
+            profesionalesViewReport.ShowDialog();
+        }
+
+        private void contactosDeEmergenciaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ContactosEmergenciaViewReport contactosEmergenciaViewReport = new ContactosEmergenciaViewReport();
+            contactosEmergenciaViewReport.ShowDialog();
+        }
+
+        private void turnosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TurnosViewReport turnosViewReport = new TurnosViewReport();
+            turnosViewReport.ShowDialog();
+        }
     }
 }

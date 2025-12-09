@@ -128,6 +128,7 @@
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Multiline = true;
             txtFiltro.Name = "txtFiltro";
+            txtFiltro.PlaceholderText = "Filtrar por profesional o profesión...";
             txtFiltro.Size = new Size(774, 37);
             txtFiltro.TabIndex = 25;
             // 

@@ -148,6 +148,8 @@
             Controls.Add(label2);
             Controls.Add(txtEmail);
             Controls.Add(label1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "IniciarSesionView";
             StartPosition = FormStartPosition.CenterParent;
             Text = "IniciarSesiónView";

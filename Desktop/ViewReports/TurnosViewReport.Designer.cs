@@ -1,6 +1,6 @@
 ﻿namespace Desktop.ViewReports
 {
-    partial class PacientesViewReport
+    partial class TurnosViewReport
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,14 @@
         {
             SuspendLayout();
             // 
-            // PacientesViewReport
+            // TurnosViewReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 636);
-            Margin = new Padding(2);
-            Name = "PacientesViewReport";
+            ClientSize = new Size(882, 933);
+            Name = "TurnosViewReport";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Listado de pacientes";
-            Load += PacientesViewReport_Load;
+            Text = "TurnosViewReport";
             ResumeLayout(false);
         }
 

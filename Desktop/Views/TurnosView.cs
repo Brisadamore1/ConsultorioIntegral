@@ -46,11 +46,42 @@ namespace Desktop.Views
 
             //inicializamos el estado actuales con el estado inicial
             currentState = initialDisplayState;
-            currentState.UpdateUI();
+            try
+            {
+                var initTask = currentState.UpdateUI();
+                // Observa errores asincrónicos y muéstralos en UI para evitar que el ShowDialog lance TargetInvocationException
+                initTask.ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        var ex = t.Exception?.GetBaseException();
+                        try { MessageBox.Show($"Error inicializando vista Turnos: {ex?.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error inicializando vista Turnos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+            }
 
             //dataGridProveedoresView.DataSource = ListProveedores;
             //CargarGrilla();
-            _ = CargarCombo();
+            try
+            {
+                var comboTask = CargarCombo();
+                comboTask.ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        var ex = t.Exception?.GetBaseException();
+                        try { MessageBox.Show($"Error cargando combos Turnos: {ex?.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error iniciando carga de combos Turnos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+            }
         }
 
         private async Task CargarCombo()
@@ -104,7 +135,15 @@ namespace Desktop.Views
 
         private async void btnGuardar_Click_1(object sender, EventArgs e)
         {
-            turnoCurrent.EstadoTurno = (EstadoTurnoEnum)comboEstado.SelectedItem;
+            try
+            {
+                if (comboEstado.SelectedItem is Service.Enums.EstadoTurnoEnum estado)
+                {
+                    turnoCurrent.EstadoTurno = estado;
+                }
+            }
+            catch { }
+
             currentState.OnGuardar();
         }
 

@@ -124,6 +124,7 @@
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Multiline = true;
             txtFiltro.Name = "txtFiltro";
+            txtFiltro.PlaceholderText = "Filtrar por contacto o paciente...";
             txtFiltro.Size = new Size(820, 35);
             txtFiltro.TabIndex = 25;
             // 
@@ -175,7 +176,7 @@
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(1168, 579);
+            tabPageAgregarEditar.Size = new Size(1305, 579);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;

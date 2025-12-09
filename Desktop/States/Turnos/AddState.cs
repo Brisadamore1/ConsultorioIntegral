@@ -37,25 +37,82 @@ namespace Desktop.States.Turnos
 
         public async void OnGuardar()
         {
-            var turno = new Turno
+            try
             {
-                FechaHora = _form.dateTimeFecha.Value,
-                DuracionMinutos = int.TryParse(_form.txtDuracion.Text, out int duracion) ? duracion : 0,
+                // Validaciones básicas para evitar excepciones por SelectedValue nulo o tipos inesperados
+                if (_form.comboProfesionales.SelectedValue == null || _form.comboPacientes.SelectedValue == null)
+                {
+                    MessageBox.Show("Debe seleccionar Profesional y Paciente antes de guardar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                PacienteId = (int)_form.comboPacientes.SelectedValue,
-                ProfesionalId = (int)_form.comboProfesionales.SelectedValue,
+                if (_form.comboEstado.SelectedItem == null)
+                {
+                    MessageBox.Show("Debe seleccionar el Estado del turno.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                EstadoTurno = (EstadoTurnoEnum)_form.comboEstado.SelectedItem
-            };
-            await _form.turnoService.AddAsync(turno);
-            _form.SetState(_form.initialDisplayState);
-            await _form.currentState.UpdateUI();
+                // Convertir SelectedValue a int de forma segura
+                int pacienteId;
+                int profesionalId;
+                try
+                {
+                    pacienteId = Convert.ToInt32(_form.comboPacientes.SelectedValue);
+                }
+                catch
+                {
+                    MessageBox.Show("Id de Paciente inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                try
+                {
+                    profesionalId = Convert.ToInt32(_form.comboProfesionales.SelectedValue);
+                }
+                catch
+                {
+                    MessageBox.Show("Id de Profesional inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Duración segura
+                int duracion = int.TryParse(_form.txtDuracion.Text, out int d) ? d : 0;
+
+                // Estado: intentar castear o parsear
+                EstadoTurnoEnum estado;
+                if (_form.comboEstado.SelectedItem is EstadoTurnoEnum e)
+                    estado = e;
+                else
+                {
+                    try { estado = (EstadoTurnoEnum)Enum.Parse(typeof(EstadoTurnoEnum), _form.comboEstado.SelectedItem.ToString()); }
+                    catch { estado = EstadoTurnoEnum.Reservado; }
+                }
+
+                var turno = new Turno
+                {
+                    FechaHora = _form.dateTimeFecha.Value,
+                    DuracionMinutos = duracion,
+                    PacienteId = pacienteId,
+                    ProfesionalId = profesionalId,
+                    EstadoTurno = estado
+                };
+
+                await _form.turnoService.AddAsync(turno);
+                _form.SetState(_form.initialDisplayState);
+                await _form.currentState.UpdateUI();
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error al guardar el turno: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+            }
 
         }
 
         public Task UpdateUI()
         {
             _form.txtDuracion.Clear();
+
+            // Al iniciar el modo agregar, fijar la fecha y hora al momento actual y limpiar el calendario
+            try { _form.dateTimeFecha.Value = DateTime.Now; } catch { }
             
             _form.comboPacientes.SelectedIndex = -1;
             _form.comboProfesionales.SelectedIndex = -1;

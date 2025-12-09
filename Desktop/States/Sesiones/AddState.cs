@@ -1,6 +1,7 @@
 ﻿using Desktop.Interfaces;
 using Desktop.Views;
 using Service.Models;
+using Service.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,15 +56,38 @@ namespace Desktop.States.Sesiones
 
         }
 
-        public Task UpdateUI()
+        public async Task UpdateUI()
         {
-            _form.comboTurnos.SelectedIndex = -1;
+            // Cargar solo turnos que no tienen sesión asignada
+            try
+            {
+                var turnos = await _form.turnoService.GetAllAsync(string.Empty) ?? new List<Service.Models.Turno>();
+                var sesiones = await _form.sesionService.GetAllAsync(string.Empty) ?? new List<Sesion>();
+                var usados = sesiones.Where(s => s.TurnoId.HasValue).Select(s => s.TurnoId!.Value).ToHashSet();
+                var disponibles = turnos.Where(t => !usados.Contains(t.Id) && t.EstadoTurno == EstadoTurnoEnum.Atendido).ToList();
+
+                var displayList = disponibles.Select(t => new
+                {
+                    Id = t.Id,
+                    DisplayName = $"{t.Profesional?.Nombre ?? "Profesional sin asignar"} - {t.Paciente?.Nombre ?? "Paciente sin asignar"} - {t.FechaHora:dd/MM/yyyy HH:mm}"
+                }).ToList();
+
+                _form.comboTurnos.DataSource = displayList;
+                _form.comboTurnos.DisplayMember = "DisplayName";
+                _form.comboTurnos.ValueMember = "Id";
+                _form.comboTurnos.SelectedIndex = -1;
+            }
+            catch
+            {
+                // Si falla, dejar combo vacío para evitar duplicados
+                _form.comboTurnos.DataSource = new List<Service.Models.Turno>();
+                _form.comboTurnos.SelectedIndex = -1;
+            }
+
             _form.numericHonorario.Value = 0;
             _form.checkBoxPagado.Checked = false;
             _form.txtNotas.Clear();
             _form.tabControl1.SelectTab(_form.tabPageAgregarEditar);
-            return Task.CompletedTask;
-
         }
         public void OnAgregar()
         {

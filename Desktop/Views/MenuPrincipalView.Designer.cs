@@ -36,13 +36,16 @@
             itemMenuTurnos = new FontAwesome.Sharp.IconMenuItem();
             sesionesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             reportesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
+            profesionalesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             pacientesToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
+            contactosDeEmergenciaToolStripMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem2 = new FontAwesome.Sharp.IconMenuItem();
             itemMenuSalirDelSistema = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem3 = new FontAwesome.Sharp.IconMenuItem();
             pictureBox1 = new PictureBox();
             panelTitulo = new Panel();
+            turnosToolStripMenuItem = new FontAwesome.Sharp.IconMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelTitulo.SuspendLayout();
@@ -69,13 +72,13 @@
             menuStrip1.Location = new Point(0, 91);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(14, 4, 0, 4);
-            menuStrip1.Size = new Size(1464, 53);
+            menuStrip1.Size = new Size(1819, 53);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // itemMenuProfesionales
             // 
-            itemMenuProfesionales.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            itemMenuProfesionales.Font = new Font("Berlin Sans FB", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             itemMenuProfesionales.ForeColor = Color.Silver;
             itemMenuProfesionales.IconChar = FontAwesome.Sharp.IconChar.HandHoldingMedical;
             itemMenuProfesionales.IconColor = Color.Silver;
@@ -83,13 +86,13 @@
             itemMenuProfesionales.IconSize = 40;
             itemMenuProfesionales.ImageScaling = ToolStripItemImageScaling.None;
             itemMenuProfesionales.Name = "itemMenuProfesionales";
-            itemMenuProfesionales.Size = new Size(252, 45);
+            itemMenuProfesionales.Size = new Size(270, 45);
             itemMenuProfesionales.Text = "Profesionales";
             itemMenuProfesionales.Click += profesionalesToolStripMenuItem_Click;
             // 
             // itemMenuPacientes
             // 
-            itemMenuPacientes.Font = new Font("Berlin Sans FB", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            itemMenuPacientes.Font = new Font("Berlin Sans FB", 22.2F);
             itemMenuPacientes.ForeColor = Color.Silver;
             itemMenuPacientes.IconChar = FontAwesome.Sharp.IconChar.Users;
             itemMenuPacientes.IconColor = Color.Silver;
@@ -97,14 +100,14 @@
             itemMenuPacientes.IconSize = 41;
             itemMenuPacientes.ImageScaling = ToolStripItemImageScaling.None;
             itemMenuPacientes.Name = "itemMenuPacientes";
-            itemMenuPacientes.Size = new Size(206, 45);
+            itemMenuPacientes.Size = new Size(219, 45);
             itemMenuPacientes.Text = "Pacientes";
             itemMenuPacientes.Click += itemMenuPacientes_Click;
             // 
             // contactosDeEmergenciaToolStripMenuItem
             // 
             contactosDeEmergenciaToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
-            contactosDeEmergenciaToolStripMenuItem.Font = new Font("Berlin Sans FB", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            contactosDeEmergenciaToolStripMenuItem.Font = new Font("Berlin Sans FB", 22.2F);
             contactosDeEmergenciaToolStripMenuItem.ForeColor = Color.Silver;
             contactosDeEmergenciaToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.PhoneVolume;
             contactosDeEmergenciaToolStripMenuItem.IconColor = Color.Silver;
@@ -112,13 +115,13 @@
             contactosDeEmergenciaToolStripMenuItem.IconSize = 38;
             contactosDeEmergenciaToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             contactosDeEmergenciaToolStripMenuItem.Name = "contactosDeEmergenciaToolStripMenuItem";
-            contactosDeEmergenciaToolStripMenuItem.Size = new Size(381, 45);
+            contactosDeEmergenciaToolStripMenuItem.Size = new Size(461, 45);
             contactosDeEmergenciaToolStripMenuItem.Text = "Contactos de Emergencia";
             contactosDeEmergenciaToolStripMenuItem.Click += contactosDeEmergenciaToolStripMenuItem_Click;
             // 
             // itemMenuTurnos
             // 
-            itemMenuTurnos.Font = new Font("Berlin Sans FB", 18F);
+            itemMenuTurnos.Font = new Font("Berlin Sans FB", 22.2F);
             itemMenuTurnos.ForeColor = Color.Silver;
             itemMenuTurnos.IconChar = FontAwesome.Sharp.IconChar.ClipboardCheck;
             itemMenuTurnos.IconColor = Color.Silver;
@@ -126,13 +129,13 @@
             itemMenuTurnos.IconSize = 38;
             itemMenuTurnos.ImageScaling = ToolStripItemImageScaling.None;
             itemMenuTurnos.Name = "itemMenuTurnos";
-            itemMenuTurnos.Size = new Size(149, 45);
+            itemMenuTurnos.Size = new Size(170, 45);
             itemMenuTurnos.Text = "Turnos";
             itemMenuTurnos.Click += itemMenuTurnos_Click;
             // 
             // sesionesToolStripMenuItem
             // 
-            sesionesToolStripMenuItem.Font = new Font("Berlin Sans FB", 18F);
+            sesionesToolStripMenuItem.Font = new Font("Berlin Sans FB", 22.2F);
             sesionesToolStripMenuItem.ForeColor = Color.Silver;
             sesionesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.CalendarCheck;
             sesionesToolStripMenuItem.IconColor = Color.Silver;
@@ -140,14 +143,14 @@
             sesionesToolStripMenuItem.IconSize = 38;
             sesionesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             sesionesToolStripMenuItem.Name = "sesionesToolStripMenuItem";
-            sesionesToolStripMenuItem.Size = new Size(164, 45);
+            sesionesToolStripMenuItem.Size = new Size(191, 45);
             sesionesToolStripMenuItem.Text = "Sesiones";
             sesionesToolStripMenuItem.Click += sesionesToolStripMenuItem_Click;
             // 
             // reportesToolStripMenuItem
             // 
-            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pacientesToolStripMenuItem });
-            reportesToolStripMenuItem.Font = new Font("Berlin Sans FB", 18F);
+            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { profesionalesToolStripMenuItem, pacientesToolStripMenuItem, contactosDeEmergenciaToolStripMenuItem1, turnosToolStripMenuItem });
+            reportesToolStripMenuItem.Font = new Font("Berlin Sans FB", 22.2F);
             reportesToolStripMenuItem.ForeColor = Color.Silver;
             reportesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.FileArrowDown;
             reportesToolStripMenuItem.IconColor = Color.Silver;
@@ -155,8 +158,22 @@
             reportesToolStripMenuItem.IconSize = 38;
             reportesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            reportesToolStripMenuItem.Size = new Size(174, 45);
+            reportesToolStripMenuItem.Size = new Size(204, 45);
             reportesToolStripMenuItem.Text = "Reportes";
+            // 
+            // profesionalesToolStripMenuItem
+            // 
+            profesionalesToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
+            profesionalesToolStripMenuItem.ForeColor = Color.Silver;
+            profesionalesToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.HandHoldingMedical;
+            profesionalesToolStripMenuItem.IconColor = Color.Silver;
+            profesionalesToolStripMenuItem.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            profesionalesToolStripMenuItem.IconSize = 40;
+            profesionalesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
+            profesionalesToolStripMenuItem.Name = "profesionalesToolStripMenuItem";
+            profesionalesToolStripMenuItem.Size = new Size(521, 46);
+            profesionalesToolStripMenuItem.Text = "Profesionales";
+            profesionalesToolStripMenuItem.Click += profesionalesToolStripMenuItem_Click_1;
             // 
             // pacientesToolStripMenuItem
             // 
@@ -168,14 +185,28 @@
             pacientesToolStripMenuItem.IconSize = 38;
             pacientesToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
-            pacientesToolStripMenuItem.Size = new Size(239, 44);
+            pacientesToolStripMenuItem.Size = new Size(521, 46);
             pacientesToolStripMenuItem.Text = "Pacientes";
             pacientesToolStripMenuItem.Click += pacientesToolStripMenuItem_Click;
+            // 
+            // contactosDeEmergenciaToolStripMenuItem1
+            // 
+            contactosDeEmergenciaToolStripMenuItem1.BackColor = Color.FromArgb(15, 22, 41);
+            contactosDeEmergenciaToolStripMenuItem1.ForeColor = Color.Silver;
+            contactosDeEmergenciaToolStripMenuItem1.IconChar = FontAwesome.Sharp.IconChar.PhoneVolume;
+            contactosDeEmergenciaToolStripMenuItem1.IconColor = Color.Silver;
+            contactosDeEmergenciaToolStripMenuItem1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            contactosDeEmergenciaToolStripMenuItem1.IconSize = 40;
+            contactosDeEmergenciaToolStripMenuItem1.ImageScaling = ToolStripItemImageScaling.None;
+            contactosDeEmergenciaToolStripMenuItem1.Name = "contactosDeEmergenciaToolStripMenuItem1";
+            contactosDeEmergenciaToolStripMenuItem1.Size = new Size(521, 46);
+            contactosDeEmergenciaToolStripMenuItem1.Text = "Contactos de Emergencia";
+            contactosDeEmergenciaToolStripMenuItem1.Click += contactosDeEmergenciaToolStripMenuItem1_Click;
             // 
             // iconMenuItem2
             // 
             iconMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { itemMenuSalirDelSistema });
-            iconMenuItem2.Font = new Font("Berlin Sans FB", 18F);
+            iconMenuItem2.Font = new Font("Berlin Sans FB", 22.2F);
             iconMenuItem2.ForeColor = Color.Silver;
             iconMenuItem2.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
             iconMenuItem2.IconColor = Color.Silver;
@@ -183,7 +214,7 @@
             iconMenuItem2.IconSize = 40;
             iconMenuItem2.ImageScaling = ToolStripItemImageScaling.None;
             iconMenuItem2.Name = "iconMenuItem2";
-            iconMenuItem2.Size = new Size(122, 45);
+            iconMenuItem2.Size = new Size(138, 45);
             iconMenuItem2.Text = "Salir";
             // 
             // itemMenuSalirDelSistema
@@ -196,7 +227,7 @@
             itemMenuSalirDelSistema.IconSize = 40;
             itemMenuSalirDelSistema.ImageScaling = ToolStripItemImageScaling.None;
             itemMenuSalirDelSistema.Name = "itemMenuSalirDelSistema";
-            itemMenuSalirDelSistema.Size = new Size(319, 46);
+            itemMenuSalirDelSistema.Size = new Size(375, 46);
             itemMenuSalirDelSistema.Text = "Salir del sistema";
             itemMenuSalirDelSistema.Click += itemMenuSalirDelSistema_Click;
             // 
@@ -240,6 +271,20 @@
             panelTitulo.Size = new Size(1729, 82);
             panelTitulo.TabIndex = 29;
             // 
+            // turnosToolStripMenuItem
+            // 
+            turnosToolStripMenuItem.BackColor = Color.FromArgb(15, 22, 41);
+            turnosToolStripMenuItem.ForeColor = Color.Silver;
+            turnosToolStripMenuItem.IconChar = FontAwesome.Sharp.IconChar.ClipboardCheck;
+            turnosToolStripMenuItem.IconColor = Color.Silver;
+            turnosToolStripMenuItem.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            turnosToolStripMenuItem.IconSize = 40;
+            turnosToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
+            turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
+            turnosToolStripMenuItem.Size = new Size(521, 46);
+            turnosToolStripMenuItem.Text = "Turnos";
+            turnosToolStripMenuItem.Click += turnosToolStripMenuItem_Click;
+            // 
             // MenuPrincipalView
             // 
             AutoScaleDimensions = new SizeF(17F, 29F);
@@ -281,5 +326,8 @@
         private FontAwesome.Sharp.IconMenuItem pacientesToolStripMenuItem;
         private PictureBox pictureBox1;
         private Panel panelTitulo;
+        private FontAwesome.Sharp.IconMenuItem profesionalesToolStripMenuItem;
+        private FontAwesome.Sharp.IconMenuItem contactosDeEmergenciaToolStripMenuItem1;
+        private FontAwesome.Sharp.IconMenuItem turnosToolStripMenuItem;
     }
 }

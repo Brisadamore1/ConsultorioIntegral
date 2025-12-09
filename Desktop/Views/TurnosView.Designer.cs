@@ -77,7 +77,7 @@
             label1.BackColor = Color.FromArgb(15, 22, 41);
             label1.Font = new Font("Times New Roman", 34.8F, FontStyle.Bold);
             label1.ForeColor = Color.Silver;
-            label1.Location = new Point(711, 9);
+            label1.Location = new Point(730, 9);
             label1.Name = "label1";
             label1.Size = new Size(202, 67);
             label1.TabIndex = 0;
@@ -146,6 +146,7 @@
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Multiline = true;
             txtFiltro.Name = "txtFiltro";
+            txtFiltro.PlaceholderText = "Filtrar por profesional o paciente...";
             txtFiltro.Size = new Size(866, 37);
             txtFiltro.TabIndex = 25;
             // 
@@ -178,7 +179,7 @@
             tabPageAgregarEditar.Location = new Point(4, 29);
             tabPageAgregarEditar.Name = "tabPageAgregarEditar";
             tabPageAgregarEditar.Padding = new Padding(3);
-            tabPageAgregarEditar.Size = new Size(1168, 579);
+            tabPageAgregarEditar.Size = new Size(1305, 579);
             tabPageAgregarEditar.TabIndex = 1;
             tabPageAgregarEditar.Text = "Agregar/Editar";
             tabPageAgregarEditar.UseVisualStyleBackColor = true;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Desktop.States.Turnos
 {
@@ -18,28 +19,40 @@ namespace Desktop.States.Turnos
         }
         public async void OnEliminar()
         {
-            _form.turnoCurrent = (Turno)_form.ListTurnos.Current;
-            if (_form.turnoCurrent == null)
+            // Obtener el turno seleccionado de forma segura
+            var current = _form.ListTurnos.Current as Turno;
+            if (current == null)
             {
                 MessageBox.Show("Debe seleccionar un turno", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var result = MessageBox.Show($"¿Está seguro que desea eliminar el turno {_form.turnoCurrent.Id}?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                _form.turnoCurrent = (Turno)_form.ListTurnos.Current;
-                if (_form.turnoCurrent != null)
-                {
-                    await _form.turnoService.DeleteAsync(_form.turnoCurrent.Id);
-                    _form.SetState(_form.initialDisplayState);
-                    _form.currentState.UpdateUI();
-                    // await CargarGrilla();
-                }
-            }
-            else
+
+            // Construir mensaje más informativo: Profesional, Paciente y Fecha/Hora
+            var profesional = current.Profesional?.Nombre ?? "Profesional sin asignar";
+            var paciente = current.Paciente?.Nombre ?? "Paciente sin asignar";
+            var fecha = current.FechaHora;
+            var fechaTexto = fecha == DateTime.MinValue ? "sin fecha" : fecha.ToString("dd/MM/yyyy") + " a las " + fecha.ToString("HH:mm");
+
+            var pregunta = $"¿Está seguro que desea eliminar el turno de {profesional} para {paciente} correspondiente al día {fechaTexto}?";
+
+            var result = MessageBox.Show(pregunta, "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes)
             {
                 _form.SetState(_form.initialDisplayState);
+                return;
             }
+
+            try
+            {
+                await _form.turnoService.DeleteAsync(current.Id);
+                _form.SetState(_form.initialDisplayState);
+                await _form.currentState.UpdateUI();
+            }
+            catch (Exception ex)
+            {
+                try { MessageBox.Show($"Error al eliminar el turno: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); } catch { }
+            }
+
             _form.turnoCurrent = null;
         }
 

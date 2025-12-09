@@ -340,6 +340,7 @@
             txtFiltro.Margin = new Padding(3, 4, 3, 4);
             txtFiltro.Multiline = true;
             txtFiltro.Name = "txtFiltro";
+            txtFiltro.PlaceholderText = "Filtrar por paciente o dni...";
             txtFiltro.Size = new Size(821, 37);
             txtFiltro.TabIndex = 25;
             // 

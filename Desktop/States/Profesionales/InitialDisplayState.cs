@@ -53,15 +53,21 @@ namespace Desktop.States.Profesionales
                 }
                 var terms = txt.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 _form.ListProfesionales.DataSource = allLocal.Where(item =>
-                    !string.IsNullOrEmpty(item.Nombre) && terms.All(t => item.Nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0)
-                ).ToList();
+                {
+                    var nombre = item.Nombre ?? string.Empty;
+                    var profesion = item.Profesion ?? string.Empty;
+                    return terms.All(t =>
+                        nombre.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0
+                        || profesion.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0
+                    );
+                }).ToList();
             };
             _form.txtFiltro.Tag = newHandler;
             _form.txtFiltro.TextChanged += newHandler;
 
             _form.dataGridProfesionalesView.DataSource = _form.ListProfesionales;
 
-            // Evitar la fila "nueva" editable al final
+            // Evitar la fila "nueva" editable al fondo
             _form.dataGridProfesionalesView.AllowUserToAddRows = false;
 
             #region Ocultar columnas innecesarias
@@ -101,6 +107,63 @@ namespace Desktop.States.Profesionales
                     found.DisplayIndex = di++;
                 }
             }
+
+            // Asegurar que la columna "Destacado" se muestre como checkbox (tildado si true, destildado si false)
+            try
+            {
+                DataGridViewColumn? destCol = null;
+                if (_form.dataGridProfesionalesView.Columns.Contains("Destacado"))
+                    destCol = _form.dataGridProfesionalesView.Columns["Destacado"];
+                else
+                    destCol = _form.dataGridProfesionalesView.Columns.Cast<DataGridViewColumn>()
+                        .FirstOrDefault(c => string.Equals(c.DataPropertyName, "Destacado", StringComparison.OrdinalIgnoreCase)
+                                             || string.Equals(c.HeaderText, "Destacado", StringComparison.OrdinalIgnoreCase));
+
+                if (destCol != null)
+                {
+                    // Si ya es checkbox, asegurar propiedades y permitir edición directa
+                    if (destCol is DataGridViewCheckBoxColumn chkCol)
+                    {
+                        chkCol.ReadOnly = false; // permitir toggling
+                        chkCol.ThreeState = false;
+                        chkCol.HeaderText = "Nuevo";
+                        chkCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    }
+                    else
+                    {
+                        var displayIndex = destCol.DisplayIndex;
+                        var visible = destCol.Visible;
+                        var dataProp = string.IsNullOrWhiteSpace(destCol.DataPropertyName) ? "Destacado" : destCol.DataPropertyName;
+                        // Remover la columna existente y reemplazar por DataGridViewCheckBoxColumn vinculada
+                        _form.dataGridProfesionalesView.Columns.Remove(destCol);
+                        var newChk = new DataGridViewCheckBoxColumn
+                        {
+                            Name = "Destacado",
+                            HeaderText = "Nuevo",
+                            DataPropertyName = dataProp,
+                            ReadOnly = false,
+                            ThreeState = false,
+                            AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                            TrueValue = true,
+                            FalseValue = false
+                        };
+                        _form.dataGridProfesionalesView.Columns.Add(newChk);
+                        newChk.DisplayIndex = displayIndex;
+                        newChk.Visible = visible;
+                    }
+                }
+            }
+            catch
+            {
+                // Silenciar errores para no romper la UI
+            }
+
+            // Permitir que el usuario tilda/destilde el check directamente y propagar al servidor
+            try { _form.dataGridProfesionalesView.CurrentCellDirtyStateChanged -= DataGridProfesionalesView_CurrentCellDirtyStateChanged; } catch { }
+            _form.dataGridProfesionalesView.CurrentCellDirtyStateChanged += DataGridProfesionalesView_CurrentCellDirtyStateChanged;
+
+            try { _form.dataGridProfesionalesView.CellValueChanged -= DataGridProfesionalesView_DestacadoCellValueChanged; } catch { }
+            _form.dataGridProfesionalesView.CellValueChanged += DataGridProfesionalesView_DestacadoCellValueChanged;
 
             // Formateo de celdas: mostrar "Sin asignar" cuando Especialidad esté vacía
             try { _form.dataGridProfesionalesView.CellFormatting -= DataGridProfesionalesView_CellFormatting; } catch { }
@@ -156,6 +219,68 @@ namespace Desktop.States.Profesionales
             {
                 // Ignorar cualquier error de formateo para no romper la UI
             }
+        }
+
+        private void DataGridProfesionalesView_CurrentCellDirtyStateChanged(object? sender, EventArgs e)
+        {
+            try
+            {
+                var grid = _form.dataGridProfesionalesView;
+                if (grid.IsCurrentCellDirty)
+                {
+                    // Commit inmediato para que CellValueChanged se dispare
+                    grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                }
+            }
+            catch { }
+        }
+
+        private async void DataGridProfesionalesView_DestacadoCellValueChanged(object? sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                var grid = _form.dataGridProfesionalesView;
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+                var col = grid.Columns[e.ColumnIndex];
+                if (!string.Equals(col.Name, "Destacado", StringComparison.OrdinalIgnoreCase) && !string.Equals(col.DataPropertyName, "Destacado", StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                var row = grid.Rows[e.RowIndex];
+                var profesional = row.DataBoundItem as Profesional;
+                if (profesional == null)
+                    return;
+
+                // Obtener el valor actual del cell (puede ser bool o null)
+                object? cellVal = row.Cells[e.ColumnIndex].Value;
+                bool nuevoValor = false;
+                if (cellVal is bool b) nuevoValor = b;
+                else if (cellVal is bool?) nuevoValor = (bool)((bool?)cellVal ?? false);
+                else if (cellVal != null)
+                {
+                    // intentar parsear
+                    bool.TryParse(cellVal.ToString(), out nuevoValor);
+                }
+
+                // Si no hay cambio, salir
+                if (profesional.Destacado == nuevoValor) return;
+
+                profesional.Destacado = nuevoValor;
+
+                // Intentar persistir al servidor. Mostrar mensaje solo en error.
+                try
+                {
+                    await _form.profesionalService.UpdateAsync(profesional);
+                }
+                catch (Exception ex)
+                {
+                    // Revertir valor local si falla
+                    profesional.Destacado = !nuevoValor;
+                    try { row.Cells[e.ColumnIndex].Value = profesional.Destacado; } catch { }
+                    MessageBox.Show($"Error al actualizar 'Destacado': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch { }
         }
     }
 }
